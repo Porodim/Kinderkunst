@@ -3,7 +3,6 @@
 import { zeigeStart } from './ansichten/start.js';
 import { zeigeArchiv } from './ansichten/archiv.js';
 import { zeigeErfassen } from './ansichten/erfassen.js';
-import { zeigeKinder } from './ansichten/kinder.js';
 import { zeigeWerk } from './ansichten/werk.js';
 import { zeigeBearbeiten } from './ansichten/bearbeiten.js';
 import { zeigeTechnikTest } from './ansichten/technik-test.js';
@@ -12,8 +11,7 @@ import { esc } from './format.js';
 const ANSICHTEN = {
   start: { titel: 'Erinnerungen', zeige: zeigeStart, nav: 'start' },
   archiv: { titel: 'Archiv', zeige: zeigeArchiv, nav: 'archiv' },
-  erfassen: { titel: 'Werk erfassen', zeige: zeigeErfassen, nav: 'erfassen' },
-  kinder: { titel: 'Kinder', zeige: zeigeKinder, nav: 'kinder' },
+  erfassen: { titel: 'Werk sichern', zeige: zeigeErfassen, nav: null, zurueck: true },
   werk: { titel: 'Werk', zeige: zeigeWerk, nav: 'archiv', zurueck: true },
   bearbeiten: { titel: 'Bearbeiten', zeige: zeigeBearbeiten, nav: 'archiv', zurueck: true },
   technik: { titel: 'Technik-Test', zeige: zeigeTechnikTest, nav: null, zurueck: true },

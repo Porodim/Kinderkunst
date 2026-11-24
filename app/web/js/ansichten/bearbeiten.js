@@ -17,19 +17,18 @@ export async function zeigeBearbeiten(ziel, istAktuell, parameter) {
   let laufend = 0;
 
   ziel.innerHTML = `
-    <h2>Werk bearbeiten</h2>
-    <div class="card"><h3>Fotos</h3>
-      <p class="mute" style="margin-top:0">Das erste Foto ist das Titelbild. ★ macht ein Foto zum Titelbild, ‹ schiebt es nach vorn.</p>
-      <div class="auswahl fotos"></div><div class="auswahl neu"></div><div class="knoepfe"></div></div>
-    <div class="card formular"><h3>Angaben</h3></div>
-    <div class="card"><h3>Storys</h3><div class="storys"></div><button type="button" class="btn s neuestory">＋ Story (Text oder Ton)</button></div>
+    <div class="card">
+      <div class="auswahl fotos"></div><div class="auswahl neu"></div><div class="knoepfe"></div>
+      <small>Das erste Foto ist das Titelbild. ★ macht ein Foto zum Titelbild.</small></div>
+    <div class="card formular"></div>
+    <div class="card"><h3>Was sagt das Kind dazu?</h3><div class="storys"></div><button type="button" class="chip neuestory">＋ Hinzufügen</button></div>
     <p class="meldung"></p>
-    <div class="row"><button class="btn speichern">Speichern</button><a class="btn g" href="#werk-${werk.id}" style="text-decoration:none">Abbrechen</a></div>
-    <div class="row"><button class="chip loeschen">In den Papierkorb</button></div>`;
+    <button class="btn speichern" style="display:block;width:100%">Speichern</button>
+    <div class="row"><button class="chip loeschen">Werk löschen</button></div>`;
 
   const fotos = ziel.querySelector('.fotos');
   const speichern = ziel.querySelector('.speichern');
-  const formular = werkFormular({ kinder, werk, vorhandeneTags: tags.map((t) => t.name), mitBeitrag: true });
+  const formular = werkFormular({ kinder, werk, vorhandeneTags: tags.map((t) => t.name) });
   ziel.querySelector('.formular').append(formular.element);
 
   function zeichneFotos() {
@@ -37,7 +36,7 @@ export async function zeigeBearbeiten(ziel, istAktuell, parameter) {
       .map((m, i) => `<div class="tile" data-medium="${m}"><img alt="" src="${esc(vorschauUrl(m, 400))}">
         ${i === 0 ? '<span class="titelmarke">Titelbild</span>' : ''}
         <div class="row" style="position:absolute;left:4px;right:4px;top:4px;margin:0;justify-content:flex-end;gap:4px">
-          ${i > 0 ? '<button type="button" class="knopf" style="position:static" data-aktion="titel" aria-label="Als Titelbild">★</button><button type="button" class="knopf" style="position:static" data-aktion="vor" aria-label="Nach vorn">‹</button>' : ''}
+          ${i > 0 ? '<button type="button" class="knopf" style="position:static" data-aktion="titel" aria-label="Als Titelbild">★</button>' : ''}
           ${medien.length > 1 ? '<button type="button" class="knopf" style="position:static" data-aktion="weg" aria-label="Foto entfernen">✕</button>' : ''}
         </div></div>`)
       .join('');
@@ -47,10 +46,9 @@ export async function zeigeBearbeiten(ziel, istAktuell, parameter) {
     const { werk: aktuell } = await anfrage('GET', `api/werke/${werk.id}`);
     Object.assign(werk, { storys: aktuell.storys });
     ziel.querySelector('.storys').innerHTML = aktuell.storys.length
-      ? aktuell.storys.map((s) => `<div class="story">${s.text ? `<p>„${esc(s.text)}“</p>` : ''}${s.audio_id ? `<small>🎙 Tonaufnahme ${dauer(s.audio_dauer_ms || 0)}</small>` : ''}
-          <div class="row" style="margin:4px 0"><button type="button" class="chip" data-story="${s.id}">Ändern</button>
-          <button type="button" class="chip" data-storyweg="${s.id}">Löschen</button></div></div>`).join('')
-      : '<p class="mute">Noch keine Story.</p>';
+      ? aktuell.storys.map((s) => `<div class="story">${s.text ? `<p>„${esc(s.text)}“</p>` : ''}${s.audio_id ? `<small>🎙 Aufnahme ${dauer(s.audio_dauer_ms || 0)}</small>` : ''}
+          <button type="button" class="chip" style="padding:2px 10px;font-size:12px" data-story="${s.id}">ändern</button></div>`).join('')
+      : '';
   }
 
   ziel.querySelector('.knoepfe').append(fotoKnoepfe(async (dateien) => {
@@ -65,7 +63,7 @@ export async function zeigeBearbeiten(ziel, istAktuell, parameter) {
       speichern.disabled = false;
     }
     zeichneFotos();
-  }, { kameraText: 'Foto ergänzen', galerieText: 'Aus Galerie' }));
+  }, { kameraText: '＋ Foto', galerieText: '＋ Aus Galerie' }));
 
   ziel.addEventListener('click', async (e) => {
     const aktion = e.target.closest('[data-aktion]');
@@ -80,11 +78,6 @@ export async function zeigeBearbeiten(ziel, istAktuell, parameter) {
     if (e.target.closest('.neuestory')) oeffneStoryBlatt({ werk, kinder, nachSpeichern: zeichneStorys });
     const storyKnopf = e.target.closest('[data-story]');
     if (storyKnopf) oeffneStoryBlatt({ werk, story: werk.storys.find((s) => s.id === Number(storyKnopf.dataset.story)), kinder, nachSpeichern: zeichneStorys });
-    const storyWeg = e.target.closest('[data-storyweg]');
-    if (storyWeg && (await bestaetige('Diese Story löschen?', 'Löschen'))) {
-      await anfrage('DELETE', `api/storys/${storyWeg.dataset.storyweg}`);
-      zeichneStorys();
-    }
     if (e.target === speichern) {
       speichern.disabled = true;
       try {
@@ -97,10 +90,10 @@ export async function zeigeBearbeiten(ziel, istAktuell, parameter) {
         speichern.disabled = false;
       }
     }
-    if (e.target.closest('.loeschen') && (await bestaetige('Dieses Werk in den Papierkorb legen? Es bleibt 30 Tage wiederherstellbar.', 'In den Papierkorb'))) {
+    if (e.target.closest('.loeschen') && (await bestaetige('Dieses Werk löschen? Im Archiv unter „Papierkorb“ kannst du es 30 Tage lang zurückholen.', 'Löschen'))) {
       await anfrage('DELETE', `api/werke/${werk.id}`);
       zustand.werke = [];
-      zeigeHinweis('Im Papierkorb – 30 Tage wiederherstellbar');
+      zeigeHinweis('Gelöscht – 30 Tage im Papierkorb');
       location.hash = 'archiv';
     }
   });

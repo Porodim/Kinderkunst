@@ -47,6 +47,7 @@ Zeitkritisch ist das **Archivieren** (Foto + Story sichern, solange die Kinder k
 
 ### Entwicklungsablauf (seit 24.11.2026)
 
+- **Gestaltung: so einfach und intuitiv wie die alte App.** Die Nutzerin hat die erste M2-Oberfläche als zu kompliziert abgelehnt. Wenige Knöpfe, kurze Wege, Kinder nur mit Name und Geburtsdatum, Seltenes zugeklappt unter „Mehr“. Lieber eine Funktion weglassen als die Oberfläche überladen; im Zweifel fragen.
 - **Die Nutzerin ist technische Laiin.** Claude führt sie durch die Meilensteine: Wünsche in Alltagssprache einem Meilenstein zuordnen, erklären, was als Nächstes passiert, und selbst entscheiden, wann ein Stand fertig ist. Maßstab ist die Prüfliste in **`docs/FAHRPLAN.md`**; den Fahrplan nach jedem Meilenstein nachführen. Fachwörter (Branch, Pull Request …) beim ersten Mal kurz erklären.
 - Laufende Arbeit auf dem Branch **`feature/entwicklung`**. Ist ein Meilenstein nach der Prüfliste fertig, wird der Branch gepusht und ein **Pull Request** angelegt; der Entwickler übernimmt ihn. Dazwischen wird lokal committet und die Vorschau aktualisiert.
 - **Vorschau zum Ausprobieren** ohne Home Assistant: `node werkzeuge/vorschau-bauen.mjs <Ordner>` baut aus `app/web` eine Seite, die ohne Server läuft (`app/web/js/vorschau/server.js` bildet die API im Browser nach). Sie wird als privates Claude-Artefakt „Kinderkunst Vorschau“ veröffentlicht (Slug `6ba8c030-c2f4-47ad-acf9-082bbedb4432`); nach jeder Änderung neu veröffentlichen. Kamera und Mikrofon sind dort gesperrt, Fotos bleiben im Browserfenster.

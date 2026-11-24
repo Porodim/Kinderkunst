@@ -18,7 +18,7 @@ export function werkKachel(werk) {
     ${bild}
     ${alter ? `<span class="marke">${esc(alter)}</span>` : ''}
     ${werk.favorit ? '<span class="herz" aria-label="Lieblingswerk">♥</span>' : ''}
-    ${werk.unvollstaendig ? '<span class="offen">Kind fehlt</span>' : ''}
+    ${werk.unvollstaendig ? '<span class="offen">ohne Kind</span>' : ''}
     <div class="tt">${esc(werk.titel || ART_TEXT[werk.art] || 'Werk')}${werk.hat_audio ? ' 🎙' : ''}${werk.anzahl_fotos > 1 ? ` · ${werk.anzahl_fotos} Fotos` : ''}
       <small>${esc(unterzeile)}</small></div></a>`;
 }

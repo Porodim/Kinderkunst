@@ -17,11 +17,16 @@ Ein **Meilenstein** ist ein Paket von Funktionen, das zusammen benutzbar ist. Be
    - Dein Mann schaut es an und übernimmt es (**Merge**).
    - In Home Assistant beim Add-on auf **„Neu bauen“** tippen. Zuerst im Test-Add-on ausprobieren, dann im echten.
 
+## Leitlinie für die Gestaltung
+
+Die App bleibt so **einfach und intuitiv wie die alte App** („Das kleine Atelier für große Werke“): wenige Knöpfe, kurze Wege, nur das Nötige sichtbar. Alles Seltene liegt zugeklappt unter „Mehr“. Neue Funktionen werden nur dann sichtbar, wenn sie im Alltag wirklich gebraucht werden.
+
 ## Prüfliste: Wann ist ein Meilenstein fertig?
 
 Claude entscheidet danach, ob ein Stand ins Repository kommt:
 
 - [ ] Alle geplanten Funktionen des Meilensteins sind da (siehe Tabelle unten).
+- [ ] Die Oberfläche ist so schlicht wie in der alten App (Leitlinie oben).
 - [ ] Alle automatischen Tests laufen fehlerfrei, auch bei GitHub (dort zusätzlich der Bau für den Raspberry Pi).
 - [ ] Claude hat den kompletten Ablauf selbst im Browser durchgeklickt: in der App und in der Vorschau, ohne Fehlermeldungen.
 - [ ] Die Vorschau ist auf dem neuesten Stand, damit du sie ausprobieren kannst.
@@ -35,7 +40,7 @@ Claude entscheidet danach, ob ein Stand ins Repository kommt:
 |---|---|---|---|
 | M0 | Bestandsaufnahme | Klarheit, was von der alten App bleibt | ✅ fertig |
 | M1 | Fundament | App läuft auf Home Assistant, Fotos und Ton werden sicher gespeichert, Technik-Test | ✅ fertig, offen: Backup als eigene Datei |
-| **M2** | **Archiv** | Kinder anlegen, Werke mit mehreren Fotos, Datum und Alter automatisch, Geschichten als Text und Ton, Tags, Lieblingswerke, Eingangskorb für viele Fotos, Galerie mit Filtern und Suche, Zeitstrahl nach Alter, Papierkorb | ✅ gebaut, **jetzt ausprobieren** |
+| **M2** | **Archiv** | Schlicht wie die alte App: Kind mit Name und Geburtsdatum, Werk sichern (Foto, Kind, was es ist, Datum, Titel, „Was sagt das Kind dazu?“ als Text oder Aufnahme), Archiv nach Kindern und Alter. Seltenes (Tags, ungefähres Datum, Suche, Filter) zugeklappt | ✅ gebaut und vereinfacht, **jetzt ausprobieren** |
 | M3 | Fotos geraderücken | Schräg fotografierte Bilder gerade ziehen, zuschneiden, drehen, aufhellen; das Original bleibt immer erhalten | ⬜ als Nächstes |
 | M4 | Sticker & Themen | Aquarell-Sticker in Druckqualität, Themen, Rahmen, Sticker-Vorschläge passend zu den Tags | ⬜ |
 | M5 | Seiten gestalten | Albumseiten aus dem Archiv, wie in der alten App, aber verknüpft: ändert sich ein Werk, ändert sich die Seite | ⬜ |

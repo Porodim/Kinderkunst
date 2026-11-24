@@ -23,24 +23,26 @@ export async function zeigeArchiv(ziel, istAktuell, parameter) {
   const [kinder, { tags }] = await Promise.all([ladeKinder(), anfrage('GET', 'api/tags')]);
   if (!istAktuell()) return;
 
+  const filterAktiv = Boolean(f.suche || f.art || f.tag || f.favorit || f.unvollstaendig || f.papierkorb);
   ziel.innerHTML = `
-    <h2>Archiv</h2>
-    <div class="suche" style="margin:10px 0"><input type="search" class="suchfeld" placeholder="Suchen in Titel, Story, Tags" value="${esc(f.suche)}"></div>
     <div class="filter-kinder"></div>
-    <div class="filter-arten"></div>
-    <div class="chips filter-extra">
-      <button type="button" class="chip" data-schalter="favorit">♥ Lieblingswerke</button>
-      <button type="button" class="chip" data-schalter="unvollstaendig">Kind fehlt</button>
-      <button type="button" class="chip" data-schalter="papierkorb">🗑 Papierkorb</button>
-      ${tags.length ? `<select class="tagwahl" style="width:auto;margin:0;padding:6px 10px;border-radius:999px">
-        <option value="">Tag …</option>${tags.map((t) => `<option value="${esc(t.name)}" ${f.tag === t.name ? 'selected' : ''}>${esc(t.name)} (${t.anzahl})</option>`).join('')}</select>` : ''}
-    </div>
-    <p class="mute anzahl" style="margin:6px 0"></p>
+    <details class="filter" ${filterAktiv ? 'open' : ''}><summary class="mute" style="margin:4px 0 8px">Suchen und filtern</summary>
+      <div class="suche" style="margin:6px 0 10px"><input type="search" class="suchfeld" placeholder="Titel, Geschichte oder Tag" value="${esc(f.suche)}"></div>
+      <div class="filter-arten"></div>
+      <div class="chips filter-extra" style="flex-wrap:wrap">
+        <button type="button" class="chip" data-schalter="favorit">♥ Lieblingswerke</button>
+        <button type="button" class="chip" data-schalter="unvollstaendig">Ohne Kind</button>
+        <button type="button" class="chip" data-schalter="papierkorb">Papierkorb</button>
+        ${tags.length ? `<select class="tagwahl" style="width:auto;margin:0;padding:6px 10px;border-radius:999px">
+          <option value="">Tag …</option>${tags.map((t) => `<option value="${esc(t.name)}" ${f.tag === t.name ? 'selected' : ''}>${esc(t.name)}</option>`).join('')}</select>` : ''}
+      </div>
+    </details>
+    <small class="anzahl" style="margin:4px 0 10px"></small>
     <div class="ergebnis"></div>
     <div class="row"><button class="btn g mehr" hidden>Weitere laden</button></div>`;
 
   const kinderWahl = chipAuswahl(
-    [{ wert: null, text: 'Alle Kinder' }, ...kinder.map((k) => ({ wert: k.id, text: k.spitzname || k.name, farbe: k.farbe }))],
+    [{ wert: null, text: 'Alle' }, ...kinder.map((k) => ({ wert: k.id, text: k.name }))],
     f.kind,
     { leerErlaubt: false, beiAenderung: (w) => neuLaden({ kind: w, alter: null }) },
   );
@@ -59,7 +61,7 @@ export async function zeigeArchiv(ziel, istAktuell, parameter) {
     const kind = kinder.find((k) => k.id === f.kind);
     anzahl.textContent = `${zustand.gesamt} ${zustand.gesamt === 1 ? 'Werk' : 'Werke'}${f.papierkorb ? ' im Papierkorb (werden nach 30 Tagen gelöscht)' : ''}`;
     if (!zustand.werke.length) {
-      ergebnis.innerHTML = `<div class="card"><p>${f.papierkorb ? 'Der Papierkorb ist leer.' : 'Hier ist noch nichts. Über „＋ Werk“ sicherst du das erste Kunstwerk.'}</p></div>`;
+      ergebnis.innerHTML = `<div class="card"><p>${f.papierkorb ? 'Der Papierkorb ist leer.' : 'Hier ist noch nichts.'}</p>${f.papierkorb ? '' : '<a class="btn" href="#erfassen" style="text-decoration:none">＋ Werk sichern</a>'}</div>`;
     } else if (kind?.geburtsdatum) {
       // Zeitstrahl: nach Lebensjahr gruppiert (D-04)
       const gruppen = gruppiere(zustand.werke, (w) => (w.datum ? lebensjahr(kind.geburtsdatum, w.datum) : null));
