@@ -1,0 +1,6 @@
+# Changelog
+
+| Datum | Änderung |
+|---|---|
+| 24.11.2026 | Bisherige App 1:1 nach `alt/` übernommen (Commit von der Claude-Instanz der Nutzerin). |
+| 24.11.2026 | Planung ins Repo übernommen: `CLAUDE.md`, `PROJEKT.md`, `docs/ANFORDERUNGEN.md` (v0.2), `docs/ARCHITEKTUR.md`. Kein App-Code geändert. Nächster Schritt: M0 Bestandsaufnahme. |
