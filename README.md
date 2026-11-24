@@ -17,7 +17,6 @@ Familien-App zum Archivieren von Kinderkunstwerken und Bauwerken (Bilder, Lego, 
 ## In Home Assistant installieren (Testkanal)
 
 1. Einstellungen → Add-ons → Add-on Store → ⋮ → **Repositories** → `https://github.com/porodim/kinderkunst` hinzufügen.
-   Solange M1 noch auf dem Branch liegt: `https://github.com/porodim/kinderkunst#feature/m1-fundament`.
 2. „Kinderkunst (Test)“ installieren (wird auf dem Raspberry Pi gebaut, dauert einige Minuten) und starten.
 3. In der Seitenleiste „Kinderkunst Test“ öffnen → „Technik-Test“.
 
