@@ -38,3 +38,16 @@ export function migriere(db) {
   }
   return schemaVersion(db);
 }
+
+// Führt fn in einer Transaktion aus; bei einem Fehler wird alles zurückgerollt.
+export function transaktion(db, fn) {
+  db.exec('BEGIN IMMEDIATE');
+  try {
+    const ergebnis = fn();
+    db.exec('COMMIT');
+    return ergebnis;
+  } catch (fehler) {
+    db.exec('ROLLBACK');
+    throw fehler;
+  }
+}

@@ -47,20 +47,23 @@ Zeitkritisch ist das **Archivieren** (Foto + Story sichern, solange die Kinder k
 
 ### Entwicklungsablauf (seit 24.11.2026)
 
-- Laufende Arbeit auf dem Branch **`feature/entwicklung`**. Nach GitHub und auf Home Assistant geht ein Stand **erst bei einem Meilenstein**, auf Wunsch der Nutzerin. Bis dahin wird lokal committet.
+- **Die Nutzerin ist technische Laiin.** Claude führt sie durch die Meilensteine: Wünsche in Alltagssprache einem Meilenstein zuordnen, erklären, was als Nächstes passiert, und selbst entscheiden, wann ein Stand fertig ist. Maßstab ist die Prüfliste in **`docs/FAHRPLAN.md`**; den Fahrplan nach jedem Meilenstein nachführen. Fachwörter (Branch, Pull Request …) beim ersten Mal kurz erklären.
+- Laufende Arbeit auf dem Branch **`feature/entwicklung`**. Ist ein Meilenstein nach der Prüfliste fertig, wird der Branch gepusht und ein **Pull Request** angelegt; der Entwickler übernimmt ihn. Dazwischen wird lokal committet und die Vorschau aktualisiert.
 - **Vorschau zum Ausprobieren** ohne Home Assistant: `node werkzeuge/vorschau-bauen.mjs <Ordner>` baut aus `app/web` eine Seite, die ohne Server läuft (`app/web/js/vorschau/server.js` bildet die API im Browser nach). Sie wird als privates Claude-Artefakt „Kinderkunst Vorschau“ veröffentlicht (Slug `6ba8c030-c2f4-47ad-acf9-082bbedb4432`); nach jeder Änderung neu veröffentlichen. Kamera und Mikrofon sind dort gesperrt, Fotos bleiben im Browserfenster.
-- Jede neue Server-Route bekommt ihr Gegenstück in `js/vorschau/server.js`, sonst bricht die Vorschau. `test/vorschau.test.js` prüft das gleiche Verhalten.
+- Jede neue Server-Route bekommt ihr Gegenstück in `js/vorschau/server.js`, sonst bricht die Vorschau. `test/vertrag.test.js` lässt dasselbe Drehbuch gegen Server und Vorschau laufen und vergleicht die Antworten.
 
 ## Code-Aufbau (seit M1)
 
 - `app/server/` Node.js ohne Fremdpakete (`node:http`, `node:sqlite`), eine Aufgabe pro Datei: `start.js` → `app.js` → `routen/*.js`; `datenbank.js` + `migrationen/NNN_*.sql`; `ablage.js` (Dateien); `anmeldung.js` (Ingress).
 - `app/web/` Oberfläche ohne Build-Schritt: `index.html`, `css/` (Look aus `alt/`), `js/ansichten/` (eine Datei pro Seite), `js/bausteine/` (wiederverwendbare Teile). Alle Adressen **relativ** (Ingress-Pfad).
 - `app/test/` mit `node:test`; `npm test` muss grün sein. GitHub Actions (`.github/workflows/pruefen.yml`) testet unter Node 24 und baut beide Docker-Images.
-- `kinderkunst-test/` HA-Add-on (Testkanal), baut den Code per `git clone` aus dem Branch in `ARG QUELLE_REF` (Dockerfile). Kein `build.yaml` (seit Supervisor 2026.04 veraltet).
+- `kinderkunst-test/` HA-Add-on (Testkanal) und `kinderkunst/` (echte Daten, `KANAL=echt`), beide bauen den Code per `git clone` aus dem Branch in `ARG QUELLE_REF` (Dockerfile). Kein `build.yaml` (seit Supervisor 2026.04 veraltet).
+- Gemeinsame Logik für Browser und Server liegt in `app/web/js/` (z. B. `alter.js`, `exif.js`); der Server importiert sie von dort.
+- Vorschaubilder mit **sharp** (`server/vorschauen.js`), optional geladen: ohne sharp (z. B. in Claudes Umgebung) liefert der Server das Original. Die sharp-Tests laufen in GitHub Actions.
 - Aus `alt/index.html` werden Logik und Grafiken **umgezogen**, nicht neu erfunden (`docs/REVIEW-ALT.md` Abschnitt 5).
 
 ## Nächster Schritt
 
-1. **Frühtests auf Home Assistant** durch die Eltern (Technik-Test-Seite): Kamera und Mikrofon in der Companion-App, große Uploads über Cloudflare, zwei Benutzer, Backup/Wiederherstellung. Ergebnisse in `PROJEKT.md` eintragen.
-2. M1 abschließen: Backup-Export als Datei (B-08), Add-on „Kinderkunst“ für das echte Archiv (A4).
-3. Danach M2 Archiv-MVP (zeitkritisch): Kinderprofile, Werke, Vorschaubilder und EXIF mit sharp (B-04, B-05), Story Text + Audio, Tags, Galerie.
+1. **M2 Archiv ist gebaut** (PR liegt vor). Rückmeldungen der Nutzerin aus Vorschau und Test-Add-on einarbeiten; Frühtests auf HA (Kamera, Mikrofon, große Uploads, zwei Benutzer) in `PROJEKT.md` eintragen.
+2. Offen aus M1: Backup-Export als Datei mit Wiederherstellung (B-08). Bis dahin sichert das HA-Backup.
+3. Danach **M3 Bildbearbeitung**: Logik aus `alt/index.html` umziehen (`warp`, `adjust`, `process`, Griffe `cbDrag`/`pqDrag`), nicht-destruktiv als `medium.bearbeitung`, Vorschaubilder aus Original + Parametern.

@@ -3,6 +3,7 @@
 import { sendeJson } from '../antworten.js';
 import { ingressKopfzeilen } from '../anmeldung.js';
 import { schemaVersion } from '../datenbank.js';
+import { hatSharp } from '../vorschauen.js';
 
 export function registriereStatus(router, { db, ablage, konfiguration, version }) {
   const medienStand = db.prepare(
@@ -22,6 +23,7 @@ export function registriereStatus(router, { db, ablage, konfiguration, version }
       kopfzeilen: ingressKopfzeilen(req),
       datenbank: { schema: schemaVersion(db), medien: { ...medienStand.get(benutzer.familie_id) } },
       speicher: ablage.speicherplatz(),
+      vorschaubilder: hatSharp(),
     });
   });
 }

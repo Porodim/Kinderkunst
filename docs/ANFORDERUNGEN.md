@@ -215,6 +215,16 @@ Nur funktional, die Optik bleibt wie von seiner Frau gestaltet.
 | **M6** | Buch & Export | Bücher, Deckblatt, CEWE-ZIP 300 dpi + Beschnitt, PDF | Erstes CEWE-Fotobuch bestellt |
 | **M7** | Veröffentlichung (optional) | Nur bei echtem Interesse von außen | – |
 
+## 15a. Stand der Umsetzung (M2, 24.11.2026)
+
+| Bereich | Umgesetzt | Bewusst später |
+|---|---|---|
+| Kinder | K-01, K-02 (Profilbild ohne Zuschneiden), K-03, K-04 (Anzahl Werke, Zeitstrahl über Archiv) | K-05 |
+| Medien | F-01 (Original, Vorschaubilder, EXIF-Datum, Ausrichtung, Größe), F-03 | F-02/F-04 „Foto vom Kind“ mit Zuordnung (eigene Oberfläche) |
+| Werke | W-01, W-02, W-03 (inkl. Basteln), W-04 mit Beitrag, W-05 mit Genauigkeit und Vorschlag aus EXIF/Dateidatum, W-06, W-07, W-08, W-08a, W-09 mit Vorschlägen, W-11, W-13 | W-10 (M4), W-12 |
+| Daten | B-01 bis B-07, B-09 (Papierkorb 30 Tage; Verwendungsliste ab M5), B-10 (seitenweises Laden), B-11 | B-08 Export als Datei, B-12 (M6) |
+| Finden | D-00, D-01, D-02 (Wischen zwischen Fotos und über den Rand zum nächsten Werk), D-03 (ohne „noch auf keiner Seite“, kommt mit M5), D-04, D-05 | D-06, D-07 |
+
 ## 16. Offene Fragen
 
 1. W-04 Gemeinschaftswerk: Lösung wie beschrieben in Ordnung? Braucht ihr den „Beitrag pro Kind“?

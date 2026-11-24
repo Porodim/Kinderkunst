@@ -2,7 +2,7 @@
 
 Familien-App zum Archivieren von Kinderkunstwerken und Bauwerken (Bilder, Lego, Kapla) mit Story als Text und Audio – später als Albumseiten, PDF und CEWE-Fotobuch-Paket exportierbar. Läuft als Home-Assistant-Add-on.
 
-**Stand:** M1 Fundament (Server, Datenbank, Dateiablage, Anmeldung über Home Assistant, Technik-Test). Die bisherige App liegt als Referenz in `alt/`.
+**Stand:** M2 Archiv (Kinder, Werke mit Fotos, Datum und Alter, Geschichten als Text und Ton, Tags, Galerie mit Filtern). Fahrplan in Alltagssprache: `docs/FAHRPLAN.md`. Die bisherige App liegt als Referenz in `alt/`.
 
 | Ordner / Datei | Inhalt |
 |---|---|
@@ -12,6 +12,8 @@ Familien-App zum Archivieren von Kinderkunstwerken und Bauwerken (Bilder, Lego, 
 | `CHANGELOG.md` | Änderungsprotokoll |
 | `app/` | Die Anwendung: `server/` (Node.js), `web/` (Oberfläche), `test/` |
 | `kinderkunst-test/` | Home-Assistant-Add-on „Kinderkunst (Test)“ |
+| `kinderkunst/` | Home-Assistant-Add-on „Kinderkunst“ (echte Daten) |
+| `werkzeuge/` | Bau der Vorschau-Seite |
 | `alt/` | Bisherige App (unverändert) |
 
 ## In Home Assistant installieren (Testkanal)

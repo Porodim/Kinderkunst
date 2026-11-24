@@ -30,6 +30,8 @@ export function erzeugeRouter() {
   return {
     get: (muster, handler) => neu('GET', muster, handler),
     post: (muster, handler) => neu('POST', muster, handler),
+    put: (muster, handler) => neu('PUT', muster, handler),
+    delete: (muster, handler) => neu('DELETE', muster, handler),
     finde,
   };
 }

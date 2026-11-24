@@ -106,8 +106,8 @@ Ziel, Betrieb und Entscheidungen stehen in `docs/ARCHITEKTUR.md`, die Meilenstei
 | # | Meilenstein | Status |
 |---|---|---|
 | M0 | Bestandsaufnahme, Entscheidung Weiterbau/Neustart, Tech-Stack | ✅ Review fertig (`docs/REVIEW-ALT.md`), **Entscheidung durch den Entwickler offen** |
-| M1 | Fundament: Repo, Docker + HA-Add-on, SQLite + Dateiablage, Ingress, Backup, Kamera-/Mikrofontest | 🔄 Teil 1 fertig (Branch `feature/m1-fundament`): Server, Datenbank, Medien, Anmeldung, Technik-Test, Add-on „Kinderkunst (Test)“. Offen: Frühtests auf HA, Backup-Export, Add-on für echte Daten |
-| M2 | Archiv-MVP: Kinder, Werke, Fotos, Story Text + Audio, Tags, Galerie | ⬜ |
+| M1 | Fundament: Repo, Docker + HA-Add-on, SQLite + Dateiablage, Ingress, Backup, Kamera-/Mikrofontest | ✅ fertig (Add-ons „Kinderkunst (Test)“ und „Kinderkunst“). Offen: Frühtests auf HA, Backup-Export als Datei (B-08) |
+| M2 | Archiv-MVP: Kinder, Werke, Fotos, Story Text + Audio, Tags, Galerie | ✅ gebaut (Branch `feature/entwicklung`, PR); Rückmeldungen ausstehend. Umfang siehe `docs/ANFORDERUNGEN.md` Abschnitt 15a |
 | M3 | Bildbearbeitung nicht-destruktiv | ⬜ |
 | M4 | Sticker und Themen | ⬜ |
 | M5 | Seiten kuratieren | ⬜ |

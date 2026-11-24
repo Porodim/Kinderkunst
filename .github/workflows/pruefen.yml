@@ -37,18 +37,22 @@ jobs:
           build-args: |
             BUILD_ARCH=aarch64
             BUILD_VERSION=pruefung
-      - name: Add-on-Image (amd64) bauen und starten
+      - name: App-Image (amd64) mit aktuellem Code bauen und starten
         uses: docker/build-push-action@v6
         with:
-          context: kinderkunst-test
+          context: app
           platforms: linux/amd64
           load: true
-          tags: kinderkunst-test:pruefung
-      - name: Container startet und antwortet
+          tags: kinderkunst:pruefung
+      - name: Container startet, antwortet und erzeugt Vorschaubilder
         run: |
-          docker run -d --name kk -p 8099:8099 -e NUR_INGRESS=0 -e DEV_BENUTZER=Pruefung kinderkunst-test:pruefung
+          docker run -d --name kk -p 8099:8099 -e DEV_BENUTZER=Pruefung -e KANAL=test kinderkunst:pruefung
           for i in $(seq 1 30); do curl -fs localhost:8099/api/status && break; sleep 1; done
           docker logs kk
-          curl -fs localhost:8099/api/status | grep -q '"kanal":"test"'
+          curl -fs localhost:8099/api/status | grep -q '"vorschaubilder":true'
           curl -fs localhost:8099/ | grep -q Kinderkunst
           curl -fsI localhost:8099/schriften/nunito/nunito-latin-400-normal.woff2
+          docker exec kk node -e "require('sharp')({create:{width:1600,height:1200,channels:3,background:'#D28A74'}}).jpeg().toFile('/tmp/probe.jpg')"
+          docker cp kk:/tmp/probe.jpg /tmp/probe.jpg
+          ID=$(curl -fs -X POST -H 'Content-Type: image/jpeg' --data-binary @/tmp/probe.jpg localhost:8099/api/medien | python3 -c "import sys,json;print(json.load(sys.stdin)['medium']['id'])")
+          curl -fs -D - -o /tmp/vorschau.webp "localhost:8099/api/medien/$ID/vorschau?groesse=400" | grep -i 'content-type: image/webp'

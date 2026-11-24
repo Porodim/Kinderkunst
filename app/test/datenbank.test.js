@@ -4,8 +4,8 @@ import { oeffneDatenbank, migriere, schemaVersion } from '../server/datenbank.js
 
 test('Migrationen laufen und sind wiederholbar', () => {
   const db = oeffneDatenbank(':memory:');
-  assert.equal(schemaVersion(db), 1);
-  assert.equal(migriere(db), 1);
+  assert.equal(schemaVersion(db), 2);
+  assert.equal(migriere(db), 2);
   assert.equal(db.prepare('SELECT COUNT(*) AS n FROM familie').get().n, 1);
   db.close();
 });
