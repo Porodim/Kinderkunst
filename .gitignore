@@ -1,0 +1,38 @@
+# Echte Daten gehören NIE ins Repo (Repo kann zeitweise öffentlich sein)
+data/
+daten/
+uploads/
+backup/
+backups/
+screenshots-privat/
+
+# Datenbanken, Backups
+*.sqlite
+*.sqlite3
+*.db
+*.zip
+*.tar
+*.tar.gz
+
+# Fotos und Audio (Platzhalter-/Stickergrafiken gehören nach assets/ bzw. app/ und werden dort gezielt per git add -f aufgenommen)
+*.jpg
+*.jpeg
+*.png
+*.heic
+*.heif
+*.gif
+*.mp3
+*.m4a
+*.aac
+*.ogg
+*.opus
+*.wav
+
+# Ausnahme: das Backup-Format der alten App, nur mit erfundenen Daten
+!alt/**
+
+# Allgemeines
+.env
+node_modules/
+__pycache__/
+.DS_Store

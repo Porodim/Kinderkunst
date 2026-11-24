@@ -37,9 +37,17 @@ Diese Punkte entscheiden über die Machbarkeit und werden **vor** dem Ausbau get
 3. **Zwei Benutzer gleichzeitig** (er und sie) auf demselben Bestand.
 4. **Backup und Wiederherstellung** eines Add-on-Datenordners samt Bildern.
 
+## Installation auf Home Assistant (entschieden 24.11.2026)
+
+- Der Entwickler installiert das Add-on **manuell über dieses Repo** (als Add-on-Repository in Home Assistant hinzufügen).
+- **Ob Home Assistant ein privates Repo lesen kann, ist ungeklärt.** Bis das geklärt ist, wird das Repo bei Bedarf **vorübergehend öffentlich** gestellt. Sobald der Weg läuft, geht es wieder auf privat, falls das technisch möglich ist.
+- **Folge für alle:** Das Repo muss jederzeit öffentlichkeitstauglich sein. **Keine Kinderfotos, Kindernamen, Geburtsdaten, Audioaufnahmen, Backups oder andere persönliche Daten im Repo, auch nicht im Verlauf.** Details und Prüfschritte stehen in `CLAUDE.md`.
+- Stand der Prüfung (24.11.2026): `alt/` enthält nur Sticker- und Hintergrundgrafiken (185 eingebettete WebP-Bilder, je unter 12 KB) und keine Fotos oder Namen. Die Screenshots der alten App liegen **nicht** im Repo und bleiben draußen.
+- Die echten Daten liegen nur im Datenordner des Add-ons auf dem HA-Rechner (A3), nie im Repo. Dafür sorgt `.gitignore`.
+
 ## Offene Punkte (Entwickler klärt)
 
-- **Wie kommt das Add-on auf HA?** Der Entwickler hat das bei früheren Add-ons schon gemacht. Den bewährten Weg übernehmen und hier festhalten. Zu klären ist insbesondere, ob das Repo für den Add-on-Weg öffentlich sein muss oder ob es auch privat geht. Das Repo darf nie echte Kinderdaten enthalten, damit beides möglich bleibt.
+- **Privat oder öffentlich?** Ausprobieren, ob HA das private Repo lesen kann. Falls nicht: temporär öffentlich (siehe oben). Den bewährten Weg der bisherigen Add-ons hier festhalten.
 - **Versionierung:** gleiches Schema wie bei früheren Add-ons (Versionsnummer aus Datum und Uhrzeit)? Vorschlag, noch nicht entschieden.
 - **Automatischer Build** (GitHub Actions) oder Bau direkt auf dem HA-Rechner?
 

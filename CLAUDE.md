@@ -29,7 +29,11 @@ Zeitkritisch ist das **Archivieren** (Foto + Story sichern, solange die Kinder k
 - **Nie** nach Passwörtern oder Tokens fragen. Zugriff läuft über die vorhandene GitHub-Anbindung.
 - `alt/` bleibt unverändert (Referenz).
 - Farb- und Stil-Guide in `PROJEKT.md` ist verbindlich. **Optik nicht eigenmächtig ändern**; Vorschläge als offene Frage notieren.
-- **Keine echten Kinderfotos oder Kindernamen im Repo.** Testdaten sind frei erfunden. Keine externen Dienste oder Bild-APIs für Kinderfotos (N-04).
+- **Datenschutz, höchste Priorität: Das Repo ist zeitweise öffentlich.** Es dürfen **niemals** Kinderfotos, Kindernamen, Geburtsdaten, Audioaufnahmen, Backups, Screenshots mit echten Inhalten oder andere persönliche Daten committet werden. Testdaten sind frei erfunden (erfundene Namen, Platzhalterbilder, selbst erzeugte Grafiken).
+  - **Vor jedem Commit** prüfen: `git status` und `git diff --staged` durchsehen, keine Bild-, Audio-, JSON-Backup- oder Datenbankdateien aus dem echten Bestand dabei.
+  - Echte Daten liegen ausschließlich im Datenordner des Add-ons auf dem Home-Assistant-Rechner. Dafür steht in `.gitignore` der Datenordner samt Bild-, Audio-, Datenbank- und Backup-Endungen.
+  - **Falls doch etwas Persönliches im Repo gelandet ist:** sofort dem Entwickler melden und nicht nur die Datei löschen. Im Git-Verlauf bleibt sie sichtbar. Dann muss der Verlauf bereinigt oder das Repo neu angelegt werden, und das Repo muss bis dahin auf privat gestellt werden.
+  - Keine externen Dienste oder Bild-APIs für Kinderfotos (N-04).
 - Änderungen am Datenmodell nur mit Migration (N-05).
 - Architektur-Entscheidungen aus `docs/ARCHITEKTUR.md` nur nach Rücksprache mit dem Entwickler ändern.
 - Bei Unklarheiten nicht raten: Frage in `PROJEKT.md` unter „Offene Punkte“ eintragen und im Chat stellen.
@@ -48,7 +52,7 @@ Noch **kein** neuer App-Code. Zuerst:
 1. Prüfe `alt/index.html` gegen `docs/ANFORDERUNGEN.md`, vor allem Abschnitt 3 (Medien), 5 (Bilddatenhaltung, Einzelprüfung B-01 bis B-12), 6 (Bildbearbeitung) und 9 (Seiten).
    - Die Datei ist 1,1 MB groß, weil Sticker und Aquarell-Grafiken als WebP-Daten-URLs eingebettet sind. **Nicht komplett lesen.** Mit Suche und Auszügen arbeiten und die Daten-URLs überspringen.
    - Bekannt: Vanilla-JS, eine Datei, Speicher in IndexedDB (Datenbank `kinderkunst`), Schriften Dancing Script / Cormorant Garamond / Nunito.
-2. Schreibe das Ergebnis nach `docs/REVIEW-ALT.md`: pro Anforderungs-ID erfüllt / teilweise / fehlt, dazu bekannte Fehler (offene Korrekturen siehe `PROJEKT.md` Abschnitt 6).
+2. Schreibe das Ergebnis nach `docs/REVIEW-ALT.md`: pro Anforderungs-ID erfüllt / teilweise / fehlt, dazu bekannte Fehler (offene Korrekturen siehe `PROJEKT.md` Abschnitt 4).
 3. Gib eine begründete Empfehlung **„Weiterbau oder neues Gerüst“** und einen Tech-Stack-Vorschlag. Berücksichtige die Randbedingungen aus `docs/ARCHITEKTUR.md` (Docker-Container, SQLite plus Dateiablage, Bildverarbeitung auf dem Server, Mikrofon und Kamera in der HA-App).
 4. **Der Entwickler entscheidet**, danach beginnt M1 (Fundament).
 
