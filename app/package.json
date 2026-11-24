@@ -1,0 +1,20 @@
+{
+  "name": "kinderkunst",
+  "version": "0.1.0",
+  "description": "Archiv und Fotobuch für Kinderkunstwerke, läuft als Home-Assistant-Add-on",
+  "private": true,
+  "type": "module",
+  "engines": {
+    "node": ">=22.13"
+  },
+  "scripts": {
+    "start": "node --disable-warning=ExperimentalWarning server/start.js",
+    "dev": "DEV_BENUTZER=Testperson DATEN_DIR=./daten node --disable-warning=ExperimentalWarning --watch server/start.js",
+    "test": "node --disable-warning=ExperimentalWarning --test test/*.test.js"
+  },
+  "dependencies": {
+    "@fontsource/cormorant-garamond": "^5.1.0",
+    "@fontsource/dancing-script": "^5.1.0",
+    "@fontsource/nunito": "^5.1.0"
+  }
+}

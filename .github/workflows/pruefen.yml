@@ -1,0 +1,39 @@
+# Prüft bei jedem Push: Tests unter Node 24 (mit Schriftpaketen) und Bau beider Docker-Images.
+name: Prüfen
+on:
+  push:
+  pull_request:
+jobs:
+  tests:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: app
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 24
+      - run: npm install --no-audit --no-fund
+      - run: npm test
+  docker:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: docker/setup-qemu-action@v3
+      - uses: docker/setup-buildx-action@v3
+      - name: App-Image (amd64 und arm64)
+        uses: docker/build-push-action@v6
+        with:
+          context: app
+          platforms: linux/amd64,linux/arm64
+          push: false
+      - name: Add-on-Image wie auf Home Assistant (aarch64)
+        uses: docker/build-push-action@v6
+        with:
+          context: kinderkunst-test
+          platforms: linux/arm64
+          push: false
+          build-args: |
+            BUILD_FROM=node:24-alpine
+            QUELLE_REF=${{ github.head_ref || github.ref_name }}

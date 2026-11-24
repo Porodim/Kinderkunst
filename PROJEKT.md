@@ -106,13 +106,26 @@ Ziel, Betrieb und Entscheidungen stehen in `docs/ARCHITEKTUR.md`, die Meilenstei
 | # | Meilenstein | Status |
 |---|---|---|
 | M0 | Bestandsaufnahme, Entscheidung Weiterbau/Neustart, Tech-Stack | ✅ Review fertig (`docs/REVIEW-ALT.md`), **Entscheidung durch den Entwickler offen** |
-| M1 | Fundament: Repo, Docker + HA-Add-on, SQLite + Dateiablage, Ingress, Backup, Kamera-/Mikrofontest | 🔄 in Arbeit (Branch `feature/m1-fundament`) |
+| M1 | Fundament: Repo, Docker + HA-Add-on, SQLite + Dateiablage, Ingress, Backup, Kamera-/Mikrofontest | 🔄 Teil 1 fertig (Branch `feature/m1-fundament`): Server, Datenbank, Medien, Anmeldung, Technik-Test, Add-on „Kinderkunst (Test)“. Offen: Frühtests auf HA, Backup-Export, Add-on für echte Daten |
 | M2 | Archiv-MVP: Kinder, Werke, Fotos, Story Text + Audio, Tags, Galerie | ⬜ |
 | M3 | Bildbearbeitung nicht-destruktiv | ⬜ |
 | M4 | Sticker und Themen | ⬜ |
 | M5 | Seiten kuratieren | ⬜ |
 | M6 | Buch und Export (CEWE-ZIP, PDF) | ⬜ |
 | M7 | Veröffentlichung (optional) | ⬜ |
+
+### Frühtests M1 (auf Home Assistant, Technik-Test-Seite)
+
+| Test | Ergebnis |
+|---|---|
+| Fotos per Kamera/Galerie in der HA-App (Android) hochladen | ⬜ |
+| Mehrere große Fotos (je 4 MB+) über Cloudflare hochladen | ⬜ |
+| Mikrofon-Aufnahme in der HA-App | ⬜ |
+| Live-Kamera in der HA-App | ⬜ |
+| Beide Eltern gleichzeitig, jeder mit eigenem HA-Konto (zwei Namen sichtbar) | ⬜ |
+| Backup und Wiederherstellung des Add-ons | ⬜ |
+
+Lokal (Chrome mit simulierter Kamera und simuliertem Mikrofon) am 24.11.2026 erfolgreich: Upload 4,7 MB byte-genau gespeichert, Duplikat erkannt, Aufnahme gespeichert, Live-Kamera.
 
 ### Zu CEWE / MCF
 
