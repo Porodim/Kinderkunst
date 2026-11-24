@@ -1,7 +1,0 @@
-# Bau auf dem HA-Rechner (ARCHITEKTUR A8). QUELLE_REF bestimmt, welcher Branch gebaut wird.
-# Für Tests eines Feature-Branches hier vorübergehend dessen Namen eintragen.
-build_from:
-  aarch64: "node:24-alpine"
-  amd64: "node:24-alpine"
-args:
-  QUELLE_REF: "main"

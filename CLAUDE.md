@@ -50,7 +50,7 @@ Zeitkritisch ist das **Archivieren** (Foto + Story sichern, solange die Kinder k
 - `app/server/` Node.js ohne Fremdpakete (`node:http`, `node:sqlite`), eine Aufgabe pro Datei: `start.js` → `app.js` → `routen/*.js`; `datenbank.js` + `migrationen/NNN_*.sql`; `ablage.js` (Dateien); `anmeldung.js` (Ingress).
 - `app/web/` Oberfläche ohne Build-Schritt: `index.html`, `css/` (Look aus `alt/`), `js/ansichten/` (eine Datei pro Seite), `js/bausteine/` (wiederverwendbare Teile). Alle Adressen **relativ** (Ingress-Pfad).
 - `app/test/` mit `node:test`; `npm test` muss grün sein. GitHub Actions (`.github/workflows/pruefen.yml`) testet unter Node 24 und baut beide Docker-Images.
-- `kinderkunst-test/` HA-Add-on (Testkanal), baut den Code per `git clone` aus dem Branch in `build.yaml`.
+- `kinderkunst-test/` HA-Add-on (Testkanal), baut den Code per `git clone` aus dem Branch in `ARG QUELLE_REF` (Dockerfile). Kein `build.yaml` (seit Supervisor 2026.04 veraltet).
 - Aus `alt/index.html` werden Logik und Grafiken **umgezogen**, nicht neu erfunden (`docs/REVIEW-ALT.md` Abschnitt 5).
 
 ## Nächster Schritt

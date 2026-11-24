@@ -28,12 +28,27 @@ jobs:
           context: app
           platforms: linux/amd64,linux/arm64
           push: false
-      - name: Add-on-Image wie auf Home Assistant (aarch64)
+      - name: Add-on-Image wie auf Home Assistant (aarch64, ohne Zusatzargumente wie der Supervisor)
         uses: docker/build-push-action@v6
         with:
           context: kinderkunst-test
           platforms: linux/arm64
           push: false
           build-args: |
-            BUILD_FROM=node:24-alpine
-            QUELLE_REF=${{ github.head_ref || github.ref_name }}
+            BUILD_ARCH=aarch64
+            BUILD_VERSION=pruefung
+      - name: Add-on-Image (amd64) bauen und starten
+        uses: docker/build-push-action@v6
+        with:
+          context: kinderkunst-test
+          platforms: linux/amd64
+          load: true
+          tags: kinderkunst-test:pruefung
+      - name: Container startet und antwortet
+        run: |
+          docker run -d --name kk -p 8099:8099 -e NUR_INGRESS=0 -e DEV_BENUTZER=Pruefung kinderkunst-test:pruefung
+          for i in $(seq 1 30); do curl -fs localhost:8099/api/status && break; sleep 1; done
+          docker logs kk
+          curl -fs localhost:8099/api/status | grep -q '"kanal":"test"'
+          curl -fs localhost:8099/ | grep -q Kinderkunst
+          curl -fsI localhost:8099/schriften/nunito/nunito-latin-400-normal.woff2
