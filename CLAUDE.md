@@ -45,6 +45,12 @@ Zeitkritisch ist das **Archivieren** (Foto + Story sichern, solange die Kinder k
 - Kleine Dokumentations-Änderungen direkt auf `main`. Größere Umbauten auf einem Branch `feature/<name>` und per Pull Request.
 - Strukturänderungen (Dateien verschoben, Framework gewechselt) im Changelog ausdrücklich vermerken.
 
+### Entwicklungsablauf (seit 24.11.2026)
+
+- Laufende Arbeit auf dem Branch **`feature/entwicklung`**. Nach GitHub und auf Home Assistant geht ein Stand **erst bei einem Meilenstein**, auf Wunsch der Nutzerin. Bis dahin wird lokal committet.
+- **Vorschau zum Ausprobieren** ohne Home Assistant: `node werkzeuge/vorschau-bauen.mjs <Ordner>` baut aus `app/web` eine Seite, die ohne Server läuft (`app/web/js/vorschau/server.js` bildet die API im Browser nach). Sie wird als privates Claude-Artefakt „Kinderkunst Vorschau“ veröffentlicht (Slug `6ba8c030-c2f4-47ad-acf9-082bbedb4432`); nach jeder Änderung neu veröffentlichen. Kamera und Mikrofon sind dort gesperrt, Fotos bleiben im Browserfenster.
+- Jede neue Server-Route bekommt ihr Gegenstück in `js/vorschau/server.js`, sonst bricht die Vorschau. `test/vorschau.test.js` prüft das gleiche Verhalten.
+
 ## Code-Aufbau (seit M1)
 
 - `app/server/` Node.js ohne Fremdpakete (`node:http`, `node:sqlite`), eine Aufgabe pro Datei: `start.js` → `app.js` → `routen/*.js`; `datenbank.js` + `migrationen/NNN_*.sql`; `ablage.js` (Dateien); `anmeldung.js` (Ingress).

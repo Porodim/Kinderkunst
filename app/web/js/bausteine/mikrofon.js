@@ -1,5 +1,5 @@
 // Frühtest 1: Tonaufnahme im Browser (B-11). Höchstens 3 Minuten, Datei wird unverändert gespeichert.
-import { ladeHoch } from '../api.js';
+import { istVorschau, ladeHoch } from '../api.js';
 import { dauer, esc } from '../format.js';
 
 const MAX_MS = 3 * 60 * 1000;
@@ -43,6 +43,10 @@ export function bausteinMikrofon(nachSpeichern) {
     }[zustand];
   }
 
+  if (istVorschau) {
+    ausgabe.innerHTML = '<span class="mute">Mikrofon: In der Vorschau-Seite gesperrt. Bitte in der Home-Assistant-App testen.</span>';
+    return karte;
+  }
   if (!window.isSecureContext || !navigator.mediaDevices?.getUserMedia || !window.MediaRecorder) {
     ausgabe.innerHTML = '<span class="fehler">Hier ist keine Tonaufnahme möglich.</span> Das Mikrofon funktioniert nur über eine sichere Verbindung (HTTPS), also über die Home-Assistant-App oder die Cloudflare-Adresse.';
     return karte;

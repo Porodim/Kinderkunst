@@ -2,7 +2,11 @@
 import { holeJson } from '../api.js';
 import { esc } from '../format.js';
 
-const KANAL = { test: 'Testkanal – nur erfundene Daten', entwicklung: 'Entwicklungsumgebung' };
+const KANAL = {
+  test: 'Testkanal – nur erfundene Daten',
+  entwicklung: 'Entwicklungsumgebung',
+  vorschau: 'Vorschau – Fotos bleiben nur in diesem Fenster',
+};
 
 export async function zeigeStart(ziel) {
   const status = await holeJson('api/status');

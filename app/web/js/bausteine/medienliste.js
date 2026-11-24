@@ -1,6 +1,6 @@
 // Zuletzt hochgeladene Dateien. Im Technik-Test werden die Originale angezeigt; die Galerie ab M2
 // nutzt Vorschaubilder (B-04).
-import { holeJson } from '../api.js';
+import { dateiUrl, holeJson } from '../api.js';
 import { bytes, dauer, esc, zeitpunkt } from '../format.js';
 
 export function bausteinMedienliste() {
@@ -15,7 +15,7 @@ export function bausteinMedienliste() {
     leer.textContent = medien.length ? '' : 'Noch nichts hochgeladen.';
     raster.innerHTML = medien
       .map((m) => {
-        const quelle = `api/medien/${m.id}/datei`;
+        const quelle = esc(dateiUrl(m.id));
         const inhalt = m.art === 'audio'
           ? `<div class="tt">🎙 ${dauer(m.dauer_ms || 0)}<audio controls preload="none" src="${quelle}"></audio></div>`
           : `<img loading="lazy" alt="" src="${quelle}">`;

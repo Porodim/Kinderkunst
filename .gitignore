@@ -36,3 +36,4 @@ screenshots-privat/
 node_modules/
 __pycache__/
 .DS_Store
+vorschau-ausgabe/
