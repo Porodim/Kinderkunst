@@ -17,7 +17,7 @@ Dieses Dokument regelt, **wie** die App betrieben wird. Was sie können soll, st
 | A4 | **Zwei Kanäle:** ein Add-on „Kinderkunst (Test)“ mit erfundenen Daten und ein Add-on „Kinderkunst“ mit dem echten Archiv. Getrennte Datenordner. | Ein fehlerhafter Test gefährdet nie die echten Bilder. |
 | A5 | **Fernzugriff** über den vorhandenen Cloudflare-Zugang, wie bei den bisherigen Add-ons. | Vorhanden und erprobt. HTTPS ist damit gegeben, was für das Mikrofon Pflicht ist (N-02). |
 | A6 | **Das Repo ist die Quelle der Wahrheit.** Änderungen auf `main` bzw. per Pull Request, von dort wird auf HA ausgerollt. Release-Notizen in `CHANGELOG.md`. | Nachvollziehbar, und die Weiterarbeit braucht keine lokale Entwicklungsumgebung. |
-| A7 | **Tech-Stack: offen.** Vorschlag kommt aus M0. | Hängt vom Code-Review ab. |
+| A7 | **Tech-Stack: offen.** Vorschlag aus M0 liegt vor (`REVIEW-ALT.md` Abschnitt 6), Entscheidung durch den Entwickler. | Hängt vom Code-Review ab. |
 
 ## Randbedingungen an den Tech-Stack (A7)
 

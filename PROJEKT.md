@@ -2,7 +2,7 @@
 
 | | |
 |---|---|
-| **Version** | 3 |
+| **Version** | 4 |
 | **Stand** | 24.11.2026 |
 | **Weiterführend** | `CLAUDE.md` (Arbeitsanweisung) · `docs/ANFORDERUNGEN.md` (Anforderungen, Meilensteine) · `docs/ARCHITEKTUR.md` (Betrieb) |
 
@@ -59,35 +59,35 @@ Rounded Paper, Wellenrand, Polaroid, Oval, Stern, gerissenes Papier, Floral Bord
 
 Eine einzige HTML-Datei (ca. 1,1 MB), Vanilla-JavaScript und CSS, kein Build-Schritt. Sticker und Aquarell-Grafiken sind als WebP-Daten-URLs eingebettet. Daten liegen **im Browser** (IndexedDB, Datenbank `kinderkunst`), nicht auf einem Server. Sie enthält nur **Testdaten**.
 
-Funktionsumfang laut Übergabe, Status in M0 zu prüfen:
+Funktionsumfang laut Übergabe, **geprüft in M0** (Code-Review, nicht im Browser getestet; Details und Zeilenangaben in `docs/REVIEW-ALT.md`):
 
-| Bereich | Funktion | Status |
-|---|---|---|
-| Basis | Kinderprofile mit Geburtsdatum, Alter und Sternzeichen berechnet | ❓ |
-| Basis | Seiten-Editor Hoch-/Querformat, 1–5 Bilder pro Seite | ❓ |
-| Basis | Textfelder Name, Datum, Alter, Anekdote | ❓ |
-| Basis | Upload per Kamera oder Galerie, direkt auf der Albumseite | ❓ |
-| Bild | Drehen, Zuschneiden, Zoom, Helligkeit/Kontrast/Sättigung, „Papier aufhellen“ | ❓ |
-| Bild | 4-Ecken-Perspektivkorrektur | ❓ |
-| Gestaltung | Formen, Rahmen, Themen-Hintergründe pro Seite | ❓ |
-| Gestaltung | Ebenen: Basis-Aquarell plus antippbare Rand-Deko, Button „Schlichter“ | ❓ |
-| Gestaltung | Sticker-Sets inkl. Lego/Kapla und Sternzeichen | ❓ |
-| Gestaltung | Stille Design-Beraterin (Icon, nur auf Antippen, keine Pop-ups) | ❓ |
-| Export | Deckblatt-Generator | ❓ |
-| Export | Heimdrucker-PDF 300 dpi mit Druckrand | ⚠️ PDF-Button zuletzt fehlerhaft |
-| Export | Fotobuch-ZIP, 300 dpi, 3 mm Beschnitt | ❓ |
-| Export | JSON-Backup-Export und -Import | ❓ |
+| Bereich | Funktion | Status | Befund M0 |
+|---|---|---|---|
+| Basis | Kinderprofile mit Geburtsdatum, Alter und Sternzeichen berechnet | ✅ | Kein Profilbild |
+| Basis | Seiten-Editor Hoch-/Querformat, 1–5 Bilder pro Seite | ✅ | Mehrere Anordnungen je Bildzahl, automatische Wahl |
+| Basis | Textfelder Name, Datum, Alter, Anekdote | ⚠️ | Werte werden kopiert, Datum = Anlagetag statt Entstehungsdatum, Story hängt an der Seite |
+| Basis | Upload per Kamera oder Galerie, direkt auf der Albumseite | ⚠️ | Verkleinert auf 1.800 px (Original weg); die programmierte Galerie ist nicht erreichbar |
+| Bild | Drehen, Zuschneiden, Zoom, Helligkeit/Kontrast/Sättigung, „Papier aufhellen“ | ✅ | Nur 90°-Drehung, kein feines Drehen |
+| Bild | 4-Ecken-Perspektivkorrektur | ✅ | Echte Perspektiventzerrung; Lupe fehlt |
+| Gestaltung | Formen, Rahmen, Themen-Hintergründe pro Seite | ⚠️ | 12 Themen, 12 Rahmen; Oval, Stern, Floral Border entfernt |
+| Gestaltung | Ebenen: Basis-Aquarell plus antippbare Rand-Deko, Button „Schlichter“ | ⬜ | Im Code abgeschaltet, keine Bedienung |
+| Gestaltung | Sticker-Sets inkl. Lego/Kapla und Sternzeichen | ✅ | 122 Sticker in 15 Sets; nur ca. 150 px groß (Druckschärfe) |
+| Gestaltung | Stille Design-Beraterin (Icon, nur auf Antippen, keine Pop-ups) | ✅ | Lokale Prüfungen inkl. dpi-Warnung |
+| Export | Deckblatt-Generator | ✅ | |
+| Export | Heimdrucker-PDF 300 dpi mit Druckrand | ⚠️ | Code formal schlüssig, Ursache des Fehlers nicht reproduziert; Vorschau und Export sind getrennt programmiert |
+| Export | Fotobuch-ZIP, 300 dpi, 3 mm Beschnitt | ✅ | Format fest 21×28 cm; Bildquelle nur 1.800 px |
+| Export | JSON-Backup-Export und -Import | ✅ | Nur Browser-Bestand mit Base64-Bildern |
 
 **Nicht vorhanden (neu):** gemeinsamer Datenbestand für mehrere Nutzer, Audio-Story, eigener Archiv-Bereich, Medium-Entität, Gemeinschaftswerke, Tags, Eingangskorb. Siehe `docs/ANFORDERUNGEN.md`.
 
 ## 4. Bekannte Korrekturwünsche an der alten App
 
-| Korrektur | Status |
-|---|---|
-| Zuschneiden und Perspektivrahmen: Griffe an Ecken **und** Seitenmitten, ganzer Rahmen verschiebbar | ❓ |
-| Sticker per Maus und Touch verschiebbar, skalierbar, löschbar | ❓ |
-| Kinderbilder vollständig ohne Abschneiden (`object-contain`), wenig Weißraum | ❓ |
-| PDF-Button funktioniert; PDF im gleichen Stil wie die Albumseiten | ⚠️ |
+| Korrektur | Status | Befund M0 |
+|---|---|---|
+| Zuschneiden und Perspektivrahmen: Griffe an Ecken **und** Seitenmitten, ganzer Rahmen verschiebbar | ✅ | Im Code umgesetzt; Lupe fehlt noch (I-01) |
+| Sticker per Maus und Touch verschiebbar, skalierbar, löschbar | ✅ | Im Code umgesetzt; Drehen fehlt (S-05) |
+| Kinderbilder vollständig ohne Abschneiden (`object-contain`), wenig Weißraum | ⚠️ | Bis zu 10 % Beschnitt gegen Weißraum (bewusster Kompromiss im Code) |
+| PDF-Button funktioniert; PDF im gleichen Stil wie die Albumseiten | ⚠️ | Ursache offen; Stilabweichung, weil Vorschau (HTML) und Export (Canvas) getrennt programmiert sind |
 
 Diese Korrekturen werden **nicht** mehr an der alten App umgesetzt, sondern in der neuen Version (Meilensteine M3 bis M6).
 
@@ -97,7 +97,7 @@ Ziel, Betrieb und Entscheidungen stehen in `docs/ARCHITEKTUR.md`, die Meilenstei
 
 | # | Meilenstein | Status |
 |---|---|---|
-| M0 | Bestandsaufnahme, Entscheidung Weiterbau/Neustart, Tech-Stack | ⬜ **nächster Schritt** |
+| M0 | Bestandsaufnahme, Entscheidung Weiterbau/Neustart, Tech-Stack | ✅ Review fertig (`docs/REVIEW-ALT.md`), **Entscheidung durch den Entwickler offen** |
 | M1 | Fundament: Repo, Docker + HA-Add-on, SQLite + Dateiablage, Ingress, Backup, Kamera-/Mikrofontest | ⬜ |
 | M2 | Archiv-MVP: Kinder, Werke, Fotos, Story Text + Audio, Tags, Galerie | ⬜ |
 | M3 | Bildbearbeitung nicht-destruktiv | ⬜ |
@@ -114,8 +114,13 @@ Ziel, Betrieb und Entscheidungen stehen in `docs/ARCHITEKTUR.md`, die Meilenstei
 
 ## 6. Offene Punkte
 
-- [ ] M0 durchführen und Status in Abschnitt 3 und 4 eintragen
-- [ ] Tech-Stack festlegen (Entwickler)
+- [x] M0 durchführen und Status in Abschnitt 3 und 4 eintragen
+- [ ] Weiterbau oder neues Gerüst und Tech-Stack festlegen (Entwickler). Empfehlung aus M0: neues Gerüst, alte Logik und Grafiken umziehen, Node.js + SQLite + sharp, Frontend ohne Build-Schritt (`docs/REVIEW-ALT.md` Abschnitt 5 und 6)
+- [ ] CPU-Architektur des HA-Rechners (arm64 oder amd64) für die Wahl der Bildbibliotheken (Entwickler)
+- [ ] **Datenschutz:** Sind die Vornamen in `docs/ANFORDERUNGEN.md` (Beispiel bei W-04 und Abschnitt 14) echte Namen der Kinder? Falls ja: ersetzen und Verlauf bereinigen, bevor das Repo öffentlich wird (Entwickler)
+- [ ] Bilder auf Seiten immer vollständig oder leichter Beschnitt als Einstellung? (seine Frau)
+- [ ] Welche Rahmenliste gilt: Design-Guide (mit Oval, Stern, Floral Border) oder Stand der alten App? Sollen Deko-Ebenen mit „Schlichter“ zurückkommen? (seine Frau)
+- [ ] Gibt es die Aquarell-Sticker in höherer Auflösung? Sollen die 63 älteren, ungenutzten Sticker übernommen werden? (seine Frau)
 - [ ] CEWE-Format festlegen, z. B. 21×28 cm hoch oder 30×30 cm quadratisch (seine Frau)
 - [ ] Gemeinschaftswerk-Lösung W-04 bestätigen, Beitrag pro Kind nötig? (beide)
 - [ ] Sollen Großeltern mitlesen dürfen (R-04)? (beide)
