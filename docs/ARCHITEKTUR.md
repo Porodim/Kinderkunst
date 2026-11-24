@@ -3,7 +3,7 @@
 | | |
 |---|---|
 | **Stand** | 24.11.2026 |
-| **Status** | Entscheidungen A1–A6 sind getroffen. A7 (Tech-Stack) ist offen und wird in M0 vorgeschlagen. Der Entwickler entscheidet. |
+| **Status** | Entscheidungen A1–A8 sind getroffen (A7 und A8 am 24.11.2026 nach M0). |
 
 Dieses Dokument regelt, **wie** die App betrieben wird. Was sie können soll, steht in `ANFORDERUNGEN.md`.
 
@@ -17,7 +17,8 @@ Dieses Dokument regelt, **wie** die App betrieben wird. Was sie können soll, st
 | A4 | **Zwei Kanäle:** ein Add-on „Kinderkunst (Test)“ mit erfundenen Daten und ein Add-on „Kinderkunst“ mit dem echten Archiv. Getrennte Datenordner. | Ein fehlerhafter Test gefährdet nie die echten Bilder. |
 | A5 | **Fernzugriff** über den vorhandenen Cloudflare-Zugang, wie bei den bisherigen Add-ons. | Vorhanden und erprobt. HTTPS ist damit gegeben, was für das Mikrofon Pflicht ist (N-02). |
 | A6 | **Das Repo ist die Quelle der Wahrheit.** Änderungen auf `main` bzw. per Pull Request, von dort wird auf HA ausgerollt. Release-Notizen in `CHANGELOG.md`. | Nachvollziehbar, und die Weiterarbeit braucht keine lokale Entwicklungsumgebung. |
-| A7 | **Tech-Stack: offen.** Vorschlag aus M0 liegt vor (`REVIEW-ALT.md` Abschnitt 6), Entscheidung durch den Entwickler. | Hängt vom Code-Review ab. |
+| A7 | **Tech-Stack:** Node.js (LTS) im Container. Server mit den eingebauten Modulen `node:http` und `node:sqlite`, vorerst **ohne Fremdpakete**. Bilder ab M2 mit **sharp**, Seiten-Export ab M6 mit **@napi-rs/canvas**. Oberfläche Vanilla-JS mit ES-Modulen, **kein Build-Schritt**. Details `REVIEW-ALT.md` Abschnitt 6. Freigegeben 24.11.2026. | Alte Bild- und Seitenlogik ist JavaScript und wird wiederverwendet; ein Code für Vorschau und Druck. Eingebaute Module statt Fastify/better-sqlite3: weniger Abhängigkeiten, schlanker auf dem Pi. |
+| A8 | **HA-Rechner:** Raspberry Pi (vermutlich Pi 5), also Architektur `aarch64`; `amd64` wird zusätzlich unterstützt. **Bau:** Das Add-on baut auf dem HA-Rechner; sein Dockerfile holt den Code per `git clone` aus diesem Repo (Branch über `build.yaml`). | Kein Container-Register und keine GitHub Actions nötig. Funktioniert nur, solange das Repo öffentlich ist; wird es privat, auf ein fertiges Image (GitHub Actions + ghcr.io) umstellen. |
 
 ## Randbedingungen an den Tech-Stack (A7)
 
@@ -49,7 +50,7 @@ Diese Punkte entscheiden über die Machbarkeit und werden **vor** dem Ausbau get
 
 - **Privat oder öffentlich?** Ausprobieren, ob HA das private Repo lesen kann. Falls nicht: temporär öffentlich (siehe oben). Den bewährten Weg der bisherigen Add-ons hier festhalten.
 - **Versionierung:** gleiches Schema wie bei früheren Add-ons (Versionsnummer aus Datum und Uhrzeit)? Vorschlag, noch nicht entschieden.
-- **Automatischer Build** (GitHub Actions) oder Bau direkt auf dem HA-Rechner?
+- ~~Automatischer Build oder Bau auf dem HA-Rechner?~~ Entschieden: Bau auf dem HA-Rechner (A8).
 
 ## Repository-Zielstruktur (Vorschlag, in M1 anpassen)
 

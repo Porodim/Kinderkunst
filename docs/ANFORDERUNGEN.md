@@ -22,6 +22,7 @@
 | E4 | **CEWE** ist erster Zielanbieter fürs Fotobuch. Format noch offen. | ✅ erste Wahl |
 | E5 | Testdaten aus der bisherigen App zu übernehmen ist **optional** (nur Testdaten vorhanden). | ✅ |
 | E6 | Original wird **immer in voller Auflösung** aufbewahrt; Begradigen/Zuschneiden ist Pflichtfunktion, aber nicht-destruktiv. | ✅ bestätigt (Entwickler) |
+| E7 | **Gestaltung bleibt nah an der alten App** (Rahmen, Themen, Sticker, Look). Bilder auf Seiten werden höchstens **5 %** beschnitten (S-02). | ✅ 24.11.2026 |
 
 ---
 

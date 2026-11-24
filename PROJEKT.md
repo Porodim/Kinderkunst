@@ -6,7 +6,7 @@
 | **Stand** | 24.11.2026 |
 | **Weiterführend** | `CLAUDE.md` (Arbeitsanweisung) · `docs/ANFORDERUNGEN.md` (Anforderungen, Meilensteine) · `docs/ARCHITEKTUR.md` (Betrieb) |
 
-**Legende Status:** ✅ fertig und getestet · ⚠️ vorhanden, aber fehlerhaft · ⬜ offen · ❓ ungeprüft (wird in M0 geklärt)
+**Legende Status:** ✅ fertig und getestet · ⚠️ vorhanden, aber fehlerhaft · ⬜ offen · 🔄 in Arbeit · ❓ ungeprüft
 
 ## 1. Idee
 
@@ -53,7 +53,15 @@ Feenwald, Unterwasserwelt, Regenbogen, Dino, Jahrmarkt, Kindergarten, Tierpark, 
 
 ### Rahmen
 
-Rounded Paper, Wellenrand, Polaroid, Oval, Stern, gerissenes Papier, Floral Border (in der alten App zusätzlich Torbogen und Briefmarke).
+Wie in der alten App (Entscheidung 24.11.2026: Design bleibt nah an der alten App): Ohne Rahmen, Soft Fade, Wolke, Papierrahmen, Polaroid, Büttenrand, Wellenrand, Torbogen, Briefmarke, Washi-Tape, Feinlinie, Kissenform. Oval, Stern und Floral Border entfallen; Deko-Ebenen bleiben wie in der alten App abgeschaltet.
+
+### Bilder auf Seiten
+
+Werke werden möglichst vollständig gezeigt. Damit wenig Weißraum bleibt, darf ein Bild höchstens **5 %** beschnitten werden (alte App: 10 %).
+
+### Sticker
+
+Die 122 Aquarell-Sticker der alten App bleiben. Für den Druck werden sie in M4 in höherer Auflösung gebraucht (siehe Offene Punkte). Die 63 älteren, ungenutzten Sticker werden nicht übernommen.
 
 ## 3. Alte App (`alt/index.html`)
 
@@ -98,7 +106,7 @@ Ziel, Betrieb und Entscheidungen stehen in `docs/ARCHITEKTUR.md`, die Meilenstei
 | # | Meilenstein | Status |
 |---|---|---|
 | M0 | Bestandsaufnahme, Entscheidung Weiterbau/Neustart, Tech-Stack | ✅ Review fertig (`docs/REVIEW-ALT.md`), **Entscheidung durch den Entwickler offen** |
-| M1 | Fundament: Repo, Docker + HA-Add-on, SQLite + Dateiablage, Ingress, Backup, Kamera-/Mikrofontest | ⬜ |
+| M1 | Fundament: Repo, Docker + HA-Add-on, SQLite + Dateiablage, Ingress, Backup, Kamera-/Mikrofontest | 🔄 in Arbeit (Branch `feature/m1-fundament`) |
 | M2 | Archiv-MVP: Kinder, Werke, Fotos, Story Text + Audio, Tags, Galerie | ⬜ |
 | M3 | Bildbearbeitung nicht-destruktiv | ⬜ |
 | M4 | Sticker und Themen | ⬜ |
@@ -115,12 +123,12 @@ Ziel, Betrieb und Entscheidungen stehen in `docs/ARCHITEKTUR.md`, die Meilenstei
 ## 6. Offene Punkte
 
 - [x] M0 durchführen und Status in Abschnitt 3 und 4 eintragen
-- [ ] Weiterbau oder neues Gerüst und Tech-Stack festlegen (Entwickler). Empfehlung aus M0: neues Gerüst, alte Logik und Grafiken umziehen, Node.js + SQLite + sharp, Frontend ohne Build-Schritt (`docs/REVIEW-ALT.md` Abschnitt 5 und 6)
-- [ ] CPU-Architektur des HA-Rechners (arm64 oder amd64) für die Wahl der Bildbibliotheken (Entwickler)
-- [ ] **Datenschutz:** Sind die Vornamen in `docs/ANFORDERUNGEN.md` (Beispiel bei W-04 und Abschnitt 14) echte Namen der Kinder? Falls ja: ersetzen und Verlauf bereinigen, bevor das Repo öffentlich wird (Entwickler)
-- [ ] Bilder auf Seiten immer vollständig oder leichter Beschnitt als Einstellung? (seine Frau)
-- [ ] Welche Rahmenliste gilt: Design-Guide (mit Oval, Stern, Floral Border) oder Stand der alten App? Sollen Deko-Ebenen mit „Schlichter“ zurückkommen? (seine Frau)
-- [ ] Gibt es die Aquarell-Sticker in höherer Auflösung? Sollen die 63 älteren, ungenutzten Sticker übernommen werden? (seine Frau)
+- [x] Neues Gerüst und Tech-Stack festgelegt (24.11.2026), siehe `docs/ARCHITEKTUR.md` A7/A8
+- [x] HA-Rechner: Raspberry Pi, vermutlich Pi 5 (`aarch64`)
+- [x] Datenschutz: Personennamen und Foto-Beschreibungen aus allen Dokumenten **und dem Git-Verlauf** entfernt (24.11.2026)
+- [ ] Alte Commits sind bei GitHub noch über ihre direkte Kennung abrufbar, bis GitHub sie aufräumt. Für endgültiges Entfernen beim GitHub-Support „cached views“ löschen lassen (Entwickler)
+- [x] Bildbeschnitt auf Seiten höchstens 5 %; Rahmen und Deko wie in der alten App
+- [ ] **Sticker in Druckauflösung (M4):** Die vorhandenen Sticker sind 90–249 px groß. Claude kann keine neuen Aquarell-Rastergrafiken malen. Möglich sind: (a) hochrechnen der vorhandenen Grafiken (wird etwas weicher), (b) neue Fassungen mit einem Bildgenerator erzeugen, die vorhandenen Sticker als Vorlage, (c) Sticker im Druck kleiner halten. Entscheidung in M4 (seine Frau)
 - [ ] CEWE-Format festlegen, z. B. 21×28 cm hoch oder 30×30 cm quadratisch (seine Frau)
 - [ ] Gemeinschaftswerk-Lösung W-04 bestätigen, Beitrag pro Kind nötig? (beide)
 - [ ] Sollen Großeltern mitlesen dürfen (R-04)? (beide)
