@@ -1,7 +1,7 @@
 # Home-Assistant-Add-on „Kinderkunst (Test)“ – Testkanal mit erfundenen Daten (ARCHITEKTUR A4).
 # Eigener Datenordner, getrennt vom späteren Add-on „Kinderkunst“ mit dem echten Archiv.
 name: "Kinderkunst (Test)"
-version: "0.2.0"
+version: "0.2.1"
 slug: kinderkunst_test
 description: "Testkanal der Kinderkunst-App – bitte nur erfundene Testdaten verwenden"
 url: "https://github.com/porodim/kinderkunst"

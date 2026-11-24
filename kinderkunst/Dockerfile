@@ -7,8 +7,9 @@ FROM node:24-alpine
 ARG QUELLE_REF="main"
 ARG QUELLE_URL="https://github.com/porodim/kinderkunst.git"
 
-# Fragt den aktuellen Stand aller Branches bei GitHub ab. Ändert er sich, baut „Neu bauen“ den Code frisch.
-ADD "https://api.github.com/repos/porodim/kinderkunst/branches" /tmp/quelle-stand.json
+# Fragt den aktuellen Stand aller Branches bei GitHub ab (Git-Protokoll, ohne die Abfragegrenze der GitHub-API).
+# Ändert er sich, baut „Neu bauen“ den Code frisch.
+ADD "https://github.com/porodim/kinderkunst.git/info/refs?service=git-upload-pack" /tmp/quelle-stand.json
 
 RUN apk add --no-cache --virtual .bauwerkzeug git \
  && git clone --depth 1 --branch "${QUELLE_REF}" "${QUELLE_URL}" /quelle \
