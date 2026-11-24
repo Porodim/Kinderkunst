@@ -16,7 +16,7 @@ Zeitkritisch ist das **Archivieren** (Foto + Story sichern, solange die Kinder k
 ## Was du zuerst lesen sollst
 
 1. `PROJEKT.md` – Idee, Design-Guide, Ist-Stand der alten App, offene Punkte
-2. `docs/ANFORDERUNGEN.md` – Anforderungen mit IDs (z. B. `W-04`), Entscheidungen E1–E6, Datenmodell, Meilensteine M0–M7
+2. `docs/ANFORDERUNGEN.md` – Anforderungen mit IDs (z. B. `W-04`), Entscheidungen E1–E7, Datenmodell, Meilensteine M0–M7
 3. `docs/ARCHITEKTUR.md` – Entscheidungen zu Betrieb, Hosting und Deployment
 4. `CHANGELOG.md` – was zuletzt geändert wurde
 5. `alt/UEBERGABE.md` – Hintergrund zur alten App; Abschnitte 6–8 sind durch die obigen Dokumente überholt
@@ -45,15 +45,16 @@ Zeitkritisch ist das **Archivieren** (Foto + Story sichern, solange die Kinder k
 - Kleine Dokumentations-Änderungen direkt auf `main`. Größere Umbauten auf einem Branch `feature/<name>` und per Pull Request.
 - Strukturänderungen (Dateien verschoben, Framework gewechselt) im Changelog ausdrücklich vermerken.
 
-## Nächster Schritt: M0 Bestandsaufnahme
+## Code-Aufbau (seit M1)
 
-Noch **kein** neuer App-Code. Zuerst:
+- `app/server/` Node.js ohne Fremdpakete (`node:http`, `node:sqlite`), eine Aufgabe pro Datei: `start.js` → `app.js` → `routen/*.js`; `datenbank.js` + `migrationen/NNN_*.sql`; `ablage.js` (Dateien); `anmeldung.js` (Ingress).
+- `app/web/` Oberfläche ohne Build-Schritt: `index.html`, `css/` (Look aus `alt/`), `js/ansichten/` (eine Datei pro Seite), `js/bausteine/` (wiederverwendbare Teile). Alle Adressen **relativ** (Ingress-Pfad).
+- `app/test/` mit `node:test`; `npm test` muss grün sein. GitHub Actions (`.github/workflows/pruefen.yml`) testet unter Node 24 und baut beide Docker-Images.
+- `kinderkunst-test/` HA-Add-on (Testkanal), baut den Code per `git clone` aus dem Branch in `build.yaml`.
+- Aus `alt/index.html` werden Logik und Grafiken **umgezogen**, nicht neu erfunden (`docs/REVIEW-ALT.md` Abschnitt 5).
 
-1. Prüfe `alt/index.html` gegen `docs/ANFORDERUNGEN.md`, vor allem Abschnitt 3 (Medien), 5 (Bilddatenhaltung, Einzelprüfung B-01 bis B-12), 6 (Bildbearbeitung) und 9 (Seiten).
-   - Die Datei ist 1,1 MB groß, weil Sticker und Aquarell-Grafiken als WebP-Daten-URLs eingebettet sind. **Nicht komplett lesen.** Mit Suche und Auszügen arbeiten und die Daten-URLs überspringen.
-   - Bekannt: Vanilla-JS, eine Datei, Speicher in IndexedDB (Datenbank `kinderkunst`), Schriften Dancing Script / Cormorant Garamond / Nunito.
-2. Schreibe das Ergebnis nach `docs/REVIEW-ALT.md`: pro Anforderungs-ID erfüllt / teilweise / fehlt, dazu bekannte Fehler (offene Korrekturen siehe `PROJEKT.md` Abschnitt 4).
-3. Gib eine begründete Empfehlung **„Weiterbau oder neues Gerüst“** und einen Tech-Stack-Vorschlag. Berücksichtige die Randbedingungen aus `docs/ARCHITEKTUR.md` (Docker-Container, SQLite plus Dateiablage, Bildverarbeitung auf dem Server, Mikrofon und Kamera in der HA-App).
-4. **Der Entwickler entscheidet**, danach beginnt M1 (Fundament).
+## Nächster Schritt
 
-Verwerfe nicht reflexartig, was nicht passt. Aus der alten App sind Look, Aquarell-Grafiken, Sticker, Layout-Ideen und Bildbearbeitungs-Logik wertvoll und sollen übernommen werden, auch wenn Speicher und Struktur neu entstehen.
+1. **Frühtests auf Home Assistant** durch die Eltern (Technik-Test-Seite): Kamera und Mikrofon in der Companion-App, große Uploads über Cloudflare, zwei Benutzer, Backup/Wiederherstellung. Ergebnisse in `PROJEKT.md` eintragen.
+2. M1 abschließen: Backup-Export als Datei (B-08), Add-on „Kinderkunst“ für das echte Archiv (A4).
+3. Danach M2 Archiv-MVP (zeitkritisch): Kinderprofile, Werke, Vorschaubilder und EXIF mit sharp (B-04, B-05), Story Text + Audio, Tags, Galerie.

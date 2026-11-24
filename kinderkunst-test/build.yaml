@@ -1,0 +1,7 @@
+# Bau auf dem HA-Rechner (ARCHITEKTUR A8). QUELLE_REF bestimmt, welcher Branch gebaut wird.
+# Vor dem Zusammenführen nach main hier "main" eintragen.
+build_from:
+  aarch64: "node:24-alpine"
+  amd64: "node:24-alpine"
+args:
+  QUELLE_REF: "feature/m1-fundament"
