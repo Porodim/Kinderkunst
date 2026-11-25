@@ -224,14 +224,14 @@
     return c.toDataURL('image/jpeg', 0.85);
   }
 
-  // Knopf auf der Kunstwerke-Seite neben „Foto machen“ und „Aus der Galerie“
-  const archivAlt = vGal;
-  vGal = function () {
-    const html = archivAlt();
-    if (S.ui.ak || !kidOf(S.ui.kid)) return html;
-    return html.replace('</label></div><small id="ast">', '</label><button class="chip" data-a="bsp">Beispielfotos (nur Vorschau)</button></div><small id="ast">');
+  // Knopf im Fenster „Kunstwerk hinzufügen“ neben „Foto machen“ und „Aus der Galerie“
+  const hinzuAlt = act.gadd;
+  act.gadd = (el) => {
+    hinzuAlt(el);
+    const z = document.querySelector('#sh #ast');
+    if (z) z.insertAdjacentHTML('beforebegin', '<div class="row"><button class="chip" data-a="bsp">Beispielfotos (nur Vorschau)</button></div>');
   };
-  act.bsp = async () => addFiles(await erzeugen());
+  act.bsp = async () => { closeSh(); addFiles(await erzeugen()); };
 
   // Im Kinderprofil: Beispielbild statt Foto aus der Galerie
   const kindAlt = act.kid;
