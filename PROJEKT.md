@@ -157,7 +157,7 @@ Lokal (Chrome mit simulierter Kamera und simuliertem Mikrofon) am 24.11.2026 erf
 - [ ] Sollen Großeltern mitlesen dürfen (R-04)? (beide)
 - [ ] Zusatzideen der Frau in `docs/ANFORDERUNGEN.md` Abschnitt 17 ergänzen
 - [ ] Deployment-Weg auf HA festhalten (Entwickler), siehe `docs/ARCHITEKTUR.md`
-- [x] Hintergründe in Druckqualität: selbst gemalt mit `werkzeuge/grafiken/aquarell-malen.py` (1600×1131), Rückmeldung der Nutzerin ausstehend.
+- [x] Hintergründe in Druckqualität: selbst gemalt mit `werkzeuge/grafiken/aquarell-malen.py` (1600×1131), auf Wunsch dezent: Farbe überall leicht, weicher Übergang zur Mitte, damit Kinderbild und Sticker im Mittelpunkt stehen.
 - [ ] **Endgültig gelöschte Werke (Entwickler):** Leert die App den Papierkorb, verschwindet das Werk aus dem gespeicherten Zustand; die Bilddateien (Original, Arbeitsfassung) bleiben aber im Datenordner des Add-ons liegen. Sollen sie automatisch mit gelöscht werden? (Vorschlag: täglicher Aufräumlauf, der Dateien löscht, auf die weder der Zustand noch eine der letzten Sicherungskopien verweist.)
 - [x] Knopf „Foto hochladen“ klemmt in der Vorschau (Claude-App lässt dort keine Dateiauswahl zu). Ersatz: Knopf „Beispielfotos“ nur in der Vorschau. Auf Home Assistant noch prüfen (Frühtest).
 

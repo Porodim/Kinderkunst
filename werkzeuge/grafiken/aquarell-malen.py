@@ -112,9 +112,12 @@ class Maler:
         return Image.fromarray(np.clip(self.bild, 0, 255).astype(np.uint8))
 
 
-def rahmen_bild(saat, farben, breite=0.2, staerke=0.55, zweite=None):
+def rahmen_bild(saat, farben, breite=0.2, staerke=0.55, zweite=None, grund=0.3):
+    """Farbrand mit weichem Übergang; die Mitte bekommt einen zarten Hauch derselben Farben (grund).
+    Seit 25.11.2026 bewusst dezent: Das Kinderbild und die Sticker sollen im Mittelpunkt stehen."""
+    staerke *= 0.62
     m = Maler(saat)
-    r = m.rahmen(breite)
+    r = m.rahmen(breite, weich=0.16)
     # Farbe wandert rund um die Mitte
     w = (np.arctan2(m.y - 0.5, (m.x - 0.5) * B / H) / (2 * np.pi) + 0.5 + m.rauschen(0.15, 2) * 0.05) % 1
     n = len(farben)
@@ -124,9 +127,11 @@ def rahmen_bild(saat, farben, breite=0.2, staerke=0.55, zweite=None):
     t = pos - np.floor(pos)
     t = t * t * (3 - 2 * t)
     farbe = cs[i0] * (1 - t[..., None]) + cs[(i0 + 1) % n] * t[..., None]
-    m.lasur(m.wolkig(r, 0.45) * staerke, farbe)
-    r2 = m.rahmen(breite * 0.55, zacken=0.07)
-    m.lasur(m.wolkig(r2, 0.6, 0.05) * staerke * 0.55, zweite and hexf(zweite) or farbe)
+    papier = m.rahmen(2, zacken=0)
+    m.lasur(m.wolkig(papier, 0.5, 0.12) * staerke * grund, farbe, kanten=0.1)
+    m.lasur(m.wolkig(r, 0.45) * staerke, farbe, kanten=0.22)
+    r2 = m.rahmen(breite * 0.55, zacken=0.07, weich=0.08)
+    m.lasur(m.wolkig(r2, 0.6, 0.05) * staerke * 0.5, zweite and hexf(zweite) or farbe, kanten=0.22)
     m.koernung(2.5)
     return m
 
@@ -163,9 +168,9 @@ def meer():
     papier = m.rahmen(2, zacken=0)
     unten = np.clip((m.y - 0.3) / 0.65, 0, 1) ** 1.4 + m.rauschen(0.08) * 0.08 + np.sin(m.x * 7 + m.rauschen(0.12) * 2.5) * 0.035
     flaeche = np.clip(unten * 1.1 + m.rahmen(0.1, zacken=0.04) * 0.3, 0, 1) * papier
-    m.lasur(m.wolkig(flaeche, 0.18, 0.12) * 0.85, '#94C4D4')
+    m.lasur(m.wolkig(np.clip(flaeche * 0.8 + 0.18, 0, 1) * papier, 0.18, 0.12) * 0.5, '#9CC8D6', kanten=0.2)
     wellen = np.clip((m.y - 0.66) / 0.3 + np.sin(m.x * 13 + m.rauschen(0.1) * 3) * 0.08 + m.rauschen(0.07) * 0.12, 0, 1)
-    m.lasur(wellen * 0.65 * papier, '#6AA6BE', kanten=0.5)
+    m.lasur(wellen * 0.32 * papier, '#7FB2C6', kanten=0.3)
     m.koernung(2.5)
     return m.fertig()
 
@@ -174,12 +179,12 @@ def sterne():
     m = Maler(18)
     papier = m.rahmen(2, zacken=0)
     oben = np.clip(1.08 - m.y * 1.2 + m.rauschen(0.12) * 0.1, 0, 1)
-    m.lasur(m.wolkig(oben * papier, 0.12, 0.15) * 0.95, '#7383AC')
-    m.lasur(np.clip(oben - 0.4, 0, 1) * 1.2 * m.wolkig(papier, 0.2, 0.12) * 0.75, '#53628F', kanten=0.3)
+    m.lasur(m.wolkig(np.clip(oben * 0.85 + 0.15, 0, 1) * papier, 0.12, 0.15) * 0.62, '#95A2C6', kanten=0.2)
+    m.lasur(np.clip(oben - 0.45, 0, 1) * 1.2 * m.wolkig(papier, 0.2, 0.12) * 0.4, '#7584AE', kanten=0.2)
     wolken = np.clip(0.5 - np.abs(m.y - 0.7) * 2.4 + m.rauschen(0.09) * 0.25, 0, 1) * papier
-    m.lasur(wolken * 0.3, '#CBC5DF')
-    m.punkte(650, '#FFF6DA', 1.5, dichte=lambda x, y: max(0.0, 1 - y * 1.35))
-    m.punkte(40, '#F3D990', 3.4, dichte=lambda x, y: max(0.0, 1 - y * 1.4), glanz=True)
+    m.lasur(wolken * 0.22, '#D3CEE4')
+    m.punkte(500, '#FFF8E4', 1.4, dichte=lambda x, y: max(0.0, 1 - y * 1.35))
+    m.punkte(30, '#EED38C', 3.2, dichte=lambda x, y: max(0.0, 1 - y * 1.4), glanz=True)
     m.koernung(2.5)
     return m.fertig()
 
@@ -191,8 +196,8 @@ def goldglanz():
              + np.exp(-((m.x - 0.0) ** 2 / 0.025 + (m.y - 0.0) ** 2 / 0.04)) * 0.6
              + np.exp(-((m.x - 1.0) ** 2 / 0.02 + (m.y - 1.0) ** 2 / 0.03)) * 0.5)
     flaeche = np.clip(ecken * 1.2 + m.rauschen(0.05) * 0.08 - 0.05, 0, 1)
-    m.lasur(m.wolkig(flaeche, 0.45, 0.05) * 0.85, '#AFC6DF')
-    m.lasur(m.wolkig(m.rahmen(0.32, zacken=0.08, papierrand=0), 0.5) * 0.3, '#F0E0B4')
+    m.lasur(m.wolkig(flaeche, 0.45, 0.05) * 0.5, '#B7CBE0', kanten=0.2)
+    m.lasur(np.clip(m.wolkig(m.rahmen(0.32, zacken=0.08, weich=0.15, papierrand=0), 0.5) + 0.35, 0, 1) * 0.22, '#F0E0B4', kanten=0.1)
     gold = '#C59C45'
     schwuenge = [[(0.0, 0.17), (0.04, 0.07), (0.1, 0.03), (0.19, 0.01)],
                  [(0.02, 0.25), (0.06, 0.12), (0.14, 0.07), (0.24, 0.05)],
