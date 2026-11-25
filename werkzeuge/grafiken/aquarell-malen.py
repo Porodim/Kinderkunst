@@ -17,6 +17,9 @@ from scipy import ndimage as nd
 
 WURZEL = Path(__file__).resolve().parents[2]
 B, H = 1600, 1131
+# Farbkraft aller Hintergründe: 1,0 = Stand „dezenter“, seit 25.11.2026 abends 1,4 („etwas mehr Farbe“, Wahl der Nutzerin). Zum Ausprobieren: KK_FARBE=1.6 python3 ...
+import os
+FARBE = float(os.environ.get('KK_FARBE', '1.4'))
 PAPIER = np.array([251, 248, 242], float)
 
 
@@ -50,7 +53,7 @@ class Maler:
     def lasur(self, menge, farbe, kanten=0.35):
         """Eine Farbschicht auflegen: menge 0..1 je Bildpunkt. Am Rand der Fläche sammelt sich mehr Farbe (Wasserrand)."""
         farbe = hexf(farbe) if isinstance(farbe, str) else farbe
-        menge = np.clip(menge, 0, 1)
+        menge = np.clip(menge * FARBE, 0, 1)
         grad = np.hypot(*np.gradient(nd.gaussian_filter(menge, 2)))
         rand = np.clip(grad * self.h * 0.012, 0, 1) * kanten
         a = np.clip(menge * 0.75 + rand, 0, 1)[..., None]
