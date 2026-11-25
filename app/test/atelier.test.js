@@ -46,7 +46,7 @@ test('Atelier ist die Startseite, Technik-Test unter /technik', async () => {
     assert.match(start, /Speicher\.original\(p,f\)/);
     assert.equal((await fetch(`${s.basis}/speicher.js`)).status, 200);
     assert.equal((await fetch(`${s.basis}/fotodatum.js`)).status, 200);
-    assert.match(start, /data-t="gal">Archiv</);
+    assert.match(start, /data-t="gal">Kunstwerke</);
     assert.match(await (await fetch(`${s.basis}/technik`)).text(), /js\/app\.js/);
     assert.equal((await fetch(`${s.basis}/js/app.js`)).status, 200);
   } finally {

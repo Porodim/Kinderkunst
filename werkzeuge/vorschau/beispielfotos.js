@@ -3,7 +3,7 @@
  * In der Claude-App auf dem Handy lässt sich auf der Vorschau-Seite oft keine Datei auswählen. Damit man trotzdem
  * Bildbearbeitung und das automatische Datum ausprobieren kann, erzeugt dieser Knopf im Archiv drei erfundene
  * Beispielfotos (gemalt mit Canvas, keine echten Bilder) samt eingebettetem Aufnahmedatum (EXIF) und gibt sie
- * genau so an die App wie Fotos aus der Galerie.
+ * genau so an die App wie Fotos aus der Galerie. Für das Kinderprofil gibt es ebenso ein gemaltes Beispielbild.
  */
 (() => {
   const BEISPIELE = [
@@ -194,15 +194,58 @@
     return dateien;
   }
 
-  // Knopf im Archiv neben „Kamera“ und „Fotos wählen“
+  // Avatar-Bild für das Kinderprofil (gemalter Platzhalter, kein echtes Foto)
+  function beispielAvatar() {
+    const c = document.createElement('canvas');
+    c.width = c.height = 400;
+    const x = c.getContext('2d');
+    x.fillStyle = '#E8C1B7';
+    x.fillRect(0, 0, 400, 400);
+    x.fillStyle = '#f6dcc6';
+    x.beginPath();
+    x.arc(200, 210, 120, 0, Math.PI * 2);
+    x.fill();
+    x.fillStyle = '#8a5a3c';
+    x.beginPath();
+    x.arc(200, 170, 128, Math.PI, 0);
+    x.fill();
+    x.fillStyle = '#3b342f';
+    for (const ax of [160, 240]) {
+      x.beginPath();
+      x.arc(ax, 215, 11, 0, Math.PI * 2);
+      x.fill();
+    }
+    x.strokeStyle = '#c0604a';
+    x.lineWidth = 8;
+    x.lineCap = 'round';
+    x.beginPath();
+    x.arc(200, 255, 40, 0.2 * Math.PI, 0.8 * Math.PI);
+    x.stroke();
+    return c.toDataURL('image/jpeg', 0.85);
+  }
+
+  // Knopf auf der Kunstwerke-Seite neben „Foto machen“ und „Aus der Galerie“
   const archivAlt = vGal;
   vGal = function () {
     const html = archivAlt();
     if (S.ui.ak || !kidOf(S.ui.kid)) return html;
-    return html.replace(
-      '<small id="ast">',
-      '<div class="tp">Vorschau: Lässt sich hier kein Foto auswählen? Dann nimm drei erfundene Beispielfotos, um Bearbeiten und Datum auszuprobieren. <button class="chip" data-a="bsp" style="margin-left:4px">Beispielfotos</button></div><small id="ast">',
-    );
+    return html.replace('</label></div><small id="ast">', '</label><button class="chip" data-a="bsp">Beispielfotos (nur Vorschau)</button></div><small id="ast">');
   };
   act.bsp = async () => addFiles(await erzeugen());
+
+  // Im Kinderprofil: Beispielbild statt Foto aus der Galerie
+  const kindAlt = act.kid;
+  act.kid = (el) => {
+    kindAlt(el);
+    const wahl = document.querySelector('#sh [data-kp]');
+    if (wahl) wahl.closest('label').insertAdjacentHTML('afterend', '<button class="chip" data-a="bspk">Beispielbild (nur Vorschau)</button>');
+  };
+  act.bspk = () => {
+    KD.pic = beispielAvatar();
+    const a = document.querySelector('#kpv');
+    if (a) {
+      a.style.backgroundImage = `url('${KD.pic}')`;
+      a.textContent = '';
+    }
+  };
 })();
