@@ -33,7 +33,7 @@ function status() {
     benutzer: { anzeigename: BENUTZER.anzeigename, name: BENUTZER.name, kennung: BENUTZER.kennung },
     alleBenutzer: [{ anzeigename: BENUTZER.anzeigename, name: BENUTZER.name, zuletzt_gesehen: new Date().toISOString() }],
     kopfzeilen: {},
-    datenbank: { schema: 2, medien: { anzahl: daten.medien.length, bytes } },
+    datenbank: { schema: 3, medien: { anzahl: daten.medien.length, bytes } },
     speicher: { frei: Math.max(0, 500 * 1024 * 1024 - bytes), gesamt: 500 * 1024 * 1024 },
     vorschaubilder: false,
   };

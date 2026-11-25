@@ -8,6 +8,7 @@ COPY package.json ./
 RUN npm install --omit=dev --no-audit --no-fund && npm cache clean --force
 COPY server ./server
 COPY web ./web
+COPY atelier ./atelier
 
 ENV NODE_ENV=production \
     PORT=8099 \

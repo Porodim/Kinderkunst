@@ -14,6 +14,7 @@ import { registriereMedien } from './routen/medien.js';
 import { registriereKinder } from './routen/kinder.js';
 import { registriereWerke, leerePapierkorb } from './routen/werke.js';
 import { registriereStorys } from './routen/storys.js';
+import { registriereAtelier } from './routen/atelier.js';
 import { erzeugeVorschauen } from './vorschauen.js';
 
 const PAKET = JSON.parse(fs.readFileSync(path.join(path.dirname(fileURLToPath(import.meta.url)), '..', 'package.json'), 'utf8'));
@@ -30,6 +31,7 @@ export function erzeugeApp(konfiguration) {
   registriereKinder(router, kontext);
   registriereWerke(router, kontext);
   registriereStorys(router, kontext);
+  registriereAtelier(router, kontext);
 
   // Papierkorb: Werke nach 30 Tagen endgültig entfernen (B-09), beim Start und dann täglich.
   leerePapierkorb(db);

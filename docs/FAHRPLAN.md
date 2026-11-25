@@ -19,7 +19,7 @@ Ein **Meilenstein** ist ein Paket von Funktionen, das zusammen benutzbar ist. Be
 
 ## Leitlinie für die Gestaltung
 
-Die App bleibt so **einfach und intuitiv wie die alte App** („Das kleine Atelier für große Werke“): wenige Knöpfe, kurze Wege, nur das Nötige sichtbar. Alles Seltene liegt zugeklappt unter „Mehr“. Neue Funktionen werden nur dann sichtbar, wenn sie im Alltag wirklich gebraucht werden.
+Die App **ist** deine alte App (das Kinderkunst-Atelier). Sie wird weiterentwickelt, nicht ersetzt, und bleibt so **einfach und intuitiv** wie bisher („Das kleine Atelier für große Werke“): wenige Knöpfe, kurze Wege, nur das Nötige sichtbar. Alles Seltene liegt zugeklappt unter „Mehr“. Neue Funktionen werden nur dann sichtbar, wenn sie im Alltag wirklich gebraucht werden.
 
 ## Prüfliste: Wann ist ein Meilenstein fertig?
 
@@ -40,7 +40,8 @@ Claude entscheidet danach, ob ein Stand ins Repository kommt:
 |---|---|---|---|
 | M0 | Bestandsaufnahme | Klarheit, was von der alten App bleibt | ✅ fertig |
 | M1 | Fundament | App läuft auf Home Assistant, Fotos und Ton werden sicher gespeichert, Technik-Test | ✅ fertig, offen: Backup als eigene Datei |
-| **M2** | **Archiv** | Schlicht wie die alte App: Kind mit Name und Geburtsdatum, Werk sichern (Foto, Kind, was es ist, Datum, Titel, „Was sagt das Kind dazu?“ als Text oder Aufnahme), Archiv nach Kindern und Alter. Seltenes (Tags, ungefähres Datum, Suche, Filter) zugeklappt | ✅ gebaut und vereinfacht, **jetzt ausprobieren** |
+| **M2a** | **Dein Atelier auf Home Assistant** | Deine bisherige App, unverändert in der Bedienung. Speichert jetzt gemeinsam auf Home Assistant: du und dein Mann seht dieselben Kinder, Fotos und Seiten. Originalfotos werden in voller Größe aufbewahrt, frühere Stände als Sicherung | ✅ gebaut, **jetzt ausprobieren** |
+| M2 (ruht) | **Archiv (neue Oberfläche)** | Schlicht wie die alte App: Kind mit Name und Geburtsdatum, Werk sichern (Foto, Kind, was es ist, Datum, Titel, „Was sagt das Kind dazu?“ als Text oder Aufnahme), Archiv nach Kindern und Alter. Seltenes (Tags, ungefähres Datum, Suche, Filter) zugeklappt | ruht (auf Wunsch der Nutzerin) |
 | M3 | Fotos geraderücken | Schräg fotografierte Bilder gerade ziehen, zuschneiden, drehen, aufhellen; das Original bleibt immer erhalten | ⬜ als Nächstes |
 | M4 | Sticker & Themen | Aquarell-Sticker in Druckqualität, Themen, Rahmen, Sticker-Vorschläge passend zu den Tags | ⬜ |
 | M5 | Seiten gestalten | Albumseiten aus dem Archiv, wie in der alten App, aber verknüpft: ändert sich ein Werk, ändert sich die Seite | ⬜ |

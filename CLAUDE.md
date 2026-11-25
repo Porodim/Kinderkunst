@@ -47,11 +47,13 @@ Zeitkritisch ist das **Archivieren** (Foto + Story sichern, solange die Kinder k
 
 ### Entwicklungsablauf (seit 24.11.2026)
 
-- **Gestaltung: so einfach und intuitiv wie die alte App.** Die Nutzerin hat die erste M2-Oberfläche als zu kompliziert abgelehnt. Wenige Knöpfe, kurze Wege, Kinder nur mit Name und Geburtsdatum, Seltenes zugeklappt unter „Mehr“. Lieber eine Funktion weglassen als die Oberfläche überladen; im Zweifel fragen.
+- **Die App ist das Kinderkunst-Atelier der Nutzerin (`app/atelier/index.html`).** Entscheidung der Nutzerin am 25.11.2026: Sie will ihre alte App weiterbearbeiten, nicht die neu gebaute Oberfläche. Alle Änderungen an Bedienung und Aussehen passieren **in dieser Datei**, im Stil und mit den Bausteinen der alten App. Nicht neu erfinden, nicht umbauen, nichts „modernisieren“. Die Datei ist 1,1 MB groß (eingebettete Grafiken): gezielt mit Suche und Auszügen arbeiten.
+- **Speicherung wie vom Entwickler festgelegt** (SQLite + Dateiablage auf Home Assistant): `app/atelier/speicher.js` ersetzt `load()`/`save()` der alten App. Zustand (Kinder, Fotos, Seiten) als JSON in der Datenbank mit Revision und Sicherungskopien (`routen/atelier.js`, Migration 003); Bilder werden als Dateien hochgeladen und im Zustand durch `api/medien/<id>/datei` ersetzt; jedes neue Foto zusätzlich als **Original in voller Auflösung** (`p.orig`). Gleichzeitige Änderungen zweier Geräte werden nach ID zusammengeführt. Ohne Server speichert `speicher.js` im Browser.
+- **Gestaltung: so einfach und intuitiv wie die alte App.** Wenige Knöpfe, kurze Wege. Lieber eine Funktion weglassen als die Oberfläche überladen; im Zweifel fragen.
 - **Die Nutzerin ist technische Laiin.** Claude führt sie durch die Meilensteine: Wünsche in Alltagssprache einem Meilenstein zuordnen, erklären, was als Nächstes passiert, und selbst entscheiden, wann ein Stand fertig ist. Maßstab ist die Prüfliste in **`docs/FAHRPLAN.md`**; den Fahrplan nach jedem Meilenstein nachführen. Fachwörter (Branch, Pull Request …) beim ersten Mal kurz erklären.
 - Laufende Arbeit auf dem Branch **`feature/entwicklung`**. Ist ein Meilenstein nach der Prüfliste fertig, wird der Branch gepusht und ein **Pull Request** angelegt; der Entwickler übernimmt ihn. Dazwischen wird lokal committet und die Vorschau aktualisiert.
-- **Vorschau zum Ausprobieren** ohne Home Assistant: `node werkzeuge/vorschau-bauen.mjs <Ordner>` baut aus `app/web` eine Seite, die ohne Server läuft (`app/web/js/vorschau/server.js` bildet die API im Browser nach). Sie wird als privates Claude-Artefakt „Kinderkunst Vorschau“ veröffentlicht (Slug `6ba8c030-c2f4-47ad-acf9-082bbedb4432`); nach jeder Änderung neu veröffentlichen. Kamera und Mikrofon sind dort gesperrt, Fotos bleiben im Browserfenster.
-- Jede neue Server-Route bekommt ihr Gegenstück in `js/vorschau/server.js`, sonst bricht die Vorschau. `test/vertrag.test.js` lässt dasselbe Drehbuch gegen Server und Vorschau laufen und vergleicht die Antworten.
+- **Vorschau zum Ausprobieren** ohne Home Assistant: `node werkzeuge/vorschau-bauen.mjs <Ordner>` kopiert `app/atelier`; als privates Claude-Artefakt „Kinderkunst Vorschau“ veröffentlichen (Slug `6ba8c030-c2f4-47ad-acf9-082bbedb4432`), nach jeder Änderung neu. Dort speichert die App im Browser.
+- **Ruhend:** `app/web/` (neu gebaute Oberfläche aus M2) und die Routen `kinder`, `werke`, `storys`, `tags` werden von der App nicht benutzt. Unter `/technik` bleibt der Technik-Test erreichbar. Nicht weiterentwickeln, solange die Nutzerin nicht danach fragt; Löschen entscheidet der Entwickler.
 
 ## Code-Aufbau (seit M1)
 
@@ -65,6 +67,6 @@ Zeitkritisch ist das **Archivieren** (Foto + Story sichern, solange die Kinder k
 
 ## Nächster Schritt
 
-1. **M2 Archiv ist gebaut** (PR liegt vor). Rückmeldungen der Nutzerin aus Vorschau und Test-Add-on einarbeiten; Frühtests auf HA (Kamera, Mikrofon, große Uploads, zwei Benutzer) in `PROJEKT.md` eintragen.
-2. Offen aus M1: Backup-Export als Datei mit Wiederherstellung (B-08). Bis dahin sichert das HA-Backup.
-3. Danach **M3 Bildbearbeitung**: Logik aus `alt/index.html` umziehen (`warp`, `adjust`, `process`, Griffe `cbDrag`/`pqDrag`), nicht-destruktiv als `medium.bearbeitung`, Vorschaubilder aus Original + Parametern.
+1. Das Atelier läuft mit gemeinsamem Speicher (PR liegt vor). Rückmeldungen der Nutzerin **in `app/atelier/index.html`** einarbeiten, in kleinen Schritten, jeweils Vorschau aktualisieren.
+2. Offene Korrekturen der alten App (`PROJEKT.md` Abschnitt 4, `docs/REVIEW-ALT.md` Abschnitt 4), z. B. PDF-Button, Bildbeschnitt 5 % (`CROP` in `fitBox`), nur nach Rücksprache.
+3. Frühtests auf HA (Kamera, große Uploads über Cloudflare, zwei Benutzer gleichzeitig) in `PROJEKT.md` eintragen.

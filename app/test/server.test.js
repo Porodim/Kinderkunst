@@ -19,7 +19,7 @@ test('Status liefert Benutzer, Version und Speicher', async () => {
     assert.equal(r.status, 200);
     const j = await r.json();
     assert.equal(j.benutzer.anzeigename, 'Testperson');
-    assert.equal(j.datenbank.schema, 2);
+    assert.equal(j.datenbank.schema, 3);
     assert.ok(j.speicher.frei > 0);
   } finally {
     await s.stopp();
