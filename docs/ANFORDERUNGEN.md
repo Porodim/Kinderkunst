@@ -237,6 +237,8 @@ Seit 25.11.2026 ist das Atelier (`app/atelier/index.html`) die App (E7, `CLAUDE.
 | Daten | B-02, B-09 (Papierkorb 30 Tage; Warnung mit den Seiten, auf denen das Werk klebt; beim Zurückholen wieder eingeklebt) | Dateien endgültig gelöschter Werke bleiben vorerst auf dem HA-Rechner liegen (offene Frage an den Entwickler) |
 | Finden | D-00, D-01, D-02 (Großansicht mit Wischen und Pfeilen, ohne Pinch-Zoom), D-03 (Kind oder alle Kinder, Werkart, Stichwort), D-04, D-05 (Suche über Titel, Art, Stichwörter, Datum, Alter, Kind) | D-03 Favoriten und „unvollständig“, D-06, D-07 |
 
+**A2 Fotos verbessern (25.11.2026):** I-01 Lupe beim Ziehen der Perspektiv-Punkte, automatische Blatterkennung (Abschnitt 6, „danach automatische Blatterkennung“), Feindrehen ±15° mit Zuschnitt ohne weiße Ecken, Vorher/Nachher-Vergleich. Bearbeitung bleibt nicht-destruktiv (B-03): gespeichert werden nur Parameter (`edit.q`, `edit.fr` …), das Original bleibt unverändert.
+
 ## 16. Offene Fragen
 
 1. W-04 Gemeinschaftswerk: Lösung wie beschrieben in Ordnung? Braucht ihr den „Beitrag pro Kind“?

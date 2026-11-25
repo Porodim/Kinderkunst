@@ -118,8 +118,8 @@ Seit 25.11.2026 entsteht alles im Atelier der Nutzerin, in vier Meilensteinen au
 
 | # | Meilenstein | Status |
 |---|---|---|
-| A1 | Archiv: Profilbild und Lieblingsfarbe, Zeitstrahl, Datum aus dem Foto, Stichwörter, viele Fotos auf einmal, Großansicht mit Wischen, Suchen und Filtern, Papierkorb, Warnung beim Löschen | ✅ gebaut 25.11.2026, Rückmeldung der Nutzerin ausstehend |
-| A2 | Fotos verbessern: Lupe und automatische Eckenerkennung, feines Drehen, Vorher/Nachher | ⬜ |
+| A1 | Archiv: Profilbild und Lieblingsfarbe, Zeitstrahl, Datum aus dem Foto, Stichwörter, viele Fotos auf einmal, Großansicht mit Wischen, Suchen und Filtern, Papierkorb, Warnung beim Löschen | ✅ fertig 25.11.2026 (von der Nutzerin abgenommen) |
+| A2 | Fotos verbessern: Lupe und automatische Eckenerkennung, feines Drehen, Vorher/Nachher | ✅ gebaut 25.11.2026, Rückmeldung ausstehend |
 | A3 | Seiten: Sticker drehen, Sticker-Vorschläge aus Stichwörtern, kein Abschneiden, Seiten ändern sich mit | ⬜ |
 | A4 | Fotobuch & PDF: PDF wie in der App, PDF-Knopf, Fotobuch aus mehreren Seiten, Geschwister | ⬜ |
 
