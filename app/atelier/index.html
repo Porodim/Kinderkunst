@@ -2,6 +2,9 @@
 <html lang="de"><head><meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>Kinderkunst – Atelier</title>
+<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A//www.w3.org/2000/svg%22%20width%3D%2292%22%20height%3D%2292%22%20viewBox%3D%220%200%2092%2092%22%3E%3Ccircle%20cx%3D%2246%22%20cy%3D%2246%22%20r%3D%2242%22%20fill%3D%22%23FBF8F5%22%20stroke%3D%22%23D28A74%22%20stroke-width%3D%222%22/%3E%3Ccircle%20cx%3D%2246%22%20cy%3D%2246%22%20r%3D%2236%22%20fill%3D%22none%22%20stroke%3D%22%23D28A74%22%20stroke-width%3D%221%22%20stroke-dasharray%3D%222%204%22/%3E%3Cpath%20d%3D%22M30%2058%20C34%2044%2044%2034%2058%2028%22%20fill%3D%22none%22%20stroke%3D%22%233b342f%22%20stroke-width%3D%223%22%20stroke-linecap%3D%22round%22/%3E%3Cpath%20d%3D%22M58%2028%20L64%2024%20L62%2031%20Z%22%20fill%3D%22%233b342f%22/%3E%3Ccircle%20cx%3D%2233%22%20cy%3D%2236%22%20r%3D%225.5%22%20fill%3D%22%23E6BA72%22/%3E%3Ccircle%20cx%3D%2244%22%20cy%3D%2262%22%20r%3D%225%22%20fill%3D%22%23A8C3C8%22/%3E%3Ccircle%20cx%3D%2258%22%20cy%3D%2252%22%20r%3D%226%22%20fill%3D%22%23E8C1B7%22/%3E%3Ccircle%20cx%3D%2227%22%20cy%3D%2250%22%20r%3D%224%22%20fill%3D%22%23B2B89D%22/%3E%3C/svg%3E">
+<link rel="apple-touch-icon" href="icon-180.png">
+<meta name="theme-color" content="#E2D7CD">
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,600;1,500&family=Dancing+Script:wght@600;700&family=Nunito:wght@400;600;700;800&display=swap">
 <style>
 :root{--sage:#B2B89D;--rose:#E8C1B7;--terra:#D28A74;--mustard:#E6BA72;--ice:#A8C3C8;--star:#6B8E9B;--bg:#F4EFEB;--card:#FBF8F5;--ink:#3b342f;--mute:#8a7f76;--line:#e3dad2;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
@@ -10,7 +13,7 @@ html{scroll-padding-top:env(safe-area-inset-top,0px);background:var(--bg)}
 :root[data-theme="dark"]{--bg:#26221f;--card:#322d29;--ink:#efe8e1;--mute:#a79c92;--line:#463f39}
 *{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
 body{margin:0;background:radial-gradient(circle at 92% 3%,#E8C1B733,transparent 28%),radial-gradient(circle at 3% 45%,#B2B89D2e,transparent 30%),var(--bg);color:var(--ink);font:16px/1.45 Nunito,system-ui,sans-serif;padding-bottom:84px}
-body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset-top,0px);background:var(--sage);z-index:10}
+body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset-top,0px);background:linear-gradient(#B2B89D38,#B2B89D38),linear-gradient(#E8C1B752,#E8C1B752),var(--bg);z-index:10}
 h1,.serif{font-family:'Cormorant Garamond',Georgia,serif;font-weight:600;margin:0}h2,h3{font-family:'Dancing Script','Cormorant Garamond',cursive;font-weight:700;margin:0}
 h2{font-size:32px}h3{font-size:26px;margin-bottom:10px}
 main{max-width:640px;margin:0 auto;padding:20px 16px}
@@ -62,9 +65,10 @@ input[type=range]{width:100%;accent-color:var(--terra)}
 .hd{position:absolute;width:30px;height:30px;margin:-15px 0 0 -15px;border-radius:50%;background:var(--terra);border:3px solid #fff;touch-action:none;box-shadow:0 2px 6px rgba(0,0,0,.4)}
 .hero{font-family:'Dancing Script','Cormorant Garamond',cursive;font-weight:700;font-size:52px;line-height:1}.sub{font-size:21px;font-style:italic;color:var(--mute);margin:6px 0 20px}
 .kc h2{margin-bottom:2px}
-.bar{position:sticky;top:env(safe-area-inset-top,0px);z-index:11;display:flex;align-items:center;justify-content:space-between;background:var(--sage);color:#2f3326;padding:8px 14px;font-size:17px}
+/* Kopfleiste (25.11.2026): dieselbe zarte Salbei-Rosé-Welle wie auf der Startseite, nur flacher, statt der flächig grünen Leiste */
+.bar{position:sticky;top:env(safe-area-inset-top,0px);z-index:11;display:flex;align-items:center;justify-content:space-between;background:url("data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 390 70' preserveAspectRatio='none'><path d='M0 0H390V58C330 70 290 52 225 62C160 72 115 54 60 64C30 69 10 67 0 65Z' fill='%23E8C1B7' fill-opacity='.32'/><path d='M0 0H390V44C330 56 290 38 225 48C160 58 115 40 60 50C30 55 10 53 0 51Z' fill='%23B2B89D' fill-opacity='.22'/></svg>") top/100% 100% no-repeat,var(--bg);color:var(--ink);padding:8px 14px 26px;font-size:17px}
 .bar button{font-size:24px;width:36px;line-height:1}.bar b{font-weight:800}
-#pill{text-align:center;background:var(--card);border-bottom:1px solid var(--line)}
+#pill{text-align:center;margin-top:-8px}
 .pill{margin:8px 0;padding:6px 16px;border-radius:999px;border:1px solid var(--line);background:var(--bg);font-size:14px;color:var(--star);font-weight:700}
 .lf{font-size:.55em}
 .sc{flex-wrap:nowrap;overflow-x:auto;padding-bottom:4px}.sc .chip{flex:none}
