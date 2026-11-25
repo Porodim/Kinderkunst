@@ -120,8 +120,8 @@ Seit 25.11.2026 entsteht alles im Atelier der Nutzerin, in vier Meilensteinen au
 |---|---|---|
 | A1 | Archiv: Profilbild und Lieblingsfarbe, Zeitstrahl, Datum aus dem Foto, Stichwörter, viele Fotos auf einmal, Großansicht mit Wischen, Suchen und Filtern, Papierkorb, Warnung beim Löschen | ✅ fertig 25.11.2026 (von der Nutzerin abgenommen) |
 | A2 | Fotos verbessern: Lupe und automatische Eckenerkennung, feines Drehen, Vorher/Nachher | ✅ fertig 25.11.2026 (abgenommen) |
-| A3 | Seiten: Sticker drehen, Sticker-Vorschläge aus Stichwörtern, kein Abschneiden, Seiten ändern sich mit | ✅ gebaut 25.11.2026, Rückmeldung ausstehend |
-| A4 | Fotobuch & PDF: PDF wie in der App, PDF-Knopf, Fotobuch aus mehreren Seiten, Geschwister | ⬜ |
+| A3 | Seiten: Sticker drehen, Sticker-Vorschläge aus Stichwörtern, kein Abschneiden, Seiten ändern sich mit; dazu Aquarell-Hintergründe, Familie & Liebe, Galerie-Typografie und -Anordnung | ✅ fertig 25.11.2026 (abgenommen) |
+| A4 | Fotobuch & PDF: PDF wie in der App, PDF-Knopf, Fotobuch aus mehreren Seiten, Geschwister | 🟡 Alben je Kind und PDF je Album fertig; Seiten sortieren, Geschwister-Album, Fotobuch-ZIP prüfen offen |
 
 ### Frühtests M1 (auf Home Assistant, Technik-Test-Seite)
 
