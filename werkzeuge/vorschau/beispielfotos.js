@@ -233,6 +233,30 @@
   };
   act.bsp = async () => { closeSh(); addFiles(await erzeugen()); };
 
+  // Sprachaufnahme: Die Vorschau darf kein Mikrofon benutzen. Ein Beispielton zeigt, wie Anhören und Speichern aussehen.
+  function beispielTon() {
+    const rate = 16000, noten = [523, 587, 659, 784, 659, 587, 523], lang = 0.32, n = Math.round(rate * lang * noten.length);
+    const puffer = new ArrayBuffer(44 + n * 2), v = new DataView(puffer);
+    const schreib = (o, t) => [...t].forEach((c, i) => v.setUint8(o + i, c.charCodeAt(0)));
+    schreib(0, 'RIFF'); v.setUint32(4, 36 + n * 2, true); schreib(8, 'WAVEfmt '); v.setUint32(16, 16, true); v.setUint16(20, 1, true);
+    v.setUint16(22, 1, true); v.setUint32(24, rate, true); v.setUint32(28, rate * 2, true); v.setUint16(32, 2, true); v.setUint16(34, 16, true);
+    schreib(36, 'data'); v.setUint32(40, n * 2, true);
+    for (let i = 0; i < n; i++) {
+      const t = i / rate, k = Math.floor(t / lang), f = noten[k], a = Math.sin(Math.PI * ((t % lang) / lang)) * 0.3;
+      v.setInt16(44 + i * 2, Math.sin(2 * Math.PI * f * t) * a * 32767, true);
+    }
+    let bin = '';
+    new Uint8Array(puffer).forEach((b) => (bin += String.fromCharCode(b)));
+    return 'data:audio/wav;base64,' + btoa(bin);
+  }
+  const aufnahmeAlt = act.aurec;
+  act.aurec = (el) => {
+    aufnahmeAlt(el);
+    const r = document.querySelector('#sh .rec');
+    if (r) r.insertAdjacentHTML('afterend', '<div class="row" style="justify-content:center"><button class="chip" data-a="bspton">Beispiel-Aufnahme (nur Vorschau)</button></div>');
+  };
+  act.bspton = () => auFertig(beispielTon(), 2240);
+
   // Im Kinderprofil: Beispielbild statt Foto aus der Galerie
   const kindAlt = act.kid;
   act.kid = (el) => {

@@ -62,17 +62,17 @@ const Speicher = (() => {
   function hinweis(text) {
     if (typeof say === 'function') say(text);
   }
-  async function hochladen(blob, art, name) {
+  async function hochladen(blob, art, name, extra = {}) {
     const r = await fetch(`api/medien?art=${art}`, {
       method: 'POST',
-      headers: { 'Content-Type': blob.type || 'image/jpeg', 'X-Dateiname': encodeURIComponent(name || '') },
+      headers: { 'Content-Type': blob.type || 'image/jpeg', 'X-Dateiname': encodeURIComponent(name || ''), ...extra },
       body: blob,
     });
     if (!r.ok) throw new Error(`Hochladen fehlgeschlagen (${r.status})`);
     return (await r.json()).medium.id;
   }
 
-  // Daten-URLs in Fotos und Profilbildern einmalig hochladen und durch die Server-Adresse ersetzen.
+  // Daten-URLs in Fotos, Sprachaufnahmen und Profilbildern einmalig hochladen und durch die Server-Adresse ersetzen.
   async function auslagern() {
     for (const k of S.kids) {
       const wert = k.pic;
@@ -88,6 +88,13 @@ const Speicher = (() => {
         const blob = await (await fetch(wert)).blob();
         const id = await hochladen(blob, art, `${feld}-${p.id}.jpg`);
         if (p[feld] === wert) p[feld] = `api/medien/${id}/datei`; // nur ersetzen, wenn inzwischen nicht neu bearbeitet
+      }
+      // Sprachaufnahme (W-08, seit 25.11.2026) als Audio-Datei
+      if (p.au && typeof p.au.u === 'string' && p.au.u.startsWith('data:')) {
+        const wert = p.au.u;
+        const blob = await (await fetch(wert)).blob();
+        const id = await hochladen(blob, 'audio', `ton-${p.id}`, { 'X-Dauer-Ms': String(Math.round(p.au.ms || 0)) });
+        if (p.au && p.au.u === wert) p.au.u = `api/medien/${id}/datei`;
       }
       if (originale.has(p.id)) {
         try {

@@ -243,6 +243,8 @@ Seit 25.11.2026 ist das Atelier (`app/atelier/index.html`) die App (E7, `CLAUDE.
 
 **A4 Fotobuch & PDF (25.11.2026):** E-04 PDF im Stil der Seiten (gleiche Rahmen, Hintergründe, Typografie, höchstens 5 % Beschnitt), mehrere Alben je Kind mit eigenem Deckblatt, Seiten umsortieren (`pg.ord`), Geschwister-Alben (`groups`, Seiten mit Kunstwerken mehrerer Kinder, Künstlerzeile nennt jedes Kind mit Datum), Fotobuch-Paket mit exakten Maßen (21 × 28 bzw. 28 × 21 cm + 3 mm Beschnitt, 300 dpi) und Hinweis bei gemischten Formaten.
 
+**Sprachaufnahme (25.11.2026):** W-08 umgesetzt im Atelier: Schalter „Sprachaufnahmen“ in den Einstellungen (Zahnrad, gilt je Gerät), in der Großansicht „Erzähl mal!“ → aufnehmen (höchstens 3 Minuten, B-11), anhören, speichern, neu aufnehmen, löschen. Gespeichert als `p.au={u,ms,at}`, auf Home Assistant als Medium der Art `audio`. Vorhandene Aufnahmen bleiben auch bei ausgeschaltetem Schalter hörbar. Offen: W-08a (mehrere Erzähler je Werk), S-07 QR-Code.
+
 ## 16. Offene Fragen
 
 1. W-04 Gemeinschaftswerk: Lösung wie beschrieben in Ordnung? Braucht ihr den „Beitrag pro Kind“?
