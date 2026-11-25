@@ -158,7 +158,7 @@ Lokal (Chrome mit simulierter Kamera und simuliertem Mikrofon) am 24.11.2026 erf
 - [ ] Zusatzideen der Frau in `docs/ANFORDERUNGEN.md` Abschnitt 17 ergänzen
 - [ ] Deployment-Weg auf HA festhalten (Entwickler), siehe `docs/ARCHITEKTUR.md`
 - [ ] **Endgültig gelöschte Werke (Entwickler):** Leert die App den Papierkorb, verschwindet das Werk aus dem gespeicherten Zustand; die Bilddateien (Original, Arbeitsfassung) bleiben aber im Datenordner des Add-ons liegen. Sollen sie automatisch mit gelöscht werden? (Vorschlag: täglicher Aufräumlauf, der Dateien löscht, auf die weder der Zustand noch eine der letzten Sicherungskopien verweist.)
-- [ ] Wo genau klemmt der Knopf „Foto hochladen“ (Vorschau in der Claude-App oder auf Home Assistant)? (seine Frau)
+- [x] Knopf „Foto hochladen“ klemmt in der Vorschau (Claude-App lässt dort keine Dateiauswahl zu). Ersatz: Knopf „Beispielfotos“ nur in der Vorschau. Auf Home Assistant noch prüfen (Frühtest).
 
 ## 7. Änderungsprotokoll
 
