@@ -33,7 +33,14 @@ export function registriereAtelier(router, { db }) {
     if (!zustand || typeof zustand !== 'object' || !['kids', 'photos', 'pages'].every((k) => Array.isArray(zustand[k]))) {
       throw new HttpFehler(400, 'Ungültiger Zustand');
     }
-    const daten = JSON.stringify({ kids: zustand.kids, photos: zustand.photos, pages: zustand.pages });
+    if (zustand.groups !== undefined && !Array.isArray(zustand.groups)) throw new HttpFehler(400, 'Ungültiger Zustand');
+    // groups (seit 25.11.2026): gemeinsame Geschwister-Alben, optional für ältere Stände
+    const daten = JSON.stringify({
+      kids: zustand.kids,
+      photos: zustand.photos,
+      pages: zustand.pages,
+      ...(zustand.groups ? { groups: zustand.groups } : {}),
+    });
     const ergebnis = transaktion(db, () => {
       const alt = lies.get(benutzer.familie_id);
       const ist = alt ? alt.revision : 0;

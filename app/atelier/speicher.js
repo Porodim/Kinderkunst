@@ -2,16 +2,17 @@
  *
  * Ersetzt load()/save() der alten App. Auf Home Assistant speichert er gemeinsam für beide Eltern auf dem
  * Server (ARCHITEKTUR A5: SQLite + Dateiablage):
- *   - der Zustand (Kinder, Fotos, Seiten) als JSON in der Datenbank, mit Revision gegen Überschreiben,
+ *   - der Zustand (Kinder, Fotos, Seiten, Geschwister-Alben) als JSON in der Datenbank, mit Revision gegen Überschreiben,
  *   - Bilder als Dateien: Daten-URLs werden einmalig hochgeladen und durch die Adresse ersetzt,
  *   - das unveränderte Original jedes neuen Fotos zusätzlich (E6, B-02).
  * Ohne Server (z. B. Vorschau-Seite bei Claude) speichert er wie bisher im Browser (IndexedDB).
  * Klassisches Skript ohne Module, weil die App selbst eins ist. Wird vor dem App-Skript geladen.
  */
 const Speicher = (() => {
+  const TEILE = ['kids', 'photos', 'pages', 'groups']; // groups: Geschwister-Alben (seit 25.11.2026)
   let modus = null; // 'server' | 'browser'
   let revision = 0;
-  let bekannt = { kids: new Set(), photos: new Set(), pages: new Set() };
+  let bekannt = { kids: new Set(), photos: new Set(), pages: new Set(), groups: new Set() };
   let zeitgeber = null;
   let wartet = false;
   let laeuft = false;
@@ -53,10 +54,10 @@ const Speicher = (() => {
 
   // ---------- Hilfen ----------
   function zustand() {
-    return { kids: S.kids, photos: S.photos, pages: S.pages };
+    return { kids: S.kids, photos: S.photos, pages: S.pages, groups: S.groups || [] };
   }
   function merke(z) {
-    for (const k of ['kids', 'photos', 'pages']) bekannt[k] = new Set(((z && z[k]) || []).map((x) => x.id));
+    for (const k of TEILE) bekannt[k] = new Set(((z && z[k]) || []).map((x) => x.id));
   }
   function hinweis(text) {
     if (typeof say === 'function') say(text);
@@ -102,7 +103,7 @@ const Speicher = (() => {
   // Bei gleichzeitigen Änderungen auf zwei Geräten: nach ID zusammenführen, nichts verlieren.
   function zusammenfuehren(server) {
     const z = server.zustand || { kids: [], photos: [], pages: [] };
-    for (const k of ['kids', 'photos', 'pages']) {
+    for (const k of TEILE) {
       const lokal = new Map((S[k] || []).map((x) => [x.id, x]));
       const ergebnis = [];
       for (const x of z[k] || []) {
@@ -209,6 +210,7 @@ const Speicher = (() => {
         S.kids = d.zustand.kids || [];
         S.photos = d.zustand.photos || [];
         S.pages = d.zustand.pages || [];
+        S.groups = d.zustand.groups || [];
         if (!S.kids.some((k) => k.id === S.ui.kid)) S.ui.kid = S.kids[0] && S.kids[0].id;
         revision = d.revision;
         merke(d.zustand);

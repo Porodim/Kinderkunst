@@ -33,6 +33,12 @@ test('Atelier: laden, speichern, Konflikt erkennen, Sicherung', async () => {
     assert.equal(sicherungen[0].revision, 1);
     const kopie = await fetch(`${s.basis}/api/atelier/sicherungen/${sicherungen[0].id}`);
     assert.deepEqual(await kopie.json(), ZUSTAND);
+
+    // Geschwister-Alben (groups) werden mitgespeichert, sind aber optional
+    const mitGruppen = { ...neu, groups: [{ id: 'geschw', albums: [{ id: 'bk_geschw', name: 'Album 1' }] }] };
+    assert.equal((await api('PUT', 'api/atelier', { revision: 2, zustand: mitGruppen })).daten.revision, 3);
+    assert.deepEqual((await api('GET', 'api/atelier')).daten.zustand, mitGruppen);
+    assert.equal((await api('PUT', 'api/atelier', { revision: 3, zustand: { ...neu, groups: 'x' } })).status, 400);
   } finally {
     await s.stopp();
   }

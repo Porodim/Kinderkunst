@@ -241,6 +241,8 @@ Seit 25.11.2026 ist das Atelier (`app/atelier/index.html`) die App (E7, `CLAUDE.
 
 **A3 Seiten (25.11.2026):** S-05 Sticker drehen (auch im Export), W-10 Sticker-Vorschläge aus Titel, Art und Stichwörtern der Bilder einer Seite, E7 höchstens 5 % Beschnitt in der Seitenansicht (Export folgt in A4), Seitentext-Verknüpfung: Datum und Alter einer Seite folgen dem ersten Kunstwerk (abschaltbar).
 
+**A4 Fotobuch & PDF (25.11.2026):** E-04 PDF im Stil der Seiten (gleiche Rahmen, Hintergründe, Typografie, höchstens 5 % Beschnitt), mehrere Alben je Kind mit eigenem Deckblatt, Seiten umsortieren (`pg.ord`), Geschwister-Alben (`groups`, Seiten mit Kunstwerken mehrerer Kinder, Künstlerzeile nennt jedes Kind mit Datum), Fotobuch-Paket mit exakten Maßen (21 × 28 bzw. 28 × 21 cm + 3 mm Beschnitt, 300 dpi) und Hinweis bei gemischten Formaten.
+
 ## 16. Offene Fragen
 
 1. W-04 Gemeinschaftswerk: Lösung wie beschrieben in Ordnung? Braucht ihr den „Beitrag pro Kind“?
