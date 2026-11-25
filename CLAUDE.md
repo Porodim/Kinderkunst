@@ -67,6 +67,6 @@ Zeitkritisch ist das **Archivieren** (Foto + Story sichern, solange die Kinder k
 
 ## Nächster Schritt
 
-1. Das Atelier läuft mit gemeinsamem Speicher (PR liegt vor). Die Wünsche der Nutzerin vom 25.11.2026 sind in die Meilensteine A1–A4 aufgeteilt (`docs/FAHRPLAN.md`). A1–A3 sind abgenommen, A4 Fotobuch & PDF ist gebaut (25.11.2026) und wartet auf die Abnahme der Nutzerin. Die Nutzerin will den Stand erst später an den Entwickler geben; PR #2 wächst bis dahin mit. Rückmeldungen **in `app/atelier/index.html`** einarbeiten, in kleinen Schritten, jeweils Vorschau aktualisieren.
+1. Das Atelier läuft mit gemeinsamem Speicher (PR liegt vor). Die Wünsche der Nutzerin vom 25.11.2026 sind in die Meilensteine A1–A4 aufgeteilt (`docs/FAHRPLAN.md`). A1–A4 sind abgenommen (25.11.2026). Offen auf Wunsch der Nutzerin: Stimmaufnahme mit QR-Code im Fotobuch (sie überlegt noch), „Heute vor einem Jahr“ auf der Startseite. Die Nutzerin will den Stand erst später an den Entwickler geben; PR #2 wächst bis dahin mit. Rückmeldungen **in `app/atelier/index.html`** einarbeiten, in kleinen Schritten, jeweils Vorschau aktualisieren.
 2. Offene Korrekturen der alten App (`PROJEKT.md` Abschnitt 4, `docs/REVIEW-ALT.md` Abschnitt 4), z. B. PDF-Button, Bildbeschnitt 5 % (`CROP` in `fitBox`), nur nach Rücksprache.
 3. Frühtests auf HA (Kamera, große Uploads über Cloudflare, zwei Benutzer gleichzeitig) in `PROJEKT.md` eintragen.
