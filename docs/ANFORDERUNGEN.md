@@ -239,6 +239,8 @@ Seit 25.11.2026 ist das Atelier (`app/atelier/index.html`) die App (E7, `CLAUDE.
 
 **A2 Fotos verbessern (25.11.2026):** I-01 Lupe beim Ziehen der Perspektiv-Punkte, automatische Blatterkennung (Abschnitt 6, „danach automatische Blatterkennung“), Feindrehen ±15° mit Zuschnitt ohne weiße Ecken, Vorher/Nachher-Vergleich. Bearbeitung bleibt nicht-destruktiv (B-03): gespeichert werden nur Parameter (`edit.q`, `edit.fr` …), das Original bleibt unverändert.
 
+**A3 Seiten (25.11.2026):** S-05 Sticker drehen (auch im Export), W-10 Sticker-Vorschläge aus Titel, Art und Stichwörtern der Bilder einer Seite, E7 höchstens 5 % Beschnitt in der Seitenansicht (Export folgt in A4), Seitentext-Verknüpfung: Datum und Alter einer Seite folgen dem ersten Kunstwerk (abschaltbar).
+
 ## 16. Offene Fragen
 
 1. W-04 Gemeinschaftswerk: Lösung wie beschrieben in Ordnung? Braucht ihr den „Beitrag pro Kind“?

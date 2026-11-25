@@ -94,7 +94,7 @@ Funktionsumfang laut Übergabe, **geprüft in M0** (Code-Review, nicht im Browse
 |---|---|---|
 | Zuschneiden und Perspektivrahmen: Griffe an Ecken **und** Seitenmitten, ganzer Rahmen verschiebbar | ✅ | Im Code umgesetzt; Lupe fehlt noch (I-01) |
 | Sticker per Maus und Touch verschiebbar, skalierbar, löschbar | ✅ | Im Code umgesetzt; Drehen fehlt (S-05) |
-| Kinderbilder vollständig ohne Abschneiden (`object-contain`), wenig Weißraum | ⚠️ | Bis zu 10 % Beschnitt gegen Weißraum (bewusster Kompromiss im Code) |
+| Kinderbilder vollständig ohne Abschneiden (`object-contain`), wenig Weißraum | ✅ Ansicht / ⚠️ Export | In der App höchstens 5 % Beschnitt (A3). PDF/ZIP-Export schneidet noch auf Feldgröße zu, Korrektur in A4 |
 | PDF-Button funktioniert; PDF im gleichen Stil wie die Albumseiten | ⚠️ | Ursache offen; Stilabweichung, weil Vorschau (HTML) und Export (Canvas) getrennt programmiert sind |
 
 Diese Korrekturen werden **nicht** mehr an der alten App umgesetzt, sondern in der neuen Version (Meilensteine M3 bis M6).
@@ -119,8 +119,8 @@ Seit 25.11.2026 entsteht alles im Atelier der Nutzerin, in vier Meilensteinen au
 | # | Meilenstein | Status |
 |---|---|---|
 | A1 | Archiv: Profilbild und Lieblingsfarbe, Zeitstrahl, Datum aus dem Foto, Stichwörter, viele Fotos auf einmal, Großansicht mit Wischen, Suchen und Filtern, Papierkorb, Warnung beim Löschen | ✅ fertig 25.11.2026 (von der Nutzerin abgenommen) |
-| A2 | Fotos verbessern: Lupe und automatische Eckenerkennung, feines Drehen, Vorher/Nachher | ✅ gebaut 25.11.2026, Rückmeldung ausstehend |
-| A3 | Seiten: Sticker drehen, Sticker-Vorschläge aus Stichwörtern, kein Abschneiden, Seiten ändern sich mit | ⬜ |
+| A2 | Fotos verbessern: Lupe und automatische Eckenerkennung, feines Drehen, Vorher/Nachher | ✅ fertig 25.11.2026 (abgenommen) |
+| A3 | Seiten: Sticker drehen, Sticker-Vorschläge aus Stichwörtern, kein Abschneiden, Seiten ändern sich mit | ✅ gebaut 25.11.2026, Rückmeldung ausstehend |
 | A4 | Fotobuch & PDF: PDF wie in der App, PDF-Knopf, Fotobuch aus mehreren Seiten, Geschwister | ⬜ |
 
 ### Frühtests M1 (auf Home Assistant, Technik-Test-Seite)
