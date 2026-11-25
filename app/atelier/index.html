@@ -464,7 +464,7 @@ for(const d of pg.ds||[]){const s=d.s*u,X=d.x/100*Wp,Y=d.y/100*Hp,dreh=(w,h,f)=>
 if(d.g[0]=='@'){const im=await imgFrom(ST[d.g.slice(1)]);if(im){const w=1.6*s,h=w*im.height/im.width;dreh(w,h,(a,b)=>x.drawImage(im,a,b,w,h))}}
 else if(/^<img/.test(d.g)){const im=await imgFrom(d.g.match(/src="([^"]+)"/)[1]);if(im){const w=1.6*s,h=w*im.height/im.width;dreh(w,h,(a,b)=>x.drawImage(im,a,b,w,h))}}
 else if(/^<svg/.test(d.g)){const im=await imgFrom('data:image/svg+xml;charset=utf-8,'+encodeURIComponent(d.g.replace('<svg ','<svg xmlns="http://www.w3.org/2000/svg" width="400" height="280" ')));if(im)dreh(1.5*s,1.05*s,(a,b)=>x.drawImage(im,a,b,1.5*s,1.05*s))}
-else{const m=d.g.match(/color:([^"]+)">(.)/),g=m?m[2]:d.g;x.font=s+'px sans-serif';x.fillStyle=m?m[1]:'#000';dreh(x.measureText(g).width,s,(a,b)=>x.fillText(g,a,b))}}
+else{/* Zeichen-Sticker (z. B. Sternzeichen) mit Textdarstellung U+FE0E wie in der App, sonst malt das Handy im PDF bunte Emoji-Kästchen (25.11.2026) */const m=d.g.match(/color:([^"]+)">([^<]+)</),g=m?m[2]:d.g;x.font=s+'px sans-serif';x.fillStyle=m?m[1]:'#000';dreh(x.measureText(g).width,s,(a,b)=>x.fillText(g,a,b))}}
 return c}
 async function mkPdf(pgs){const enc=new TextEncoder(),ch=[],off=[];let len=0;const add=d=>{const b=typeof d=='string'?enc.encode(d):d;ch.push(b);len+=b.length},n=pgs.length,ob=(id,body)=>{off[id]=len;add(`${id} 0 obj\n`);body();add('\nendobj\n')};add('%PDF-1.4\n');
 ob(1,()=>add('<< /Type /Catalog /Pages 2 0 R >>'));ob(2,()=>add(`<< /Type /Pages /Count ${n} /Kids [${pgs.map((_,i)=>`${3+i*3} 0 R`).join(' ')}] >>`));
