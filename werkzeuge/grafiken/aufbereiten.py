@@ -30,14 +30,10 @@ KARTEN = {
     'goldglanz': (684, 1794, 422, 447),
 }
 FARBE = {'salbei': '#B2B89D', 'rose': '#E8C1B7', 'terra': '#D28A74', 'senf': '#E6BA72', 'eis': '#A8C3C8', 'stern': '#6B8E9B'}
-# Weitere Themen: Form einer Vorlage, umgefärbt in Farben der Palette (rund um die Mitte verteilt)
+# Fehlende Farbvarianten (Rosé, bunte Mischung): Form einer Vorlage, umgefärbt in Farben der Palette (rund um die Mitte verteilt).
+# Bewusst nur so viele, dass jede Farbvariante einmal vorkommt (Wunsch der Nutzerin, 25.11.2026).
 UMGEFAERBT = {
     'regenbogen': ('urzeit', ['rose', 'senf', 'eis', 'salbei']),
-    'jahrmarkt': ('sonne', ['rose', 'terra']),
-    'kita': ('feenwald', ['senf', 'eis']),
-    'tierpark': ('urzeit', ['salbei', 'terra']),
-    'natur': ('feenwald', ['salbei', 'rose']),
-    'ostern': ('sonne', ['senf', 'salbei', 'rose']),
     'familie': ('urzeit', ['rose', 'rose', 'terra']),
 }
 
