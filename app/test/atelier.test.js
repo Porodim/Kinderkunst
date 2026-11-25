@@ -45,9 +45,25 @@ test('Atelier ist die Startseite, Technik-Test unter /technik', async () => {
     assert.match(start, /<script src="speicher.js"><\/script>/);
     assert.match(start, /Speicher\.original\(p,f\)/);
     assert.equal((await fetch(`${s.basis}/speicher.js`)).status, 200);
+    assert.equal((await fetch(`${s.basis}/fotodatum.js`)).status, 200);
+    assert.match(start, /data-t="gal">Archiv</);
     assert.match(await (await fetch(`${s.basis}/technik`)).text(), /js\/app\.js/);
     assert.equal((await fetch(`${s.basis}/js/app.js`)).status, 200);
   } finally {
     await s.stopp();
   }
+});
+
+test('Atelier: Aufnahmedatum aus dem Foto (fotodatum.js)', async () => {
+  const vm = await import('node:vm');
+  const fs = await import('node:fs');
+  const { jpegMitExif, MINI_PNG } = await import('./hilfen.js');
+  const kontext = {};
+  vm.runInNewContext(fs.readFileSync(new URL('../atelier/fotodatum.js', import.meta.url), 'utf8'), kontext);
+  const { Fotodatum } = kontext;
+  assert.equal(Fotodatum.ausBytes(jpegMitExif({ datum: '2024:03:14 09:30:00' })), '2024-03-14');
+  assert.equal(Fotodatum.ausBytes(jpegMitExif({ datum: '0000:00:00 00:00:00' })), null);
+  assert.equal(Fotodatum.ausBytes(MINI_PNG), null);
+  assert.equal(Fotodatum.ausBytes(new Uint8Array([0xff, 0xd8, 0xff])), null);
+  assert.equal(await Fotodatum.lesen(new Blob([jpegMitExif({ datum: '2023:12:24 18:00:00' })])), '2023-12-24');
 });

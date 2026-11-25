@@ -67,6 +67,6 @@ Zeitkritisch ist das **Archivieren** (Foto + Story sichern, solange die Kinder k
 
 ## Nächster Schritt
 
-1. Das Atelier läuft mit gemeinsamem Speicher (PR liegt vor). Rückmeldungen der Nutzerin **in `app/atelier/index.html`** einarbeiten, in kleinen Schritten, jeweils Vorschau aktualisieren.
+1. Das Atelier läuft mit gemeinsamem Speicher (PR liegt vor). Die Wünsche der Nutzerin vom 25.11.2026 sind in die Meilensteine A1–A4 aufgeteilt (`docs/FAHRPLAN.md`). A1 Archiv ist gebaut; als Nächstes A2 Fotos verbessern. Rückmeldungen **in `app/atelier/index.html`** einarbeiten, in kleinen Schritten, jeweils Vorschau aktualisieren.
 2. Offene Korrekturen der alten App (`PROJEKT.md` Abschnitt 4, `docs/REVIEW-ALT.md` Abschnitt 4), z. B. PDF-Button, Bildbeschnitt 5 % (`CROP` in `fitBox`), nur nach Rücksprache.
 3. Frühtests auf HA (Kamera, große Uploads über Cloudflare, zwei Benutzer gleichzeitig) in `PROJEKT.md` eintragen.

@@ -71,8 +71,15 @@ const Speicher = (() => {
     return (await r.json()).medium.id;
   }
 
-  // Daten-URLs in Fotos einmalig hochladen und durch die Server-Adresse ersetzen.
+  // Daten-URLs in Fotos und Profilbildern einmalig hochladen und durch die Server-Adresse ersetzen.
   async function auslagern() {
+    for (const k of S.kids) {
+      const wert = k.pic;
+      if (typeof wert !== 'string' || !wert.startsWith('data:')) continue;
+      const blob = await (await fetch(wert)).blob();
+      const id = await hochladen(blob, 'profilbild', `profil-${k.id}.jpg`);
+      if (k.pic === wert) k.pic = `api/medien/${id}/datei`;
+    }
     for (const p of S.photos) {
       for (const [feld, art] of [['src', 'werkfoto'], ['out', 'sonstiges']]) {
         const wert = p[feld];

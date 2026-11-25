@@ -41,11 +41,20 @@ Claude entscheidet danach, ob ein Stand ins Repository kommt:
 | M0 | Bestandsaufnahme | Klarheit, was von der alten App bleibt | ✅ fertig |
 | M1 | Fundament | App läuft auf Home Assistant, Fotos und Ton werden sicher gespeichert, Technik-Test | ✅ fertig, offen: Backup als eigene Datei |
 | **M2a** | **Dein Atelier auf Home Assistant** | Deine bisherige App, unverändert in der Bedienung. Speichert jetzt gemeinsam auf Home Assistant: du und dein Mann seht dieselben Kinder, Fotos und Seiten. Originalfotos werden in voller Größe aufbewahrt, frühere Stände als Sicherung | ✅ gebaut, **jetzt ausprobieren** |
-| M2 (ruht) | **Archiv (neue Oberfläche)** | Schlicht wie die alte App: Kind mit Name und Geburtsdatum, Werk sichern (Foto, Kind, was es ist, Datum, Titel, „Was sagt das Kind dazu?“ als Text oder Aufnahme), Archiv nach Kindern und Alter. Seltenes (Tags, ungefähres Datum, Suche, Filter) zugeklappt | ruht (auf Wunsch der Nutzerin) |
-| M3 | Fotos geraderücken | Schräg fotografierte Bilder gerade ziehen, zuschneiden, drehen, aufhellen; das Original bleibt immer erhalten | ⬜ als Nächstes |
-| M4 | Sticker & Themen | Aquarell-Sticker in Druckqualität, Themen, Rahmen, Sticker-Vorschläge passend zu den Tags | ⬜ |
-| M5 | Seiten gestalten | Albumseiten aus dem Archiv, wie in der alten App, aber verknüpft: ändert sich ein Werk, ändert sich die Seite | ⬜ |
-| M6 | Fotobuch & PDF | Bücher zusammenstellen, Deckblatt, Paket für CEWE, PDF für den Drucker zu Hause | ⬜ |
+| M2 (ruht) | Archiv (neue Oberfläche) | Ersetzt durch die Meilensteine A1–A4 in deinem Atelier | ruht (auf Wunsch der Nutzerin) |
+
+### Deine Wünsche vom 25.11.2026, alle im Atelier (`app/atelier/index.html`)
+
+Die Nummern sind die aus deiner Auswahlliste.
+
+| | Meilenstein | Was ihr davon habt | Stand |
+|---|---|---|---|
+| **A1** | **Archiv** | Eigener Bereich „Archiv“ unten in der Leiste (11). Kind mit Profilbild und Lieblingsfarbe (1). Zeitstrahl: Werke nach Alter sortiert, „Im ersten Lebensjahr“, „Mit 2 Jahren“ … (2). Datum kommt automatisch aus dem Foto und lässt sich ändern (6). Stichwörter mit Vorschlägen (8). Viele Fotos auf einmal, Angaben später mit „Jetzt ausfüllen“ (10). Groß ansehen und wischen (12). Suchen und Filtern nach Art und Stichwort (13). Papierkorb 30 Tage (14). Warnung, wenn ein Werk noch auf einer Seite klebt (15) | ✅ gebaut, **jetzt ausprobieren** |
+| A2 | Fotos verbessern | Blatt gerade ziehen mit Lupe und automatischer Eckenerkennung (16), fein drehen (17), Vorher/Nachher (18) | ⬜ als Nächstes |
+| A3 | Seiten | Sticker drehen (19), Sticker-Vorschläge passend zu den Stichwörtern (20), Bilder ohne Abschneiden (21), Seiten ändern sich mit, wenn ein Werk geändert wird (24) | ⬜ |
+| A4 | Fotobuch & PDF | PDF sieht aus wie in der App, PDF-Knopf repariert (22), Fotobuch aus mehreren Seiten, sortieren, auch Geschwister zusammen (23) | ⬜ |
+
+Die früher geplanten Meilensteine M3–M6 gehen in A2–A4 auf.
 
 ## Kleines Wörterbuch
 

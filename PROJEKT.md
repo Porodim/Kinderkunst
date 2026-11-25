@@ -114,6 +114,15 @@ Ziel, Betrieb und Entscheidungen stehen in `docs/ARCHITEKTUR.md`, die Meilenstei
 | M6 | Buch und Export (CEWE-ZIP, PDF) | ⬜ |
 | M7 | Veröffentlichung (optional) | ⬜ |
 
+Seit 25.11.2026 entsteht alles im Atelier der Nutzerin, in vier Meilensteinen aus ihrer Wunschliste (Einzelheiten `docs/FAHRPLAN.md`, Stand `docs/ANFORDERUNGEN.md` Abschnitt 15b):
+
+| # | Meilenstein | Status |
+|---|---|---|
+| A1 | Archiv: Profilbild und Lieblingsfarbe, Zeitstrahl, Datum aus dem Foto, Stichwörter, viele Fotos auf einmal, Großansicht mit Wischen, Suchen und Filtern, Papierkorb, Warnung beim Löschen | ✅ gebaut 25.11.2026, Rückmeldung der Nutzerin ausstehend |
+| A2 | Fotos verbessern: Lupe und automatische Eckenerkennung, feines Drehen, Vorher/Nachher | ⬜ |
+| A3 | Seiten: Sticker drehen, Sticker-Vorschläge aus Stichwörtern, kein Abschneiden, Seiten ändern sich mit | ⬜ |
+| A4 | Fotobuch & PDF: PDF wie in der App, PDF-Knopf, Fotobuch aus mehreren Seiten, Geschwister | ⬜ |
+
 ### Frühtests M1 (auf Home Assistant, Technik-Test-Seite)
 
 | Test | Ergebnis |
@@ -148,6 +157,8 @@ Lokal (Chrome mit simulierter Kamera und simuliertem Mikrofon) am 24.11.2026 erf
 - [ ] Sollen Großeltern mitlesen dürfen (R-04)? (beide)
 - [ ] Zusatzideen der Frau in `docs/ANFORDERUNGEN.md` Abschnitt 17 ergänzen
 - [ ] Deployment-Weg auf HA festhalten (Entwickler), siehe `docs/ARCHITEKTUR.md`
+- [ ] **Endgültig gelöschte Werke (Entwickler):** Leert die App den Papierkorb, verschwindet das Werk aus dem gespeicherten Zustand; die Bilddateien (Original, Arbeitsfassung) bleiben aber im Datenordner des Add-ons liegen. Sollen sie automatisch mit gelöscht werden? (Vorschlag: täglicher Aufräumlauf, der Dateien löscht, auf die weder der Zustand noch eine der letzten Sicherungskopien verweist.)
+- [ ] Wo genau klemmt der Knopf „Foto hochladen“ (Vorschau in der Claude-App oder auf Home Assistant)? (seine Frau)
 
 ## 7. Änderungsprotokoll
 

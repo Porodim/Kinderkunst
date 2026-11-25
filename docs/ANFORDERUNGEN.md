@@ -225,6 +225,18 @@ Nur funktional, die Optik bleibt wie von seiner Frau gestaltet.
 | Daten | B-01 bis B-07, B-09 (Papierkorb 30 Tage; Verwendungsliste ab M5), B-10 (seitenweises Laden), B-11 | B-08 Export als Datei, B-12 (M6) |
 | Finden | D-00, D-01, D-02 (Wischen zwischen Fotos und über den Rand zum nächsten Werk), D-03 (ohne „noch auf keiner Seite“, kommt mit M5), D-04, D-05 | D-06, D-07 |
 
+## 15b. Stand im Atelier (A1 Archiv, 25.11.2026)
+
+Seit 25.11.2026 ist das Atelier (`app/atelier/index.html`) die App (E7, `CLAUDE.md`). Umgesetzt dort:
+
+| Bereich | Umgesetzt | Bewusst später / anders |
+|---|---|---|
+| Kinder | K-01, K-02 Profilbild (mittig quadratisch, ohne eigenes Zuschneiden) und Lieblingsfarbe aus der Palette, ohne Spitzname (Wunsch der Nutzerin), K-03, K-04 (Anzahl Werke, Zeitstrahl im Archiv) | K-05 |
+| Medien | F-01 (Original in voller Größe, verkleinerte Arbeitsfassung, EXIF-Datum über `app/atelier/fotodatum.js`), Profilbild als Datei (`art=profilbild`) | F-02/F-04 |
+| Werke | W-01 (Kamera oder viele Fotos auf einmal), W-03 (Gemalt, Lego, Kapla, Sonstiges wie bisher), W-05 (Datum aus dem Foto, sonst Speicherdatum der Datei, änderbar; ohne Genauigkeitsstufen), W-06, W-07 Titel, W-09 Stichwörter mit Vorschlägen aus bisherigen Stichwörtern, W-13 („Neu“-Markierung und „Jetzt ausfüllen“ nacheinander), Kind eines Werks änderbar | W-02, W-04, W-07 Story-Text, W-08/W-08a Ton, W-10 (A3), W-11, W-12 |
+| Daten | B-02, B-09 (Papierkorb 30 Tage; Warnung mit den Seiten, auf denen das Werk klebt; beim Zurückholen wieder eingeklebt) | Dateien endgültig gelöschter Werke bleiben vorerst auf dem HA-Rechner liegen (offene Frage an den Entwickler) |
+| Finden | D-00, D-01, D-02 (Großansicht mit Wischen und Pfeilen, ohne Pinch-Zoom), D-03 (Kind oder alle Kinder, Werkart, Stichwort), D-04, D-05 (Suche über Titel, Art, Stichwörter, Datum, Alter, Kind) | D-03 Favoriten und „unvollständig“, D-06, D-07 |
+
 ## 16. Offene Fragen
 
 1. W-04 Gemeinschaftswerk: Lösung wie beschrieben in Ordnung? Braucht ihr den „Beitrag pro Kind“?
