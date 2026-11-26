@@ -197,6 +197,8 @@ let pr=[0,0,0],pz=0;for(let i=0;i<n;i++)if(wt[i]){for(let q=0;q<3;q++)pr[q]+=a[i
 const id=kx.createImageData(w,h);for(let i=0;i<n;i++){for(let q=0;q<3;q++){const v=den[i]>1e-3?num[i*3+q]/den[i]:pr[q];id.data[i*4+q]=Math.max(pr[q]*.4,Math.min(255,v))}id.data[i*4+3]=255}kx.putImageData(id,0,0);
 const g=cv(W,H),gx=g.getContext('2d');gx.imageSmoothingEnabled=true;gx.imageSmoothingQuality='high';gx.drawImage(k,0,0,W,H);const B=gx.getImageData(0,0,W,H).data,im=x.getImageData(0,0,W,H),d=im.data;
 for(let i=0;i<d.length;i+=4){let r=Math.min(2.4,250/B[i])*d[i],gg=Math.min(2.4,250/B[i+1])*d[i+1],bb=Math.min(2.4,250/B[i+2])*d[i+2];
+/* Knicke glätten: farblose, nur ganz leicht graue Stellen (Knickschatten) werden weiß; Bleistift ist dunkler und bleibt. */
+{const l0=.299*r+.587*gg+.114*bb,sa=Math.max(r,gg,bb)-Math.min(r,gg,bb);if(l0>204&&sa<14){const t=Math.min(1,(l0-204)/26);r+=(252-r)*t;gg+=(252-gg)*t;bb+=(252-bb)*t}}
 r=(r-128)*1.06+128;gg=(gg-128)*1.06+128;bb=(bb-128)*1.06+128;const y=.299*r+.587*gg+.114*bb;d[i]=y+(r-y)*1.12;d[i+1]=y+(gg-y)*1.12;d[i+2]=y+(bb-y)*1.12}
 x.putImageData(im,0,0)}
 /* Blatt automatisch gerade ziehen nur bei einem klar erkannten, fast rechteckigen Blatt (keine Bauwerke verzerren) */
