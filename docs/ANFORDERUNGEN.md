@@ -243,6 +243,8 @@ Seit 25.11.2026 ist das Atelier (`app/atelier/index.html`) die App (E7, `CLAUDE.
 
 **A4 Fotobuch & PDF (25.11.2026):** E-04 PDF im Stil der Seiten (gleiche Rahmen, Hintergründe, Typografie, höchstens 5 % Beschnitt), mehrere Alben je Kind mit eigenem Deckblatt, Seiten umsortieren (`pg.ord`), Geschwister-Alben (`groups`, Seiten mit Kunstwerken mehrerer Kinder, Künstlerzeile nennt jedes Kind mit Datum), Fotobuch-Paket mit exakten Maßen (21 × 28 bzw. 28 × 21 cm + 3 mm Beschnitt, 300 dpi) und Hinweis bei gemischten Formaten.
 
+**Automatische Foto-Aufbereitung (26.11.2026, Wunsch der Nutzerin):** I-01/I-03 beim Einfügen: Wird ein Blatt sicher erkannt (fast rechteckig, Winkel 60–120°, 20–97 % der Fläche), wird es automatisch gerade gezogen (`edit.q`) und „Wie eingescannt“ eingeschaltet (`edit.scan`): Licht an den leeren Papierstellen messen, dazwischen ergänzen, herausrechnen (Schatten, gelbliches Licht), Farben sanft kräftiger. Bauwerke und flächig gemalte Bilder bleiben unverändert. Abschaltbar unter Bearbeiten → Aufhellen; nicht-destruktiv (B-03).
+
 **Sprachaufnahme (25.11.2026):** W-08 umgesetzt im Atelier: Schalter „Sprachaufnahmen“ in den Einstellungen (Zahnrad, gilt je Gerät), in der Großansicht „Erzähl mal!“ → aufnehmen (höchstens 3 Minuten, B-11), anhören, speichern, neu aufnehmen, löschen. Gespeichert als `p.au={u,ms,at}`, auf Home Assistant als Medium der Art `audio`. Vorhandene Aufnahmen bleiben auch bei ausgeschaltetem Schalter hörbar. Offen: W-08a (mehrere Erzähler je Werk), S-07 QR-Code.
 
 ## 16. Offene Fragen
