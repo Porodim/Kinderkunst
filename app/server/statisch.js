@@ -6,6 +6,8 @@ import { fileURLToPath } from 'node:url';
 
 const APP = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
 const WEB = path.join(APP, 'web');
+// Hauptoberfläche ist das Kinderkunst-Atelier (die App der Nutzerin); der Technik-Test liegt unter /technik.
+const ATELIER = path.join(APP, 'atelier');
 const SCHRIFTEN = path.join(APP, 'node_modules', '@fontsource');
 
 const TYPEN = {
@@ -29,9 +31,10 @@ function innerhalb(wurzel, relativ) {
 export function liefereStatisch(req, res, pfad) {
   if (req.method !== 'GET' && req.method !== 'HEAD') return false;
   let datei = null;
-  if (pfad === '/' || pfad === '') datei = path.join(WEB, 'index.html');
+  if (pfad === '/' || pfad === '') datei = path.join(ATELIER, 'index.html');
+  else if (pfad === '/technik') datei = path.join(WEB, 'index.html');
   else if (pfad.startsWith('/schriften/')) datei = innerhalb(SCHRIFTEN, pfad.slice('/schriften/'.length).replace(/^([\w-]+)\//, '$1/files/'));
-  else datei = innerhalb(WEB, pfad);
+  else datei = [innerhalb(ATELIER, pfad), innerhalb(WEB, pfad)].find((d) => d && fs.existsSync(d) && fs.statSync(d).isFile()) || null;
   if (!datei || !fs.existsSync(datei) || !fs.statSync(datei).isFile()) return false;
 
   const endung = path.extname(datei);

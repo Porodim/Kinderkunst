@@ -94,7 +94,7 @@ Funktionsumfang laut Übergabe, **geprüft in M0** (Code-Review, nicht im Browse
 |---|---|---|
 | Zuschneiden und Perspektivrahmen: Griffe an Ecken **und** Seitenmitten, ganzer Rahmen verschiebbar | ✅ | Im Code umgesetzt; Lupe fehlt noch (I-01) |
 | Sticker per Maus und Touch verschiebbar, skalierbar, löschbar | ✅ | Im Code umgesetzt; Drehen fehlt (S-05) |
-| Kinderbilder vollständig ohne Abschneiden (`object-contain`), wenig Weißraum | ⚠️ | Bis zu 10 % Beschnitt gegen Weißraum (bewusster Kompromiss im Code) |
+| Kinderbilder vollständig ohne Abschneiden (`object-contain`), wenig Weißraum | ✅ | In App, PDF und Fotobuch-Paket höchstens 5 % Beschnitt (A3/A4, gemeinsame Berechnung `fitBox`) |
 | PDF-Button funktioniert; PDF im gleichen Stil wie die Albumseiten | ⚠️ | Ursache offen; Stilabweichung, weil Vorschau (HTML) und Export (Canvas) getrennt programmiert sind |
 
 Diese Korrekturen werden **nicht** mehr an der alten App umgesetzt, sondern in der neuen Version (Meilensteine M3 bis M6).
@@ -106,13 +106,22 @@ Ziel, Betrieb und Entscheidungen stehen in `docs/ARCHITEKTUR.md`, die Meilenstei
 | # | Meilenstein | Status |
 |---|---|---|
 | M0 | Bestandsaufnahme, Entscheidung Weiterbau/Neustart, Tech-Stack | ✅ Review fertig (`docs/REVIEW-ALT.md`), **Entscheidung durch den Entwickler offen** |
-| M1 | Fundament: Repo, Docker + HA-Add-on, SQLite + Dateiablage, Ingress, Backup, Kamera-/Mikrofontest | 🔄 Teil 1 fertig (Branch `feature/m1-fundament`): Server, Datenbank, Medien, Anmeldung, Technik-Test, Add-on „Kinderkunst (Test)“. Offen: Frühtests auf HA, Backup-Export, Add-on für echte Daten |
-| M2 | Archiv-MVP: Kinder, Werke, Fotos, Story Text + Audio, Tags, Galerie | ⬜ |
+| M1 | Fundament: Repo, Docker + HA-Add-on, SQLite + Dateiablage, Ingress, Backup, Kamera-/Mikrofontest | ✅ fertig (Add-ons „Kinderkunst (Test)“ und „Kinderkunst“). Offen: Frühtests auf HA, Backup-Export als Datei (B-08) |
+| M2 | Archiv-MVP: Kinder, Werke, Fotos, Story Text + Audio, Tags, Galerie | ✅ gebaut (Branch `feature/entwicklung`, PR); Rückmeldungen ausstehend. Umfang siehe `docs/ANFORDERUNGEN.md` Abschnitt 15a |
 | M3 | Bildbearbeitung nicht-destruktiv | ⬜ |
 | M4 | Sticker und Themen | ⬜ |
 | M5 | Seiten kuratieren | ⬜ |
 | M6 | Buch und Export (CEWE-ZIP, PDF) | ⬜ |
 | M7 | Veröffentlichung (optional) | ⬜ |
+
+Seit 25.11.2026 entsteht alles im Atelier der Nutzerin, in vier Meilensteinen aus ihrer Wunschliste (Einzelheiten `docs/FAHRPLAN.md`, Stand `docs/ANFORDERUNGEN.md` Abschnitt 15b):
+
+| # | Meilenstein | Status |
+|---|---|---|
+| A1 | Archiv: Profilbild und Lieblingsfarbe, Zeitstrahl, Datum aus dem Foto, Stichwörter, viele Fotos auf einmal, Großansicht mit Wischen, Suchen und Filtern, Papierkorb, Warnung beim Löschen | ✅ fertig 25.11.2026 (von der Nutzerin abgenommen) |
+| A2 | Fotos verbessern: Lupe und automatische Eckenerkennung, feines Drehen, Vorher/Nachher | ✅ fertig 25.11.2026 (abgenommen) |
+| A3 | Seiten: Sticker drehen, Sticker-Vorschläge aus Stichwörtern, kein Abschneiden, Seiten ändern sich mit; dazu Aquarell-Hintergründe, Familie & Liebe, Galerie-Typografie und -Anordnung | ✅ fertig 25.11.2026 (abgenommen) |
+| A4 | Fotobuch & PDF: PDF wie in der App, PDF-Knopf, Fotobuch aus mehreren Seiten, Geschwister | ✅ gebaut 25.11.2026 (Alben je Kind, Seiten sortieren, Geschwister-Alben, PDF und Fotobuch-Paket geprüft, Album füllen, nach Datum sortieren); von der Nutzerin abgenommen am 25.11.2026 |
 
 ### Frühtests M1 (auf Home Assistant, Technik-Test-Seite)
 
@@ -139,6 +148,7 @@ Lokal (Chrome mit simulierter Kamera und simuliertem Mikrofon) am 24.11.2026 erf
 - [x] Neues Gerüst und Tech-Stack festgelegt (24.11.2026), siehe `docs/ARCHITEKTUR.md` A7/A8
 - [x] HA-Rechner: Raspberry Pi, vermutlich Pi 5 (`aarch64`)
 - [x] Datenschutz: Personennamen und Foto-Beschreibungen aus allen Dokumenten **und dem Git-Verlauf** entfernt (24.11.2026)
+- [ ] **Repo privat und Home Assistant (Entwickler, spätestens zum nächsten Meilenstein):** Das Test-Add-on holt sich den Code beim Bauen von GitHub. Ist das Repo privat, schlägt „Neu bauen“ fehl (das installierte Add-on läuft weiter). Möglichkeiten: (a) Repo zum Ausrollen kurz öffentlich stellen, (b) fertiges Image in GitHub Packages (privat) bauen lassen und in HA unter „Registries“ hinterlegen; dann braucht es ein kleines öffentliches Repo nur mit der Add-on-Beschreibung, (c) Add-on-Ordner als lokales Add-on per Samba in den Ordner `addons` auf dem HA-Rechner kopieren.
 - [ ] Alte Commits sind bei GitHub noch über ihre direkte Kennung abrufbar, bis GitHub sie aufräumt. Für endgültiges Entfernen beim GitHub-Support „cached views“ löschen lassen (Entwickler)
 - [x] Bildbeschnitt auf Seiten höchstens 5 %; Rahmen und Deko wie in der alten App
 - [ ] **Sticker in Druckauflösung (M4):** Die vorhandenen Sticker sind 90–249 px groß. Claude kann keine neuen Aquarell-Rastergrafiken malen. Möglich sind: (a) hochrechnen der vorhandenen Grafiken (wird etwas weicher), (b) neue Fassungen mit einem Bildgenerator erzeugen, die vorhandenen Sticker als Vorlage, (c) Sticker im Druck kleiner halten. Entscheidung in M4 (seine Frau)
@@ -147,6 +157,13 @@ Lokal (Chrome mit simulierter Kamera und simuliertem Mikrofon) am 24.11.2026 erf
 - [ ] Sollen Großeltern mitlesen dürfen (R-04)? (beide)
 - [ ] Zusatzideen der Frau in `docs/ANFORDERUNGEN.md` Abschnitt 17 ergänzen
 - [ ] Deployment-Weg auf HA festhalten (Entwickler), siehe `docs/ARCHITEKTUR.md`
+- [x] Hintergründe in Druckqualität: selbst gemalt mit `werkzeuge/grafiken/aquarell-malen.py` (1600×1131), auf Wunsch dezent: Farbe überall leicht, weicher Übergang zur Mitte, damit Kinderbild und Sticker im Mittelpunkt stehen.
+- [ ] **Eigene Adresse für den Handy-Startbildschirm (Entwickler):** Über HA-Ingress ist die App in die HA-Oberfläche eingebettet; „Zum Home-Bildschirm“ legt dann die HA-Seite mit HA-Symbol ab, nicht das Siegel (`icon-180.png`). Für ein eigenes App-Symbol bräuchte das Atelier eine eigene Adresse (z. B. Cloudflare-Subdomain auf den Add-on-Port) mit eigener Anmeldung – berührt A7/A8 (nur Ingress), daher Entscheidung des Entwicklers.
+- [ ] **Schriften lokal (Entwickler):** Das Atelier lädt Dancing Script, Nunito und Cormorant noch von Google Fonts (aus der alten App). Umstellen auf die lokal ausgelieferten `@fontsource`-Dateien (`/schriften/`), damit nichts extern abgerufen wird und PDF-Schriften offline stimmen?
+- [ ] **QR-Code zur Sprachaufnahme im Fotobuch (Entwickler, Entscheidung nötig):** Ein gedruckter QR-Code muss auf eine Adresse zeigen, die auch Oma ohne Home-Assistant-Anmeldung öffnen kann. Vorschlag: eine öffentliche Route nur zum Abspielen (z. B. `hoeren/<zufälliges Kennwort je Aufnahme>`) über die vorhandene Cloudflare-Adresse, abschaltbar. Alternative: Der QR-Code funktioniert nur für angemeldete Familienmitglieder. Die Nutzerin will QR-Codes ausdrücklich optional (eigener Schalter).
+- [ ] **Neuer Teil im gespeicherten Zustand (Entwickler, zur Info beim Merge):** Seit 25.11.2026 speichert das Atelier neben `kids`, `photos`, `pages` auch `groups` (Geschwister-Alben). `routen/atelier.js` nimmt das Feld optional an (ältere Stände ohne `groups` bleiben gültig), `speicher.js` führt es wie die anderen nach ID zusammen; Test in `test/atelier.test.js`. Keine Tabellenänderung, daher keine Migration.
+- [ ] **Endgültig gelöschte Werke (Entwickler):** Leert die App den Papierkorb, verschwindet das Werk aus dem gespeicherten Zustand; die Bilddateien (Original, Arbeitsfassung) bleiben aber im Datenordner des Add-ons liegen. Sollen sie automatisch mit gelöscht werden? (Vorschlag: täglicher Aufräumlauf, der Dateien löscht, auf die weder der Zustand noch eine der letzten Sicherungskopien verweist.)
+- [x] Knopf „Foto hochladen“ klemmt in der Vorschau (Claude-App lässt dort keine Dateiauswahl zu). Ersatz: Knopf „Beispielfotos“ nur in der Vorschau. Auf Home Assistant noch prüfen (Frühtest).
 
 ## 7. Änderungsprotokoll
 

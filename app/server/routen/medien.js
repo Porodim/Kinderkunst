@@ -1,9 +1,14 @@
-// Medien (F-01): hochladen, auflisten, Original ausliefern.
-//   POST /api/medien?art=werkfoto   Rohdaten im Anfragekörper, Kopfzeilen Content-Type, X-Dateiname, X-Dauer-Ms
-//   GET  /api/medien                neueste zuerst
+// Medien (F-01): hochladen, auflisten, Original und Vorschaubild ausliefern.
+//   POST /api/medien?art=werkfoto     Rohdaten im Anfragekörper; Kopfzeilen Content-Type, X-Dateiname,
+//                                     X-Dauer-Ms (Audio), X-Datei-Datum (Änderungsdatum der Datei, JJJJ-MM-TT)
+//   GET  /api/medien                  neueste zuerst
 //   GET  /api/medien/:id
-//   GET  /api/medien/:id/datei      unverändertes Original, mit Range-Unterstützung (für Audio auf dem iPhone)
+//   GET  /api/medien/:id/datei        unverändertes Original, mit Range-Unterstützung (Audio auf dem iPhone)
+//   GET  /api/medien/:id/vorschau?groesse=400|2000   WebP-Vorschau (B-04), sonst Original
 import { HttpFehler, sendeJson } from '../antworten.js';
+import { leseBildInfo } from '../../web/js/exif.js';
+import { GROESSEN } from '../vorschauen.js';
+import { istDatum } from '../../web/js/alter.js';
 
 const BILD = {
   'image/jpeg': '.jpg',
@@ -22,8 +27,9 @@ const AUDIO = {
   'audio/wav': '.wav',
 };
 const ARTEN = ['werkfoto', 'kindfoto', 'profilbild', 'audio', 'sonstiges'];
-const FELDER = `id, art, mime, originalname, groesse, sha256, breite, hoehe, dauer_ms, aufgenommen_am,
-  hochgeladen_am, (SELECT anzeigename FROM benutzer b WHERE b.id = hochgeladen_von) AS hochgeladen_von`;
+export const MEDIUM_FELDER = `m.id, m.art, m.mime, m.originalname, m.groesse, m.sha256, m.breite, m.hoehe, m.dauer_ms,
+  m.aufgenommen_am, json_extract(m.exif, '$.dateiDatum') AS datei_datum, m.hochgeladen_am,
+  (SELECT anzeigename FROM benutzer b WHERE b.id = m.hochgeladen_von) AS hochgeladen_von`;
 
 function dateiname(req) {
   try {
@@ -33,15 +39,16 @@ function dateiname(req) {
   }
 }
 
-export function registriereMedien(router, { db, ablage, konfiguration }) {
-  const nachHash = db.prepare(`SELECT ${FELDER} FROM medium WHERE familie_id = ? AND sha256 = ?`);
-  const nachId = db.prepare(`SELECT ${FELDER}, datei FROM medium WHERE familie_id = ? AND id = ? AND geloescht_am IS NULL`);
+export function registriereMedien(router, { db, ablage, konfiguration, vorschauen }) {
+  const nachHash = db.prepare(`SELECT ${MEDIUM_FELDER} FROM medium m WHERE m.familie_id = ? AND m.sha256 = ?`);
+  const nachId = db.prepare(`SELECT ${MEDIUM_FELDER}, m.datei FROM medium m WHERE m.familie_id = ? AND m.id = ? AND m.geloescht_am IS NULL`);
   const liste = db.prepare(
-    `SELECT ${FELDER} FROM medium WHERE familie_id = ? AND geloescht_am IS NULL ORDER BY hochgeladen_am DESC, id DESC LIMIT ?`,
+    `SELECT ${MEDIUM_FELDER} FROM medium m WHERE m.familie_id = ? AND m.geloescht_am IS NULL ORDER BY m.hochgeladen_am DESC, m.id DESC LIMIT ?`,
   );
   const einfuegen = db.prepare(`
-    INSERT INTO medium (familie_id, art, mime, datei, originalname, groesse, sha256, dauer_ms, hochgeladen_von)
-    VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?) RETURNING id`);
+    INSERT INTO medium (familie_id, art, mime, datei, originalname, groesse, sha256, breite, hoehe, dauer_ms,
+      aufgenommen_am, exif, hochgeladen_von)
+    VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?) RETURNING id`);
 
   router.post('/api/medien', async (req, res, { benutzer, query }) => {
     const art = query.get('art') || 'werkfoto';
@@ -58,11 +65,13 @@ export function registriereMedien(router, { db, ablage, konfiguration }) {
     const vorhanden = nachHash.get(benutzer.familie_id, gespeichert.sha256);
     if (vorhanden) return sendeJson(res, 200, { duplikat: true, medium: vorhanden });
 
+    const info = istAudio ? {} : leseBildInfo(await ablage.leseAnfang(gespeichert.pfad, 256 * 1024));
+    const dateiDatum = String(req.headers['x-datei-datum'] || '');
+    const exif = { ausrichtung: info.ausrichtung ?? null, dateiDatum: istDatum(dateiDatum) ? dateiDatum : null };
     const dauer = istAudio && Number.isFinite(Number(req.headers['x-dauer-ms'])) ? Math.round(Number(req.headers['x-dauer-ms'])) : null;
-    let id;
     try {
-      ({ id } = einfuegen.get(benutzer.familie_id, art, mime, gespeichert.pfad, dateiname(req), gespeichert.groesse,
-        gespeichert.sha256, dauer, benutzer.id));
+      einfuegen.get(benutzer.familie_id, art, mime, gespeichert.pfad, dateiname(req), gespeichert.groesse, gespeichert.sha256,
+        info.breite ?? null, info.hoehe ?? null, dauer, info.datum ?? null, JSON.stringify(exif), benutzer.id);
     } catch (fehler) {
       // Gleiche Datei zeitgleich von zwei Geräten hochgeladen
       const doch = nachHash.get(benutzer.familie_id, gespeichert.sha256);
@@ -88,14 +97,13 @@ export function registriereMedien(router, { db, ablage, konfiguration }) {
     sendeJson(res, 200, { medium });
   });
 
-  router.get('/api/medien/:id/datei', async (req, res, { benutzer, params }) => {
-    const medium = lade(benutzer, params.id);
-    const gesamt = await ablage.groesse(medium.datei);
+  async function sendeDatei(req, res, relativ, mime, etag) {
+    const gesamt = await ablage.groesse(relativ);
     const kopf = {
-      'Content-Type': medium.mime,
+      'Content-Type': mime,
       'Accept-Ranges': 'bytes',
       'Cache-Control': 'private, max-age=31536000, immutable',
-      ETag: `"${medium.sha256}"`,
+      ETag: `"${etag}"`,
     };
     if (req.headers['if-none-match'] === kopf.ETag) {
       res.writeHead(304, kopf);
@@ -103,16 +111,30 @@ export function registriereMedien(router, { db, ablage, konfiguration }) {
     }
     const bereich = /^bytes=(\d*)-(\d*)$/.exec(req.headers.range || '');
     if (bereich && (bereich[1] || bereich[2])) {
-      let start = bereich[1] ? Number(bereich[1]) : Math.max(0, gesamt - Number(bereich[2]));
-      let ende = bereich[1] && bereich[2] ? Math.min(Number(bereich[2]), gesamt - 1) : gesamt - 1;
+      const start = bereich[1] ? Number(bereich[1]) : Math.max(0, gesamt - Number(bereich[2]));
+      const ende = bereich[1] && bereich[2] ? Math.min(Number(bereich[2]), gesamt - 1) : gesamt - 1;
       if (start > ende || start >= gesamt) {
         res.writeHead(416, { 'Content-Range': `bytes */${gesamt}` });
         return res.end();
       }
       res.writeHead(206, { ...kopf, 'Content-Range': `bytes ${start}-${ende}/${gesamt}`, 'Content-Length': ende - start + 1 });
-      return ablage.leseStream(medium.datei, { start, end: ende }).on('error', () => res.destroy()).pipe(res);
+      return ablage.leseStream(relativ, { start, end: ende }).on('error', () => res.destroy()).pipe(res);
     }
     res.writeHead(200, { ...kopf, 'Content-Length': gesamt });
-    ablage.leseStream(medium.datei).on('error', () => res.destroy()).pipe(res);
+    ablage.leseStream(relativ).on('error', () => res.destroy()).pipe(res);
+  }
+
+  router.get('/api/medien/:id/datei', async (req, res, { benutzer, params }) => {
+    const medium = lade(benutzer, params.id);
+    await sendeDatei(req, res, medium.datei, medium.mime, medium.sha256);
+  });
+
+  router.get('/api/medien/:id/vorschau', async (req, res, { benutzer, params, query }) => {
+    const medium = lade(benutzer, params.id);
+    if (medium.art === 'audio') throw new HttpFehler(404, 'Audio hat keine Vorschau');
+    const groesse = GROESSEN.includes(Number(query.get('groesse'))) ? Number(query.get('groesse')) : GROESSEN[0];
+    const vorschau = await vorschauen.pfad(medium, groesse);
+    if (vorschau) return sendeDatei(req, res, vorschau, 'image/webp', `${medium.sha256}-${groesse}`);
+    await sendeDatei(req, res, medium.datei, medium.mime, medium.sha256);
   });
 }

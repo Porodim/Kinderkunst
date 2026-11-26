@@ -1,0 +1,275 @@
+/* Nur für die Vorschau-Seite bei Claude (wird von werkzeuge/vorschau-bauen.mjs eingebunden, nicht auf Home Assistant).
+ *
+ * In der Claude-App auf dem Handy lässt sich auf der Vorschau-Seite oft keine Datei auswählen. Damit man trotzdem
+ * Bildbearbeitung und das automatische Datum ausprobieren kann, erzeugt dieser Knopf im Archiv drei erfundene
+ * Beispielfotos (gemalt mit Canvas, keine echten Bilder) samt eingebettetem Aufnahmedatum (EXIF) und gibt sie
+ * genau so an die App wie Fotos aus der Galerie. Für das Kinderprofil gibt es ebenso ein gemaltes Beispielbild.
+ */
+(() => {
+  const BEISPIELE = [
+    { name: 'beispiel-haus.jpg', datum: '2023:06:12 10:15:00', malen: hausAufPapier },
+    { name: 'beispiel-regenbogen.jpg', datum: '2024:12:20 16:40:00', malen: regenbogenImSchatten },
+    { name: 'beispiel-turm.jpg', datum: '2025:09:03 11:05:00', malen: bausteinTurm },
+  ];
+
+  // Zufall mit festem Startwert, damit die Bilder immer gleich aussehen
+  let saat = 7;
+  const zufall = () => ((saat = (saat * 16807) % 2147483647) - 1) / 2147483646;
+  const wackel = (n) => (zufall() - 0.5) * n;
+
+  function tisch(x, w, h) {
+    const g = x.createLinearGradient(0, 0, w, h);
+    g.addColorStop(0, '#a77b52');
+    g.addColorStop(1, '#7d5634');
+    x.fillStyle = g;
+    x.fillRect(0, 0, w, h);
+    x.globalAlpha = 0.18;
+    for (let y = 0; y < h; y += 9) {
+      x.strokeStyle = zufall() > 0.5 ? '#5a3b22' : '#c49a6c';
+      x.lineWidth = 1 + zufall() * 3;
+      x.beginPath();
+      x.moveTo(0, y + wackel(6));
+      x.bezierCurveTo(w / 3, y + wackel(14), (2 * w) / 3, y + wackel(14), w, y + wackel(6));
+      x.stroke();
+    }
+    x.globalAlpha = 1;
+  }
+
+  // Stiftstrich mit leichtem Zittern wie bei Kinderhand
+  function strich(x, punkte, farbe, breite) {
+    x.strokeStyle = farbe;
+    x.lineWidth = breite;
+    x.lineCap = 'round';
+    x.lineJoin = 'round';
+    x.beginPath();
+    punkte.forEach(([px, py], i) => (i ? x.lineTo(px + wackel(5), py + wackel(5)) : x.moveTo(px, py)));
+    x.stroke();
+  }
+  function kreis(x, cx, cy, r, farbe, breite, fuellen) {
+    const p = [];
+    for (let i = 0; i <= 36; i++) p.push([cx + Math.cos(i / 5.73) * r, cy + Math.sin(i / 5.73) * r]);
+    if (fuellen) {
+      x.fillStyle = fuellen;
+      x.beginPath();
+      p.forEach(([a, b], i) => (i ? x.lineTo(a, b) : x.moveTo(a, b)));
+      x.fill();
+    }
+    strich(x, p, farbe, breite);
+  }
+
+  // Blatt Papier, schräg auf dem Tisch, mit Schatten; zeichne() malt im Blatt (0..bw, 0..bh)
+  function blatt(x, mx, my, bw, bh, winkel, zeichne, licht = 1) {
+    x.save();
+    x.translate(mx, my);
+    x.rotate(winkel);
+    x.transform(1, 0, -0.06, 1, 0, 0); // etwas schief, wie von schräg oben fotografiert
+    x.shadowColor = 'rgba(0,0,0,.35)';
+    x.shadowBlur = 30;
+    x.shadowOffsetY = 12;
+    x.fillStyle = `rgb(${Math.round(238 * licht)},${Math.round(234 * licht)},${Math.round(226 * licht)})`;
+    x.fillRect(-bw / 2, -bh / 2, bw, bh);
+    x.shadowColor = 'transparent';
+    x.translate(-bw / 2, -bh / 2);
+    zeichne(x, bw, bh);
+    x.restore();
+  }
+
+  function hausAufPapier(x, w, h) {
+    tisch(x, w, h);
+    blatt(x, w / 2, h / 2, 1000, 720, -0.09, (b) => {
+      kreis(b, 830, 130, 70, '#e2a21c', 10, '#f3c745');
+      for (let i = 0; i < 10; i++) {
+        const a = (i / 10) * Math.PI * 2;
+        strich(b, [[830 + Math.cos(a) * 95, 130 + Math.sin(a) * 95], [830 + Math.cos(a) * 140, 130 + Math.sin(a) * 140]], '#e2a21c', 8);
+      }
+      b.fillStyle = 'rgba(210,90,70,.75)';
+      b.fillRect(270, 330, 300, 260);
+      strich(b, [[270, 330], [570, 330], [570, 590], [270, 590], [270, 330]], '#b3412f', 9);
+      strich(b, [[240, 340], [420, 180], [600, 340], [240, 340]], '#6b4a8e', 10);
+      strich(b, [[390, 590], [390, 470], [460, 470], [460, 590]], '#5b3a1e', 8);
+      kreis(b, 510, 400, 30, '#3b7fb0', 7, '#9fd0ee');
+      strich(b, [[40, 650], [200, 630], [380, 655], [560, 628], [760, 652], [960, 630]], '#4f9a3c', 14);
+      for (const fx of [690, 790, 880]) {
+        strich(b, [[fx, 650], [fx, 540]], '#4f9a3c', 7);
+        kreis(b, fx, 525, 22, '#d6487e', 7, '#f08bb0');
+      }
+    });
+  }
+
+  function regenbogenImSchatten(x, w, h) {
+    tisch(x, w, h);
+    blatt(x, w / 2 + 30, h / 2, 980, 700, 0.06, (b) => {
+      ['#d9443a', '#ee8a2e', '#efcd33', '#5aa646', '#3b82c4', '#7a4fa8'].forEach((f, i) => {
+        const p = [];
+        for (let k = 0; k <= 30; k++) {
+          const a = Math.PI + (k / 30) * Math.PI;
+          p.push([490 + Math.cos(a) * (380 - i * 34), 560 + Math.sin(a) * (380 - i * 34)]);
+        }
+        strich(b, p, f, 26);
+      });
+      for (const [cx, cy] of [[150, 560], [830, 560]]) {
+        kreis(b, cx, cy, 70, '#8fa9b8', 6, '#ffffff');
+        kreis(b, cx + 70, cy + 10, 55, '#8fa9b8', 6, '#ffffff');
+        kreis(b, cx - 60, cy + 15, 50, '#8fa9b8', 6, '#ffffff');
+      }
+    }, 0.78);
+    // Schatten vom Handy über einer Ecke: zum Ausprobieren von „Papier aufhellen“
+    const g = x.createRadialGradient(w * 0.1, h * 0.95, 50, w * 0.1, h * 0.95, w * 0.7);
+    g.addColorStop(0, 'rgba(0,0,0,.42)');
+    g.addColorStop(1, 'rgba(0,0,0,0)');
+    x.fillStyle = g;
+    x.fillRect(0, 0, w, h);
+  }
+
+  function bausteinTurm(x, w, h) {
+    tisch(x, w, h);
+    const farben = ['#D28A74', '#E6BA72', '#A8C3C8', '#B2B89D', '#E8C1B7', '#6B8E9B'];
+    let y = h - 220;
+    for (let i = 0; i < 9; i++) {
+      const bw = 300 - (i % 3) * 40;
+      const bx = w / 2 - bw / 2 + wackel(40);
+      x.fillStyle = farben[i % farben.length];
+      x.shadowColor = 'rgba(0,0,0,.3)';
+      x.shadowBlur = 14;
+      x.fillRect(bx, y, bw, 110);
+      x.shadowColor = 'transparent';
+      x.fillStyle = 'rgba(255,255,255,.18)';
+      x.fillRect(bx, y, bw, 18);
+      for (let n = 0; n < bw / 75 - 0.5; n++) {
+        x.fillStyle = farben[i % farben.length];
+        x.fillRect(bx + 20 + n * 75, y - 22, 48, 24);
+        x.fillStyle = 'rgba(0,0,0,.12)';
+        x.fillRect(bx + 20 + n * 75, y - 4, 48, 4);
+      }
+      y -= 118;
+    }
+  }
+
+  // EXIF-Block mit Aufnahmedatum direkt nach dem JPEG-Anfang einsetzen
+  function mitDatum(jpeg, datum) {
+    const tiff = new Uint8Array(8 + 2 + 12 + 4 + 2 + 12 + 4 + 20);
+    const v = new DataView(tiff.buffer);
+    tiff.set([0x49, 0x49], 0);
+    v.setUint16(2, 42, true);
+    v.setUint32(4, 8, true);
+    v.setUint16(8, 1, true);
+    const exifIfd = 8 + 2 + 12 + 4;
+    v.setUint16(10, 0x8769, true);
+    v.setUint16(12, 4, true);
+    v.setUint32(14, 1, true);
+    v.setUint32(18, exifIfd, true);
+    v.setUint16(exifIfd, 1, true);
+    const stelle = exifIfd + 2 + 12 + 4;
+    v.setUint16(exifIfd + 2, 0x9003, true);
+    v.setUint16(exifIfd + 4, 2, true);
+    v.setUint32(exifIfd + 6, 20, true);
+    v.setUint32(exifIfd + 10, stelle, true);
+    for (let i = 0; i < datum.length; i++) tiff[stelle + i] = datum.charCodeAt(i);
+    const kopf = [0xff, 0xe1, 0, 0, 0x45, 0x78, 0x69, 0x66, 0, 0];
+    const laenge = kopf.length - 2 + tiff.length;
+    kopf[2] = laenge >> 8;
+    kopf[3] = laenge & 255;
+    const aus = new Uint8Array(2 + kopf.length + tiff.length + jpeg.length - 2);
+    aus.set(jpeg.subarray(0, 2), 0);
+    aus.set(kopf, 2);
+    aus.set(tiff, 2 + kopf.length);
+    aus.set(jpeg.subarray(2), 2 + kopf.length + tiff.length);
+    return aus;
+  }
+
+  async function erzeugen() {
+    saat = 7;
+    const dateien = [];
+    for (const b of BEISPIELE) {
+      const hoch = b.malen === bausteinTurm;
+      const c = document.createElement('canvas');
+      c.width = hoch ? 1200 : 1600;
+      c.height = hoch ? 1600 : 1200;
+      b.malen(c.getContext('2d'), c.width, c.height);
+      const blob = await new Promise((r) => c.toBlob(r, 'image/jpeg', 0.9));
+      const roh = new Uint8Array(await blob.arrayBuffer());
+      const [j, m, t] = b.datum.slice(0, 10).split(':').map(Number);
+      dateien.push(new File([mitDatum(roh, b.datum)], b.name, { type: 'image/jpeg', lastModified: new Date(j, m - 1, t, 12).getTime() }));
+    }
+    return dateien;
+  }
+
+  // Avatar-Bild für das Kinderprofil (gemalter Platzhalter, kein echtes Foto)
+  function beispielAvatar() {
+    const c = document.createElement('canvas');
+    c.width = c.height = 400;
+    const x = c.getContext('2d');
+    x.fillStyle = '#E8C1B7';
+    x.fillRect(0, 0, 400, 400);
+    x.fillStyle = '#f6dcc6';
+    x.beginPath();
+    x.arc(200, 210, 120, 0, Math.PI * 2);
+    x.fill();
+    x.fillStyle = '#8a5a3c';
+    x.beginPath();
+    x.arc(200, 170, 128, Math.PI, 0);
+    x.fill();
+    x.fillStyle = '#3b342f';
+    for (const ax of [160, 240]) {
+      x.beginPath();
+      x.arc(ax, 215, 11, 0, Math.PI * 2);
+      x.fill();
+    }
+    x.strokeStyle = '#c0604a';
+    x.lineWidth = 8;
+    x.lineCap = 'round';
+    x.beginPath();
+    x.arc(200, 255, 40, 0.2 * Math.PI, 0.8 * Math.PI);
+    x.stroke();
+    return c.toDataURL('image/jpeg', 0.85);
+  }
+
+  // Knopf im Fenster „Kunstwerk hinzufügen“ neben „Foto machen“ und „Aus der Galerie“
+  const hinzuAlt = act.gadd;
+  act.gadd = (el) => {
+    hinzuAlt(el);
+    const z = document.querySelector('#sh #ast');
+    if (z) z.insertAdjacentHTML('beforebegin', '<div class="row"><button class="chip" data-a="bsp">Beispielfotos (nur Vorschau)</button></div>');
+  };
+  act.bsp = async () => { closeSh(); addFiles(await erzeugen()); };
+
+  // Sprachaufnahme: Die Vorschau darf kein Mikrofon benutzen. Ein Beispielton zeigt, wie Anhören und Speichern aussehen.
+  function beispielTon() {
+    const rate = 16000, noten = [523, 587, 659, 784, 659, 587, 523], lang = 0.32, n = Math.round(rate * lang * noten.length);
+    const puffer = new ArrayBuffer(44 + n * 2), v = new DataView(puffer);
+    const schreib = (o, t) => [...t].forEach((c, i) => v.setUint8(o + i, c.charCodeAt(0)));
+    schreib(0, 'RIFF'); v.setUint32(4, 36 + n * 2, true); schreib(8, 'WAVEfmt '); v.setUint32(16, 16, true); v.setUint16(20, 1, true);
+    v.setUint16(22, 1, true); v.setUint32(24, rate, true); v.setUint32(28, rate * 2, true); v.setUint16(32, 2, true); v.setUint16(34, 16, true);
+    schreib(36, 'data'); v.setUint32(40, n * 2, true);
+    for (let i = 0; i < n; i++) {
+      const t = i / rate, k = Math.floor(t / lang), f = noten[k], a = Math.sin(Math.PI * ((t % lang) / lang)) * 0.3;
+      v.setInt16(44 + i * 2, Math.sin(2 * Math.PI * f * t) * a * 32767, true);
+    }
+    let bin = '';
+    new Uint8Array(puffer).forEach((b) => (bin += String.fromCharCode(b)));
+    return 'data:audio/wav;base64,' + btoa(bin);
+  }
+  const aufnahmeAlt = act.aurec;
+  act.aurec = (el) => {
+    aufnahmeAlt(el);
+    const r = document.querySelector('#sh .rec');
+    if (r) r.insertAdjacentHTML('afterend', '<div class="row" style="justify-content:center"><button class="chip" data-a="bspton">Beispiel-Aufnahme (nur Vorschau)</button></div>');
+  };
+  act.bspton = () => auFertig(beispielTon(), 2240);
+
+  // Im Kinderprofil: Beispielbild statt Foto aus der Galerie
+  const kindAlt = act.kid;
+  act.kid = (el) => {
+    kindAlt(el);
+    const wahl = document.querySelector('#sh [data-kp]');
+    if (wahl) wahl.closest('label').insertAdjacentHTML('afterend', '<button class="chip" data-a="bspk">Beispielbild (nur Vorschau)</button>');
+  };
+  act.bspk = () => {
+    KD.pic = beispielAvatar();
+    const a = document.querySelector('#kpv');
+    if (a) {
+      a.style.backgroundImage = `url('${KD.pic}')`;
+      a.textContent = '';
+    }
+  };
+})();

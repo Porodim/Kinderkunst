@@ -52,6 +52,22 @@ export function erzeugeAblage(wurzel) {
     }
   }
 
+  function existiert(relativ) {
+    return fs.existsSync(absolut(relativ));
+  }
+
+  // Die ersten Bytes einer Datei, z. B. für EXIF.
+  async function leseAnfang(relativ, anzahl) {
+    const datei = await fsp.open(absolut(relativ), 'r');
+    try {
+      const puffer = Buffer.alloc(anzahl);
+      const { bytesRead } = await datei.read(puffer, 0, anzahl, 0);
+      return puffer.subarray(0, bytesRead);
+    } finally {
+      await datei.close();
+    }
+  }
+
   function leseStream(relativ, bereich) {
     return fs.createReadStream(absolut(relativ), bereich);
   }
@@ -65,5 +81,5 @@ export function erzeugeAblage(wurzel) {
     return { frei: s.bavail * s.bsize, gesamt: s.blocks * s.bsize };
   }
 
-  return { speichere, leseStream, groesse, speicherplatz };
+  return { speichere, leseStream, leseAnfang, existiert, absolut, groesse, speicherplatz };
 }

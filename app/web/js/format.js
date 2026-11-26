@@ -25,3 +25,14 @@ export function zeitpunkt(iso) {
   if (!iso) return '';
   return new Date(iso).toLocaleString('de-DE', { day: 'numeric', month: 'short', hour: '2-digit', minute: '2-digit' });
 }
+
+// Gruppiert eine Liste nach Schlüssel, Reihenfolge bleibt erhalten (wie Map.groupBy, auch auf älteren Geräten).
+export function gruppiere(liste, schluessel) {
+  const gruppen = new Map();
+  for (const eintrag of liste) {
+    const k = schluessel(eintrag);
+    if (!gruppen.has(k)) gruppen.set(k, []);
+    gruppen.get(k).push(eintrag);
+  }
+  return gruppen;
+}

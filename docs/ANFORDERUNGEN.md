@@ -215,6 +215,38 @@ Nur funktional, die Optik bleibt wie von seiner Frau gestaltet.
 | **M6** | Buch & Export | Bücher, Deckblatt, CEWE-ZIP 300 dpi + Beschnitt, PDF | Erstes CEWE-Fotobuch bestellt |
 | **M7** | Veröffentlichung (optional) | Nur bei echtem Interesse von außen | – |
 
+## 15a. Stand der Umsetzung (M2, 24.11.2026)
+
+| Bereich | Umgesetzt | Bewusst später |
+|---|---|---|
+| Kinder | K-01, K-02 (Profilbild ohne Zuschneiden), K-03, K-04 (Anzahl Werke, Zeitstrahl über Archiv) | K-05 |
+| Medien | F-01 (Original, Vorschaubilder, EXIF-Datum, Ausrichtung, Größe), F-03 | F-02/F-04 „Foto vom Kind“ mit Zuordnung (eigene Oberfläche) |
+| Werke | W-01, W-02, W-03 (inkl. Basteln), W-04 mit Beitrag, W-05 mit Genauigkeit und Vorschlag aus EXIF/Dateidatum, W-06, W-07, W-08, W-08a, W-09 mit Vorschlägen, W-11, W-13 | W-10 (M4), W-12 |
+| Daten | B-01 bis B-07, B-09 (Papierkorb 30 Tage; Verwendungsliste ab M5), B-10 (seitenweises Laden), B-11 | B-08 Export als Datei, B-12 (M6) |
+| Finden | D-00, D-01, D-02 (Wischen zwischen Fotos und über den Rand zum nächsten Werk), D-03 (ohne „noch auf keiner Seite“, kommt mit M5), D-04, D-05 | D-06, D-07 |
+
+## 15b. Stand im Atelier (A1 Archiv, 25.11.2026)
+
+Seit 25.11.2026 ist das Atelier (`app/atelier/index.html`) die App (E7, `CLAUDE.md`). Umgesetzt dort:
+
+| Bereich | Umgesetzt | Bewusst später / anders |
+|---|---|---|
+| Kinder | K-01, K-02 Profilbild (mittig quadratisch, ohne eigenes Zuschneiden) und Lieblingsfarbe aus der Palette, ohne Spitzname (Wunsch der Nutzerin), K-03, K-04 (Anzahl Werke, Zeitstrahl im Archiv) | K-05 |
+| Medien | F-01 (Original in voller Größe, verkleinerte Arbeitsfassung, EXIF-Datum über `app/atelier/fotodatum.js`), Profilbild als Datei (`art=profilbild`) | F-02/F-04 |
+| Werke | W-01 (Kamera oder viele Fotos auf einmal), W-03 (Gemalt, Lego, Kapla, Sonstiges wie bisher), W-05 (Datum aus dem Foto, sonst Speicherdatum der Datei, änderbar; ohne Genauigkeitsstufen), W-06, W-07 Titel, W-09 Stichwörter mit Vorschlägen aus bisherigen Stichwörtern, W-13 („Neu“-Markierung und „Jetzt ausfüllen“ nacheinander), Kind eines Werks änderbar | W-02, W-04, W-07 Story-Text, W-08/W-08a Ton, W-10 (A3), W-11, W-12 |
+| Daten | B-02, B-09 (Papierkorb 30 Tage; Warnung mit den Seiten, auf denen das Werk klebt; beim Zurückholen wieder eingeklebt) | Dateien endgültig gelöschter Werke bleiben vorerst auf dem HA-Rechner liegen (offene Frage an den Entwickler) |
+| Finden | D-00, D-01, D-02 (Großansicht mit Wischen und Pfeilen, ohne Pinch-Zoom), D-03 (Kind oder alle Kinder, Werkart, Stichwort), D-04, D-05 (Suche über Titel, Art, Stichwörter, Datum, Alter, Kind) | D-03 Favoriten und „unvollständig“, D-06, D-07 |
+
+**A2 Fotos verbessern (25.11.2026):** I-01 Lupe beim Ziehen der Perspektiv-Punkte, automatische Blatterkennung (Abschnitt 6, „danach automatische Blatterkennung“), Feindrehen ±15° mit Zuschnitt ohne weiße Ecken, Vorher/Nachher-Vergleich. Bearbeitung bleibt nicht-destruktiv (B-03): gespeichert werden nur Parameter (`edit.q`, `edit.fr` …), das Original bleibt unverändert.
+
+**A3 Seiten (25.11.2026):** S-05 Sticker drehen (auch im Export), W-10 Sticker-Vorschläge aus Titel, Art und Stichwörtern der Bilder einer Seite, E7 höchstens 5 % Beschnitt in der Seitenansicht (Export folgt in A4), Seitentext-Verknüpfung: Datum und Alter einer Seite folgen dem ersten Kunstwerk (abschaltbar).
+
+**A4 Fotobuch & PDF (25.11.2026):** E-04 PDF im Stil der Seiten (gleiche Rahmen, Hintergründe, Typografie, höchstens 5 % Beschnitt), mehrere Alben je Kind mit eigenem Deckblatt, Seiten umsortieren (`pg.ord`), Geschwister-Alben (`groups`, Seiten mit Kunstwerken mehrerer Kinder, Künstlerzeile nennt jedes Kind mit Datum), Fotobuch-Paket mit exakten Maßen (21 × 28 bzw. 28 × 21 cm + 3 mm Beschnitt, 300 dpi) und Hinweis bei gemischten Formaten.
+
+**Automatische Foto-Aufbereitung (26.11.2026, Wunsch der Nutzerin):** I-01/I-03 als Knopf „✨ Automatisch verbessern“ (Großansicht und Bearbeiten; zuerst als stille Automatik beim Einfügen gebaut, auf Wunsch der Nutzerin durch den Knopf ersetzt): Wird ein Blatt erkannt (fast rechteckig, Winkel 60–120°, 20–97 % der Fläche), wird es automatisch gerade gezogen (`edit.q`) und „Wie eingescannt“ eingeschaltet (`edit.scan`): Licht an den leeren Papierstellen messen, dazwischen ergänzen, herausrechnen (Schatten, gelbliches Licht), Farben sanft kräftiger. Bauwerke und flächig gemalte Bilder bleiben unverändert. Abschaltbar unter Bearbeiten → Aufhellen; nicht-destruktiv (B-03).
+
+**Sprachaufnahme (25.11.2026):** W-08 umgesetzt im Atelier: Schalter „Sprachaufnahmen“ in den Einstellungen (Zahnrad, gilt je Gerät), in der Großansicht „Erzähl mal!“ → aufnehmen (höchstens 3 Minuten, B-11), anhören, speichern, neu aufnehmen, löschen. Gespeichert als `p.au={u,ms,at}`, auf Home Assistant als Medium der Art `audio`. Vorhandene Aufnahmen bleiben auch bei ausgeschaltetem Schalter hörbar. Offen: W-08a (mehrere Erzähler je Werk), S-07 QR-Code.
+
 ## 16. Offene Fragen
 
 1. W-04 Gemeinschaftswerk: Lösung wie beschrieben in Ordnung? Braucht ihr den „Beitrag pro Kind“?

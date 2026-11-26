@@ -11,6 +11,11 @@ import { HttpFehler, sendeFehler } from './antworten.js';
 import { liefereStatisch } from './statisch.js';
 import { registriereStatus } from './routen/status.js';
 import { registriereMedien } from './routen/medien.js';
+import { registriereKinder } from './routen/kinder.js';
+import { registriereWerke, leerePapierkorb } from './routen/werke.js';
+import { registriereStorys } from './routen/storys.js';
+import { registriereAtelier } from './routen/atelier.js';
+import { erzeugeVorschauen } from './vorschauen.js';
 
 const PAKET = JSON.parse(fs.readFileSync(path.join(path.dirname(fileURLToPath(import.meta.url)), '..', 'package.json'), 'utf8'));
 
@@ -20,9 +25,18 @@ export function erzeugeApp(konfiguration) {
   const ablage = erzeugeAblage(konfiguration.datenDir);
   const benutzerVon = erzeugeAnmeldung(db, konfiguration);
   const router = erzeugeRouter();
-  const kontext = { db, ablage, konfiguration, version: PAKET.version };
+  const kontext = { db, ablage, konfiguration, vorschauen: erzeugeVorschauen(ablage), version: PAKET.version };
   registriereStatus(router, kontext);
   registriereMedien(router, kontext);
+  registriereKinder(router, kontext);
+  registriereWerke(router, kontext);
+  registriereStorys(router, kontext);
+  registriereAtelier(router, kontext);
+
+  // Papierkorb: Werke nach 30 Tagen endgültig entfernen (B-09), beim Start und dann täglich.
+  leerePapierkorb(db);
+  const papierkorbTakt = setInterval(() => leerePapierkorb(db), 24 * 60 * 60 * 1000);
+  papierkorbTakt.unref();
 
   async function behandle(req, res) {
     try {
@@ -43,5 +57,5 @@ export function erzeugeApp(konfiguration) {
     }
   }
 
-  return { behandle, db };
+  return { behandle, db, beenden: () => clearInterval(papierkorbTakt) };
 }

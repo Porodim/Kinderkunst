@@ -1,5 +1,6 @@
 // Frühtest 1: Darf die App die Kamera direkt nutzen (Live-Vorschau)? Wichtig für spätere Funktionen
 // wie das Ausrichten eines Blatts. Es wird nichts gespeichert.
+import { istVorschau } from '../api.js';
 import { esc } from '../format.js';
 
 export function bausteinKameraLive() {
@@ -15,6 +16,10 @@ export function bausteinKameraLive() {
   let strom = null;
 
   async function umschalten() {
+    if (istVorschau) {
+      ausgabe.innerHTML = '<span class="mute">Live-Kamera: In der Vorschau-Seite gesperrt. Bitte in der Home-Assistant-App testen.</span>';
+      return;
+    }
     if (strom) {
       strom.getTracks().forEach((t) => t.stop());
       strom = null;
