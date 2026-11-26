@@ -14,4 +14,8 @@ Datenbank, Fotos und Tonaufnahmen liegen im Datenordner dieses Add-ons auf dem H
 
 ## Neue Version holen
 
-Nach einem neuen Meilenstein im Add-on auf **„Neu bauen“** tippen.
+Gibt es eine neue Version, zeigt Home Assistant beim Add-on ein **Update** an. Was neu ist, steht in den Release-Notizen („Änderungen“). Die Versionsnummer ist das Datum mit Uhrzeit, z. B. `2026.11.26.0748`.
+
+## Über dieses Add-on
+
+Privates Familienprojekt, nicht für die Öffentlichkeit bestimmt. Entwickelt großteils mit dem KI-Assistenten Claude (Anthropic); jede Änderung prüft ein Mensch. In der App selbst steckt keine KI: Fotos und Aufnahmen verlassen den Home-Assistant-Rechner nicht.

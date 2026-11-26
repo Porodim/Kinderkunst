@@ -56,6 +56,8 @@ Hintergrund: Früher entstand ohne Absprache eine komplett neue Oberfläche, mit
 - Vor jeder Sitzung `git pull` und `CHANGELOG.md` lesen.
 - Kleine Dokumentations-Änderungen direkt auf `main`. Größere Umbauten auf einem Branch `feature/<name>` und per Pull Request.
 - Strukturänderungen (Dateien verschoben, Framework gewechselt) im Changelog ausdrücklich vermerken.
+- **Versionen mit Datumsstempel** (`JJJJ.MM.TT.HHMM`, Wunsch der Nutzerin vom 26.11.2026). Bei jeder Änderung, die in die App soll, vor dem Push `node werkzeuge/version-setzen.mjs "…"` ausführen: setzt die Version in beiden Add-ons und `app/package.json` und schreibt Release-Notizen in `kinderkunst*/CHANGELOG.md`, die Home Assistant beim Update anzeigt. Notizen kurz, in Alltagssprache, ohne persönliche Daten. `npm test` prüft, dass alles zusammenpasst.
+- **Transparenz:** `README.md` beschreibt das Projekt als privat (nur zum Testen online, ohne Lizenz) und legt offen, dass es mit KI entwickelt wird. Bei Änderungen an diesen Punkten mitpflegen.
 
 ### Entwicklungsablauf (seit 24.11.2026)
 

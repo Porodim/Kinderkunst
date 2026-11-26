@@ -1,0 +1,12 @@
+# Änderungen
+
+Die Versionsnummer ist der Zeitpunkt der Veröffentlichung: Jahr.Monat.Tag.Uhrzeit.
+
+## 2026.11.26.0748
+
+- Das gewohnte Kinderkunst-Atelier ist jetzt die App, mit gemeinsamem Speicher auf Home Assistant: beide Handys sehen dieselben Kunstwerke und Seiten.
+- Kunstwerke: ruhige Bilderwand, mehrere Fotos auf einmal hinzufügen, Datum aus dem Foto, Papierkorb-Knopf 🗑 oben neben der Suche.
+- Fotos: Knopf „✨ Automatisch verbessern“ zieht das Blatt gerade, gleicht Schatten und kleine Knicke aus und lässt die Papierfarbe, wie sie ist.
+- Sprachaufnahme „Erzähl mal!“ zu jedem Kunstwerk und auf der Albumseite, ein- und ausschaltbar.
+- Seiten gestalten: Werkzeugleiste mit Vorschau, neue Rahmen, Aquarell-Hintergründe und Sticker.
+- Fotobuch: mehrere Alben, Geschwister-Alben, Album füllen, Seiten sortieren, PDF und CEWE-Paket.
