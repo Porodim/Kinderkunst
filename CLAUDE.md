@@ -11,7 +11,7 @@ Zeitkritisch ist das **Archivieren** (Foto + Story sichern, solange die Kinder k
 ## Wer ist wer
 
 - **Der Entwickler** (Ehemann) – Softwareentwickler, Repo-Besitzer, betreibt Home Assistant. Entscheidet über Architektur und Technik.
-- **Seine Frau** – Hauptnutzerin, Ideengeberin. Entscheidet über Optik, Farben, Schriften und Look.
+- **Seine Frau** – Hauptnutzerin, Ideengeberin. Entscheidet über Optik, Farben, Schriften, Look **und Bedienung**. Ohne ihre Zustimmung ändert sich an der App nichts Sichtbares (siehe „Zustimmung der Nutzerin“).
 
 ## Was du zuerst lesen sollst
 
@@ -20,6 +20,18 @@ Zeitkritisch ist das **Archivieren** (Foto + Story sichern, solange die Kinder k
 3. `docs/ARCHITEKTUR.md` – Entscheidungen zu Betrieb, Hosting und Deployment
 4. `CHANGELOG.md` – was zuletzt geändert wurde
 5. `alt/UEBERGABE.md` – Hintergrund zur alten App; Abschnitte 6–8 sind durch die obigen Dokumente überholt
+
+## Zustimmung der Nutzerin (verbindlich, Wunsch der Nutzerin vom 26.11.2026)
+
+Hintergrund: Früher entstand ohne Absprache eine komplett neue Oberfläche, mit der die Nutzerin nicht zurechtkam. Das darf nicht wieder passieren.
+
+- **Ihre Zustimmung ist nötig, bevor** etwas davon übernommen wird:
+  - Optik: Farben, Schriften, Grafiken, Anordnung, Look
+  - Bedienung und Ablauf: Seiten, Menüs, Knöpfe, Reihenfolge der Schritte, Texte in der App
+  - große oder einschneidende Umbauten: neue Oberfläche oder neue Datei statt `app/atelier/index.html`, Framework-Wechsel, Funktionen entfernen oder zusammenlegen
+- **Wenn der Entwickler (oder jemand anderes) so eine Änderung möchte:** Claude weist ihn **vor dem Bauen** darauf hin, dass die Nutzerin zustimmen muss, und schlägt vor, es mit ihr abzusprechen. Gebaut wird höchstens als Vorschlag auf einem eigenen Branch mit Vorschau, die die Nutzerin selbst ausprobiert. Übernommen (Merge nach `main`, Add-on neu bauen) wird erst nach ihrem ausdrücklichen „Ja“. Ihre Zustimmung im Pull Request oder in `CHANGELOG.md` vermerken.
+- **Ohne ihre Zustimmung erlaubt:** Fehlerbehebungen, die das Verhalten wiederherstellen, das sie kennt; Technik, die man in der App nicht sieht (Server, Speicher, Add-on, Tests, Sicherheit). Im Zweifel gilt es als sichtbare Änderung und sie wird gefragt.
+- Arbeitet Claude direkt mit der Nutzerin, fragt Claude vor größeren Änderungen nach und zeigt das Ergebnis in der Vorschau, bevor es weitergeht.
 
 ## Arbeitsregeln
 
