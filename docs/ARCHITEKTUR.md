@@ -50,7 +50,7 @@ Diese Punkte entscheiden über die Machbarkeit und werden **vor** dem Ausbau get
 ## Offene Punkte (Entwickler klärt)
 
 - **Privat oder öffentlich?** Ausprobieren, ob HA das private Repo lesen kann. Falls nicht: temporär öffentlich (siehe oben). Den bewährten Weg der bisherigen Add-ons hier festhalten.
-- **Versionierung:** gleiches Schema wie bei früheren Add-ons (Versionsnummer aus Datum und Uhrzeit)? Vorschlag, noch nicht entschieden.
+- ~~**Versionierung:**~~ Umgesetzt am 26.11.2026 auf Wunsch der Nutzerin: Datumsstempel `JJJJ.MM.TT.HHMM` mit Release-Notizen für Home Assistant (`werkzeuge/version-setzen.mjs`, `kinderkunst*/CHANGELOG.md`). Bestätigung durch den Entwickler mit PR #2.
 - ~~Automatischer Build oder Bau auf dem HA-Rechner?~~ Entschieden: Bau auf dem HA-Rechner (A8).
 
 ## Repository-Zielstruktur (Vorschlag, in M1 anpassen)
