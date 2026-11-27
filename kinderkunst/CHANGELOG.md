@@ -2,6 +2,10 @@
 
 Die Versionsnummer ist der Zeitpunkt der Veröffentlichung: Jahr.Monat.Tag.Uhrzeit.
 
+## 2026.11.27.1645
+
+- „Automatisch verbessern“: Weißes Papier unter Lampenlicht wird nicht mehr orange, sondern wieder hell. Keine weißen Flecken mehr an hellen Stellen. Gelbes, rosa und blaues Papier behält seine Farbe.
+
 ## 2026.11.26.0748
 
 - Das gewohnte Kinderkunst-Atelier ist jetzt die App, mit gemeinsamem Speicher auf Home Assistant: beide Handys sehen dieselben Kunstwerke und Seiten.

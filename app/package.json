@@ -1,6 +1,6 @@
 {
   "name": "kinderkunst",
-  "version": "2026.11.26.0748",
+  "version": "2026.11.27.1645",
   "description": "Archiv und Fotobuch für Kinderkunstwerke, läuft als Home-Assistant-Add-on",
   "private": true,
   "type": "module",

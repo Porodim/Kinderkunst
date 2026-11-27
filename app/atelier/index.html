@@ -198,10 +198,14 @@ let pr=[0,0,0],pz=0;for(let i=0;i<n;i++)if(wt[i]){for(let q=0;q<3;q++)pr[q]+=a[i
 const id=kx.createImageData(w,h);for(let i=0;i<n;i++){for(let q=0;q<3;q++){const v=den[i]>1e-3?num[i*3+q]/den[i]:pr[q];id.data[i*4+q]=Math.max(pr[q]*.4,Math.min(255,v))}id.data[i*4+3]=255}kx.putImageData(id,0,0);
 /* Zielfarbe des Papiers (26.11.2026, Wunsch der Nutzerin): farbiges Papier bleibt farbig, nur ein leichter Farbstich vom Licht wird ausgeglichen; Helligkeit wie an den gut beleuchteten Stellen des Blatts, nicht künstlich weiß. */
 const il=[];for(let i=0;i<n;i++)if(den[i]>1e-3)il.push([id.data[i*4],id.data[i*4+1],id.data[i*4+2]]);il.sort((p,q)=>(p[0]*.3+p[1]*.59+p[2]*.11)-(q[0]*.3+q[1]*.59+q[2]*.11));
-const Pt=il.length?il[Math.floor(il.length*.9)]:pr,pm=Math.max(...Pt),sa=(pm-Math.min(...Pt))/Math.max(1,pm),nf=Math.max(0,Math.min(1,(.14-sa)/.08)),pl=Pt[0]*.3+Pt[1]*.59+Pt[2]*.11;
+const Pt=il.length?il[Math.floor(il.length*.9)]:pr,pm=Math.max(...Pt),pn=Math.min(...Pt),sa=(pm-pn)/Math.max(1,pm),pl=Pt[0]*.3+Pt[1]*.59+Pt[2]*.11;
+/* 27.11.2026 (Screenshot der Nutzerin: weißes Blatt unter Lampenlicht wurde lachsfarben): Ein Orange- bis Bernsteinton (Farbwinkel etwa 10–50°) mit mäßiger Sättigung ist das Licht einer Lampe, kein farbiges Papier, und wird zu leicht cremigem Weiß. Gelbes (ab etwa 52°), rosa, blaues und grünes Papier sowie kräftig farbiges Papier bleiben. */
+const hu=pm==pn?0:pm==Pt[0]?((60*(Pt[1]-Pt[2])/(pm-pn))+360)%360:pm==Pt[1]?60*(Pt[2]-Pt[0])/(pm-pn)+120:60*(Pt[0]-Pt[1])/(pm-pn)+240,wb=hu>=10&&hu<=48?1:hu>48&&hu<56?(56-hu)/8:hu>=4&&hu<10?(hu-4)/6:0;
+const nf=Math.max(Math.max(0,Math.min(1,(.14-sa)/.08)),wb*.9*Math.max(0,Math.min(1,(.42-sa)/.06)));
 let T=Pt.map(v=>v*(1-nf)+pl*nf);const ziel=Math.min(248,Math.max(pm*1.06,226)),tm=Math.max(...T);T=T.map(v=>v*ziel/tm);
 const g=cv(W,H),gx=g.getContext('2d');gx.imageSmoothingEnabled=true;gx.imageSmoothingQuality='high';gx.drawImage(k,0,0,W,H);const B=gx.getImageData(0,0,W,H).data,im=x.getImageData(0,0,W,H),d=im.data;
-for(let i=0;i<d.length;i+=4){let r=Math.min(2.4,T[0]/B[i])*d[i],gg=Math.min(2.4,T[1]/B[i+1])*d[i+1],bb=Math.min(2.4,T[2]/B[i+2])*d[i+2];
+const lT=.299*T[0]+.587*T[1]+.114*T[2];for(let i=0;i<d.length;i+=4){let r=Math.min(2.4,T[0]/B[i])*d[i],gg=Math.min(2.4,T[1]/B[i+1])*d[i+1],bb=Math.min(2.4,T[2]/B[i+2])*d[i+2];
+/* Heller als das Papier (Lampenfleck, Glanz, zu weich gemessenes Licht) wird Papierfarbe statt weißer Fleck (27.11.2026) */{const l1=.299*r+.587*gg+.114*bb;if(l1>lT*.96){const t=Math.min(1,(l1-lT*.96)/(lT*.08));r+=(T[0]-r)*t;gg+=(T[1]-gg)*t;bb+=(T[2]-bb)*t}}
 /* Knicke glätten: Stellen, die nur ganz leicht dunkler sind als das Papier und dessen Farbton haben (Knickschatten), werden zu Papierfarbe; Bleistift ist dunkler und bleibt. */
 {const ab=Math.abs(r-T[0])+Math.abs(gg-T[1])+Math.abs(bb-T[2]),l0=.299*r+.587*gg+.114*bb,lt=.299*T[0]+.587*T[1]+.114*T[2];if(l0>lt*.82&&ab<lt*.36){const t=Math.min(1,(l0-lt*.82)/(lt*.1));r+=(T[0]-r)*t;gg+=(T[1]-gg)*t;bb+=(T[2]-bb)*t}}
 /* Farben nur in der Zeichnung auffrischen, das Papier behält seinen Ton */const zw=Math.min(1,(Math.abs(r-T[0])+Math.abs(gg-T[1])+Math.abs(bb-T[2]))/90),cf=1+.06*zw,sf=1+.12*zw;r=(r-128)*cf+128;gg=(gg-128)*cf+128;bb=(bb-128)*cf+128;const y=.299*r+.587*gg+.114*bb;d[i]=y+(r-y)*sf;d[i+1]=y+(gg-y)*sf;d[i+2]=y+(bb-y)*sf}
@@ -598,7 +602,7 @@ act.eauto=async()=>{if(!E)return;const p=E.p,e=p.edit;E.am='Einen Moment …';dr
 let mi=128;if(img){const k=cv(40,40),kx=k.getContext('2d');kx.drawImage(img,0,0,40,40);const d=kx.getImageData(0,0,40,40).data;let su=0;for(let i=0;i<d.length;i+=4)su+=d[i]*.3+d[i+1]*.59+d[i+2]*.11;mi=su/1600}
 Object.assign(e,{l:0,r:0,t:0,b:0,zoom:1,fr:0,paper:0,scan:1});
 if(quadOk(q,1)){Object.assign(e,{q,bri:0,con:0,sat:0});E.q=cl(q);E.fd=1;E.am='✨ Blatt gefunden: gerade gezogen und zugeschnitten, Schatten ausgeglichen, Papier aufgehellt, Farben aufgefrischt. Mit „Vorher zeigen“ vergleichen, mit „Abbrechen“ zurücknehmen.'}
-else{Object.assign(e,{q:null,bri:mi<110?Math.round(Math.min(20,(120-mi)/2)):0,con:6,sat:8});E.q=defQ();E.fd=-1;E.am='✨ Licht und Farben verbessert. Ein Blatt habe ich nicht sicher erkannt (bei Bauwerken ist das richtig so). Bei einem Blatt kannst du unter „Perspektive“ die Ecken selbst setzen.'}
+else{Object.assign(e,{q:null,bri:mi<110?Math.round(Math.min(20,(120-mi)/2)):0,con:0,sat:0});E.q=defQ();E.fd=-1;E.am='✨ Licht und Farben verbessert. Ein Blatt habe ich nicht sicher erkannt (bei Bauwerken ist das richtig so). Bei einem Blatt kannst du unter „Perspektive“ die Ecken selbst setzen.'}
 E.vor=false;drawEd()};
 act.vwauto=()=>{const id=S.ui.vi;openEd(id,'z');act.eauto()};
 act.wz=el=>{S.ui.wz=el.dataset.w;render()};act.sk2=el=>{S.ui.stk=el.dataset.n;render()};
