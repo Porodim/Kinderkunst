@@ -2,6 +2,10 @@
 
 Die Versionsnummer ist der Zeitpunkt der Veröffentlichung: Jahr.Monat.Tag.Uhrzeit.
 
+## 2026.11.27.1746
+
+- Albumseiten ordnen sich von selbst nach Datum: Eine neue Seite oder eine Seite mit älterem Bild rückt an die richtige Stelle. Von Hand verschobene Seiten bleiben, wo sie sind.
+
 ## 2026.11.27.1645
 
 - „Automatisch verbessern“: Weißes Papier unter Lampenlicht wird nicht mehr orange, sondern wieder hell. Keine weißen Flecken mehr an hellen Stellen. Gelbes, rosa und blaues Papier behält seine Farbe.
