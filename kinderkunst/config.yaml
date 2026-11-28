@@ -1,7 +1,7 @@
 # Home-Assistant-Add-on „Kinderkunst“ – das echte Archiv der Familie (ARCHITEKTUR A4).
 # Eigener Datenordner, getrennt vom Testkanal „Kinderkunst (Test)“.
 name: "Kinderkunst"
-version: "2026.11.27.1746"
+version: "2026.11.27.1812"
 slug: kinderkunst
 description: "Archiv und Fotobuch für die Kunstwerke eurer Kinder"
 url: "https://github.com/porodim/kinderkunst"

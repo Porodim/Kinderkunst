@@ -2,6 +2,14 @@
 
 Die Versionsnummer ist der Zeitpunkt der Veröffentlichung: Jahr.Monat.Tag.Uhrzeit.
 
+## 2026.11.27.1812
+
+- Kunstwerke ohne Titel: Der Hinweis „Benennen“ ist jetzt eine schmale Zeile und auch im dunklen Modus gut lesbar.
+
+## 2026.11.27.1805
+
+- Kunstwerk löschen: In der Großansicht steht oben neben „Bearbeiten“ ein Mülleimer-Knopf 🗑.
+
 ## 2026.11.27.1746
 
 - Albumseiten ordnen sich von selbst nach Datum: Eine neue Seite oder eine Seite mit älterem Bild rückt an die richtige Stelle. Von Hand verschobene Seiten bleiben, wo sie sind.
